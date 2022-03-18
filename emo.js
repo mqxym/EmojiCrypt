@@ -1,6 +1,6 @@
  	function getPassword(pass) {
 		 console.log("MD5:" + CryptoJS.MD5(pass));
-		 console.log("SHA1:" + CryptoJS.SHA1(pass));
+		 //console.log("SHA1:" + CryptoJS.SHA1(pass));
 		 console.log("SHA3:" + CryptoJS.SHA3(pass));
 		 console.log("SHA224:" + CryptoJS.SHA224(pass));
 		 console.log("SHA256:" + CryptoJS.SHA256(pass));
