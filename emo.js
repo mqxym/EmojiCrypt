@@ -1,4 +1,10 @@
- 	function base64ToHex(str) {
+ 	function getPassword(pass) {
+		 console.log("MD5:" + CryptoJS.MD5(pass));
+
+		 return pass;
+	 }
+	 
+	function base64ToHex(str) {
 	  const raw = atob(str);
 	  let result = '';
 	  for (let i = 0; i < raw.length; i++) {
