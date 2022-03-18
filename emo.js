@@ -1,5 +1,11 @@
  	function getPassword(pass) {
 		 console.log("MD5:" + CryptoJS.MD5(pass));
+		 console.log("SHA1:" + CryptoJS.SHA1(pass));
+		 console.log("SHA3:" + CryptoJS.SHA3(pass));
+		 console.log("SHA224:" + CryptoJS.SHA224(pass));
+		 console.log("SHA256:" + CryptoJS.SHA256(pass));
+		 console.log("SHA384:" + CryptoJS.SHA384(pass));
+		 console.log("SHA512:" + CryptoJS.SHA512(pass));
 
 		 return pass;
 	 }
@@ -21,11 +27,11 @@
 	}	
 	
 	function generateRandomEmo(length, emo_array) {
-		var i = 0;
-		var emo_string = "";
+		let i = 0;
+		let emo_string = "";
 
 		while (i < length) {
-			var random = Math.floor(Math.random() * 1024);
+			let random = Math.floor(Math.random() * 1024);
 			emo_string = emo_string + emo_array[random];
 			++i;
 		}
@@ -34,10 +40,10 @@
 	}
 
 	function hexToEmo (hex, emo_array) {
-		var i = 0;
-		var count_four = 0;
-		var double_hex = "";
-		var emo_string = ""; 
+		let i = 0;
+		let count_four = 0;
+		let double_hex = "";
+		let emo_string = ""; 
 
 
 		while (i < hex.length) {
@@ -67,9 +73,9 @@
 
 	function emoToHex(emo_string, emo_array) {
 		emo_string_array = stringToArray(emo_string);
-		var i = 0;
-		var count_four = 0;
-		var index = 0;
+		let i = 0;
+		let count_four = 0;
+		let index = 0;
 		hex_string = "";
 
 		while (i < emo_string_array.length) {
@@ -102,7 +108,7 @@
 	}
 
 	function removeItemAll(arr, value) {
-	  var i = 0;
+	  let i = 0;
 	  while (i < arr.length) {
 	    if (arr[i] === value) {
 	      arr.splice(i, 1);
