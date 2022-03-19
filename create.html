@@ -76,8 +76,8 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="lib/aes.js"></script>
 	<script src="emo.js"></script>
+	<script src="lib/aes.js"></script>
 	<script src="lib/md5-min.js"></script>
 	<script src="lib/sha1-min.js"></script>
 	<script src="lib/sha3-min.js"></script>
@@ -87,9 +87,11 @@
 	<script src="lib/sha512-min.js"></script>
 	<script>
 	
-	var testmode = true;
+	let testmode = true;
 
-	var emo = "😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
+	let secLevel = 1;
+
+	let emo = "😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
 	
 	$(document).ready(function(){
 
@@ -110,19 +112,19 @@
 
 
 		$("#create_submit").click(function(){
-			var message = $("#txt1").val();
-			var key1 = getPassword($("#em1").val());
-			var validfor = $("#validfor").val();
+			let message = $("#txt1").val();
+			let key1 = getPassword($("#em1").val());
+			let validfor = $("#validfor").val();
 
 			if (validfor != 6) {
 				
 			}
 			do {
-				var encrypted = CryptoJS.AES.encrypt(message, key1);
-				var encryptedString = encrypted.toString();
-				var encryptedHex = base64ToHex(encryptedString);
-				var emojiString = hexToEmo(encryptedHex, emo_array);
-				var testHex = emoToHex(emojiString, emo_array);
+				let encrypted = CryptoJS.AES.encrypt(message, key1);
+				let encryptedString = encrypted.toString();
+				let encryptedHex = base64ToHex(encryptedString);
+				let emojiString = hexToEmo(encryptedHex, emo_array);
+				let testHex = emoToHex(emojiString, emo_array);
 			} while (testHex != encryptedHex)
 
 			$("#out").val(emojiString);
@@ -133,7 +135,7 @@
 		});
 
 		$("#copy").click(function(){
-		 var copyText = document.getElementById("out");
+		 let copyText = document.getElementById("out");
 		  copyText.select();
 		  copyText.setSelectionRange(0, 99999); 
 		  document.execCommand("copy");

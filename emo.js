@@ -1,14 +1,77 @@
- 	function getPassword(pass) {
-		 console.log("MD5:" + CryptoJS.MD5(pass));
-		 //console.log("SHA1:" + CryptoJS.SHA1(pass));
-		 console.log("SHA3:" + CryptoJS.SHA3(pass));
-		 console.log("SHA224:" + CryptoJS.SHA224(pass));
-		 console.log("SHA256:" + CryptoJS.SHA256(pass));
-		 console.log("SHA384:" + CryptoJS.SHA384(pass));
-		 console.log("SHA512:" + CryptoJS.SHA512(pass));
+	function getPassword(pass, secLevel) {
 
-		 return pass;
-	 }
+		let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
+		
+		console.log(seed);
+
+		let hashPass = returnHash(seed, secLevel);
+		hashPass = CryptoJS.SHA512(pass).toString();
+		console.log (hashPass);
+		
+		return hashPass;
+	}
+	function returnHash(seed, secLevel) {
+
+		let key = seed;
+
+		console.log(key);
+
+		for (let i=0; i < seed.length; i++) {
+			let currentChar = seed.charAt(i).toLowerCase();
+			switch (currentChar) {
+				case "0":
+					key = CryptoJS.MD5(key).toString();
+					break;
+				case "1":
+					key = CryptoJS.MD5(key).toString();
+					break;
+				case "2":
+					key = CryptoJS.SHA1(key).toString();
+					break;
+				case "3":
+					key = CryptoJS.SHA1(key).toString();
+					break;
+				case "4":
+					key = CryptoJS.SHA3(key).toString();
+					break;
+				case "5":
+					key = CryptoJS.SHA3(key).toString();
+					break;
+				case "6":
+					key = CryptoJS.SHA224(key).toString();
+					break;
+				case "7":
+					key = CryptoJS.SHA224(key).toString();
+					break;
+				case "8":
+					key = CryptoJS.SHA256(key).toString();
+					break;
+				case "9":
+					key = CryptoJS.SHA256(key).toString();
+					break;
+				case "a":
+					key = CryptoJS.SHA256(key).toString();
+					break;
+				case "b":
+					key = CryptoJS.SHA512(key).toString();
+					break;
+				case "c":
+					key = CryptoJS.SHA512(key).toString();
+					break;
+				case "d":
+					key = CryptoJS.SHA512(key).toString();
+					break;
+				case "e":
+					key = CryptoJS.SHA384(key).toString();
+					break;
+				case "f":
+					key = CryptoJS.SHA384(key).toString();
+					break;
+			}   
+		}
+
+		return key;
+	}
 	 
 	function base64ToHex(str) {
 	  const raw = atob(str);
