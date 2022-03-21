@@ -20,38 +20,39 @@
 	</ul>
 	<hr>
 	<form class="form">
-	  <label for="txt1">Convert text to Emoji</label>
+	  <label for="inputText">Convert text to Emoji</label>
 	  <div class="input-group mb-3">
 		<div class="input-group-prepend">
 			<span class="input-group-text">Text</span>
 		</div>
-		<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="txt1" rows="5"></textarea>
+		<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
 	  </div>
 	  	<label for="emcode">Encrypt messages with an optional password</label>
 		<div class="input-group mb-3">
 		  <div class="input-group-prepend">
 			<span class="input-group-text" id="emcode">Key</span>
 		  </div>
-		  <input type="text" placeholder="(optional)" class="form-control" id="em1" aria-describedby="emcode">
+		  <input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
 		  <div class="input-group-append">
-			<button id="generate" type="button" class="btn btn-primary btn-block bg-dark">Generate</button>
+			<button id="btnGenerate" type="button" class="btn btn-primary btn-block bg-dark">Generate</button>
 		  </div>
 		</div>
-
-	  <div class="input-group mb-3">
+      
+	  <div class="input-group mb-3 disabled">
 		  <div class="input-group-prepend">
 			<span class="input-group-text">Valid for</span>
 		  </div>
-		  <select class="custom-select" id="validfor">
-			<option value="1">15 minutes</option>
+		  <select class="custom-select" id="inputValidFor">
+			<!--<option value="1">15 minutes</option>
 			<option value="2">1 hour</option>
 			<option value="3" selected>5 hours</option>
 			<option value="4">1 day</option>
-			<option value="5">1 week</option>
+			<option value="5">1 week</option> -->
 			<option value="6" selected>unlimited</option>
 		  </select>
 		</div>
-	 <button id="create_submit" type="button" class="btn btn-primary bg-dark btn-block mb-2">Convert / Encrypt</button>
+	
+	 <button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">Convert / Encrypt</button>
 	</form>
 	<hr>
 	<label for="basic-url">Output</label>
@@ -95,32 +96,29 @@
 	$(document).ready(function(){
 
 		emo_array = stringToArray(emo);
-		emo_array = removeItemAll(emo_array,"️");
-		emo_array = removeItemAll(emo_array," ");
-		emo_array = removeItemAll(emo_array,"‍");
-		emo_array = removeItemAll(emo_array,"​");
-
+		emo_array = cleanArray(emo_array);
 				
 		let keylength = 256;
 
 		if (testmode) {
-			$("#txt1").val("Hello World!"); 
-			let key1 = $("#em1").val();
-			$("#em1").val(generateRandomEmo(keylength,emo_array));
+			$("#inputText").val("Hello World!"); 
+			let key1 = $("#inputKey").val();
+			//$("#inputKey").val(generateRandomEmo(keylength,emo_array));
+			$("#inputKey").val("test")
 		}
 
 
-		$("#create_submit").click(function(){
-			let message = $("#txt1").val();
-			let key1 = getPassword($("#em1").val());
-			let validfor = $("#validfor").val();
+		$("#btnEncode").click(function(){
+			let message = $("#inputText").val();
+			let key1 = getPassword($("#inputKey").val());
+			let inputinputValidFor = $("#inputValidFor").val();
 
-			if (validfor != 6) {
+			if (inputValidFor != 6) {
 				
 			}
+			//fix the bug where hextoemo gives a wrong output
 			do {
-				let encrypted = CryptoJS.AES.encrypt(message, key1);
-				let encryptedString = encrypted.toString();
+				let encryptedString = CryptoJS.AES.encrypt(message, key1).toString();
 				let encryptedHex = base64ToHex(encryptedString);
 				let emojiString = hexToEmo(encryptedHex, emo_array);
 				let testHex = emoToHex(emojiString, emo_array);
@@ -129,8 +127,8 @@
 			$("#out").val(emojiString);
 		});
 
-		$("#generate").click(function(){
-			$("#em1").val(generateRandomEmo(keylength,emo_array));
+		$("#btnGenerate").click(function(){
+			$("#inputKey").val(generateRandomEmo(keylength,emo_array));
 		});
 
 		$("#copy").click(function(){

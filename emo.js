@@ -2,11 +2,11 @@
 
 		let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 		
-		console.log(seed);
+		//console.log(seed);
 
 		let hashPass = returnHash(seed, secLevel);
 		hashPass = CryptoJS.SHA512(pass).toString();
-		console.log (hashPass);
+		//console.log (hashPass);
 		
 		return hashPass;
 	}
@@ -14,7 +14,7 @@
 
 		let key = seed;
 
-		console.log(key);
+		//console.log(key);
 
 		for (let i=0; i < seed.length; i++) {
 			let currentChar = seed.charAt(i).toLowerCase();
@@ -180,4 +180,13 @@
 	    }
 	  }
 	  return arr;
+	}
+
+	function cleanArray(array) {
+
+		array = removeItemAll(array,"️");
+		array = removeItemAll(array," ");
+		array = removeItemAll(array,"‍");
+		array = removeItemAll(array,"​");
+		return array;
 	}
