@@ -34,7 +34,7 @@
 		  </div>
 		  <input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
 		</div>
-	 <button id="btnDecode" type="button" class="btn bg-dark btn-block">Convert / Decrypt</button>
+	 <button id="btnDecode" type="button" class="btn bg-dark btn-block">🔀 Decrypt</button>
 	</form>
 	<hr>
 	<div class="input-group mb-3">
@@ -42,10 +42,10 @@
 	</div>
 	<hr>
 	<p class="text-center">
-		<b id="footer">On device AES encryption. No data sent. No cookies. <br> Anti-Bruteforce/ASIC</b> 
+		<b id="footer">On device AES encryption.</b> 
 	</p>
 	<div class="text-center">
-		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode</a>
+		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
 	</div>
 	
 
@@ -74,8 +74,8 @@
 		}
 
 		$("#btnDecode").click(async function(){
-			$(this).html("Decrypting...");
-			$(this).removeClass("bg-dark").removeClass("bg-danger").removeClass("bg-success").addClass("bg-warning");
+			$(this).html("⚙️ Decrypting...");
+			
 			await new Promise(r => setTimeout(r, 15));
 			let message = $("#inputText").val();
 			let key = getPassword($("#inputKey").val(), getSecLevel());
@@ -84,11 +84,9 @@
 			let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
 			console.log(decrypted);
 			if (!decrypted) {
-				$(this).removeClass("bg-warning").addClass("bg-danger");
-				$(this).html("Failed. Wrong key/password?");
+				$(this).html("💔 Failed. Wrong key/password?");
 			} else {
-				$(this).removeClass("bg-warning").addClass("bg-success");
-				$(this).html("Decrypted!");
+				$(this).html("💚 Decrypted!");
 			}
 			
 			$("#messageOut").val(decrypted);

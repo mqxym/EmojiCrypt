@@ -1,5 +1,5 @@
 # EmojiCrypt
 - Javascript based app to decrypt and encrypt text with AES.
-- Uses CryptoJS functions
-- Uses multiple hashing functions to calculate the final key
+- Uses CryptoJS library
+- Uses multiple chained hash-functions to calculate the final key and prevents bruteforce attacks
 
