@@ -4,13 +4,19 @@
 		
 		//console.log(seed);
 
-		let hashPass = returnHash(seed, secLevel);
-		hashPass = CryptoJS.SHA512(pass).toString();
+		let hashPass = returnHash(seed);
+		
 		//console.log (hashPass);
+
+		for (let i=0; i < secLevel; i++) {
+			hashPass = returnHash(hashPass)
+		}
+
+		hashPass = CryptoJS.SHA512(pass).toString();
 		
 		return hashPass;
 	}
-	function returnHash(seed, secLevel) {
+	function returnHash(seed) {
 
 		let key = seed;
 

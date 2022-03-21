@@ -68,23 +68,26 @@
 	
 	let testmode = true;
 
+	let secLevel = 32;
+
 	$(document).ready(function(){
 
 		emo_array = stringToArray(emo);
 		emo_array = cleanArray(emo_array);
 
 		if (testmode) {
-			$("#inputText").val("🥳🍿📠🚼😸🥛💾📳😩💥🗑⛎🐁☀🚢↔😼🚲🏕↘😄🧃🔗🅱😝♀🎈⏸🐫🪕🎀✒"); 
+			$("#inputText").val("🥳🍿📠🚼😸🥛💾📳🦊🚌🎌🔄🦅🤺🎀💲😻🍙🛍ℹ🦎🌶🗃❌🐊🥃⛰🈚🤮🥃🛠💚"); 
 			let key1 = $("#inputKey").val();
 			$("#inputKey").val("test")
 		}
 
 		$("#btnDecode").click(function(){
 			let message = $("#inputText").val();
-			let key = getPassword($("#inputKey").val());
+			let key = getPassword($("#inputKey").val(), secLevel);
 			let hexString = emoToHex(message, emo_array);
 			let baseString = hexToBase64(hexString);
 			let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
+			console.log(decrypted);
 			$("#messageOut").val(decrypted);
 		});
 	});
