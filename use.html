@@ -89,7 +89,7 @@
 			let baseString = hexToBase64(hexString);
 			let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
 			console.log(decrypted);
-			$("#processStatus").html("Status: Decrypted...");
+			$("#processStatus").html("Status: Decrypted!");
 			$("#messageOut").val(decrypted);
 		});
 	});
