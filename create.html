@@ -58,7 +58,8 @@
 	 <button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">Convert / Encrypt</button>
 	</form>
 	<hr>
-	<label for="basic-url">Output</label>
+	<div id="processStatus">Status: N/A</div>
+	<label for="basic-url"><u>Output</u></label>
 	<div class="input-group mb-3">
 	  <textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
 	  	<div class="input-group-append">
@@ -67,7 +68,7 @@
 	</div>
 	<hr>
 	<p class="text-center">
-	<b>On device encryption. No data sent. No cookies. Anti-Brutforce/ASIC/Quantum</b>
+	<b>On device AES encryption. No data sent. No cookies. Anti-Brutforce/ASIC/Quantum</b>
 	</p>
 
     <!-- 
@@ -105,7 +106,10 @@
 		}
 
 
-		$("#btnEncode").click(function(){
+		$("#btnEncode").click(async function(){
+			$("#processStatus").html("Status: Encrypting...");
+			await new Promise(r => setTimeout(r, 15));
+
 			let message = $("#inputText").val();
 			let key1 = getPassword($("#inputKey").val(), getSecLevel());
 			let inputinputValidFor = $("#inputValidFor").val();
@@ -126,6 +130,7 @@
 			} while (testHex != encryptedHex)
 
 			$("#out").val(emojiString);
+			$("#processStatus").html("Status: Encrypted!");
 		});
 
 		$("#btnKeyGenerate").click(function(){

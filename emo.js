@@ -3,7 +3,7 @@
 	}
 
 	function getSecLevel () {
-		return 32;
+		return 1024;
 	}
 	
 	function getPassword(pass, secLevel) {
@@ -104,7 +104,7 @@
 	}	
 	
 	function generateRandomEmo(emo_array) {
-		let length = (2+(Math.floor(Math.random() * 8))) * 32;
+		let length = (2+(Math.floor(Math.random() * 4))) * 32;
 		
 		let emo_string = "";
 		let i = 0;

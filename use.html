@@ -37,13 +37,14 @@
 	 <button id="btnDecode" type="button" class="btn btn-primary bg-dark btn-block mb-2">Convert / Decrypt</button>
 	</form>
 	<hr>
+	<div id="processStatus">Status: N/A</div>
 	<label for="basic-url">Output</label>
 	<div class="input-group mb-3">
 	  <textarea class="form-control" aria-label="Emoji" id="messageOut" rows="10" readonly>Your message</textarea>
 	</div>
 	<hr>
 	<p class="text-center">
-	<b>On device encryption. No data sent. No cookies. Anti-Brutforce/ASIC/Quantum</b>
+	<b>On device AES encryption. No data sent. No cookies. Anti-Brutforce/ASIC/Quantum</b>
 	</p>
 
 
@@ -72,18 +73,23 @@
 		emo_array = cleanArray(emo_array);
 
 		if (isDebug()) {
-			$("#inputText").val("🥳🍿📠🚼😸🥛💾📳🦊🚌🎌🔄🦅🤺🎀💲😻🍙🛍ℹ🦎🌶🗃❌🐊🥃⛰🈚🤮🥃🛠💚"); 
+			$("#inputText").val("🥳🍿📠🚼😸🥛💾📳🦄🚞🗂👛🤔🎱📬🚸🌚🏍📃🚫🐋🪁🖲🖊🤮🏵🏭↔🐬🚗📀ℹ"); 
 			let key1 = $("#inputKey").val();
 			$("#inputKey").val("test")
 		}
 
-		$("#btnDecode").click(function(){
+		$("#btnDecode").click(async function(){
+
+			$("#processStatus").html("Status: Decrypting...");
+			await new Promise(r => setTimeout(r, 15));
+
 			let message = $("#inputText").val();
 			let key = getPassword($("#inputKey").val(), getSecLevel());
 			let hexString = emoToHex(message, emo_array);
 			let baseString = hexToBase64(hexString);
 			let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
 			console.log(decrypted);
+			$("#processStatus").html("Status: Decrypted...");
 			$("#messageOut").val(decrypted);
 		});
 	});
