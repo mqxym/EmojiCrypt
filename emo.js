@@ -1,5 +1,5 @@
 	function isDebug () {
-		return true;
+		return false;
 	}
 
 	function getSecLevel () {

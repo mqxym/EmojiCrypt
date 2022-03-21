@@ -6,31 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Emojiworld!</title>
+    <link rel="stylesheet" href="bootstrap4.css">
+	<title>🚀 - to the moon!</title>
   </head>
   <body class="d-block p-3">
 	<ul class="nav nav-pills nav-fill">
 	  <li class="nav-item">
-		<a class="nav-link" href="encrypt.html">Create</a>
+		<a class="nav-link" id="txt_encrypt" href="encrypt.html">Encrypt 📤</a>
 	  </li>
 	  <li class="nav-item">
-		<a class="nav-link active bg-dark" href="decrypt.html">Use</a>
+		<a class="nav-link active bg-dark" id="txt_decrypt" href="decrypt.html">Decrypt 📥</a>
 	  </li>
 	</ul>
 	<hr>
 	<form class="form">
-	  <label for="basic-url">Emoji to text</label>
+	  Emoji 🌈 ➡️ 📄 Text
 	  <div class="input-group">
 		<div class="input-group-prepend">
-			<span class="input-group-text">Text</span>
+			<span class="input-group-text">✉️</span>
 		</div>
 		<textarea class="form-control" placeholder="Paste message" aria-label="Emoji" id="inputText" rows="5"></textarea>
 	  </div>
 	    <label for="emcode">Decrypt messages with an optional password</label>
 		<div class="input-group mb-3">
 		  <div class="input-group-prepend">
-			<span class="input-group-text" id="emcode">Key</span>
+			<span class="input-group-text" id="emcode">🔑</span>
 		  </div>
 		  <input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
 		</div>
@@ -42,8 +42,12 @@
 	</div>
 	<hr>
 	<p class="text-center">
-	<b>On device AES encryption. No data sent. No cookies.<br> Anti-Bruteforce/ASIC</b>
+		<b id="footer">On device AES encryption. No data sent. No cookies. <br> Anti-Bruteforce/ASIC</b> 
 	</p>
+	<div class="text-center">
+		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode</a>
+	</div>
+	
 
 
 
