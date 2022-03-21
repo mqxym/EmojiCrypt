@@ -40,20 +40,6 @@
 			<button id="copyKey" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
 	    </div>
 		</div>
-      
-	  <div class="input-group mb-3 disabled">
-		  <div class="input-group-prepend">
-			<span class="input-group-text">Valid for</span>
-		  </div>
-		  <select class="custom-select" id="inputValidFor">
-			<!--<option value="1">15 minutes</option>
-			<option value="2">1 hour</option>
-			<option value="3">5 hours</option>
-			<option value="4">1 day</option>
-			<option value="5">1 week</option> -->
-			<option value="6" selected>unlimited</option>
-		  </select>
-		</div>
 	
 	 <button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">Convert / Encrypt</button>
 	</form>
@@ -109,16 +95,11 @@
 
 			let message = $("#inputText").val();
 			let key1 = getPassword($("#inputKey").val(), getSecLevel());
-			let inputinputValidFor = $("#inputValidFor").val();
 			
 			let textHex;
 			let encryptedHex;
 			let emojiString;
 			let encryptedString;
-
-			if (inputValidFor != 6) {
-				
-			}
 
 			do {
 				encryptedString = CryptoJS.AES.encrypt(message, key1).toString();
