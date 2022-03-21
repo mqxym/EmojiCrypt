@@ -1,3 +1,11 @@
+	function isDebug () {
+		return true;
+	}
+
+	function getSecLevel () {
+		return 32;
+	}
+	
 	function getPassword(pass, secLevel) {
 
 		let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
@@ -95,9 +103,11 @@
 	  );
 	}	
 	
-	function generateRandomEmo(length, emo_array) {
-		let i = 0;
+	function generateRandomEmo(emo_array) {
+		let length = (2+(Math.floor(Math.random() * 8))) * 32;
+		
 		let emo_string = "";
+		let i = 0;
 
 		while (i < length) {
 			let random = Math.floor(Math.random() * 1024);
