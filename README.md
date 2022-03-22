@@ -3,3 +3,4 @@
 - Uses CryptoJS library
 - Uses multiple chained hash-functions to calculate the final key and prevents bruteforce attacks
 
+(c) All rights reserved.
