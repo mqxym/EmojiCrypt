@@ -1,5 +1,5 @@
 	function isDebug () {
-		return true;
+		return false;
 	}
 
 	function getSecLevel () {
@@ -9,20 +9,12 @@
 	function getPassword(pass, secLevel) {
 
 		let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
-		
-		//console.log(seed);
-
 		let hashPass = returnHash(seed);
-		
-		//console.log (hashPass);
-
 		for (let i=0; i < secLevel; i++) {
 			hashPass = returnHash(hashPass)
 		}
-
-		hashPass = CryptoJS.SHA512(pass).toString();
 		
-		return hashPass;
+		return CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();
 	}
 	function returnHash(seed) {
 
