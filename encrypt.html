@@ -68,15 +68,8 @@
 		- save password as a cookie
 		- languages (ger, span, port, rus, japan etc)
 	-->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
-	</script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
-	</script>
+	<script src="jquery.js"></script>
+	<script src="bootstrap4.css"></script>
 	<script src="emo.js"></script>
 	<script src="crypto.js"></script>
 
@@ -101,17 +94,14 @@
 				await new Promise(r => setTimeout(r, 15));
 
 				let message = $("#inputText").val();
-				let key1 = getPassword($("#inputKey").val(), getSecLevel());
+				let key1 = getPassword($("#inputKey").val());
 
 				let textHex;
-				let encryptedHex;
-				let emojiString;
-				let encryptedString;
 
 				do {
-					encryptedString = CryptoJS.AES.encrypt(message, key1).toString();
-					encryptedHex = base64ToHex(encryptedString);
-					emojiString = hexToEmo(encryptedHex, emo_array);
+					let encryptedString = CryptoJS.AES.encrypt(message, key1).toString();
+					let encryptedHex = base64ToHex(encryptedString);
+					let emojiString = hexToEmo(encryptedHex, emo_array);
 					testHex = emoToHex(emojiString, emo_array);
 				} while (testHex != encryptedHex)
 
