@@ -1,5 +1,9 @@
 function isDebug() {
-	return true;
+	return false;
+}
+
+function getFooter() {
+	return "Secure on device AES/BF encryption! Version 0.5";
 }
 
 function getSecLevel(pass) {
