@@ -1,13 +1,48 @@
 function isDebug() {
-	return false;
+	return true;
 }
 
 function getSecLevel(pass) {
-	return 1024;
+
+	seed = CryptoJS.MD5(pass).toString();
+
+	sum = 0;
+
+	for (let i = 0; i < seed.length; i++) {
+		let currentChar = seed.charAt(i).toLowerCase();
+		switch (currentChar) {
+			case "0":
+			case "1":
+			case "2":
+			case "3":
+				sum += 4;
+				break;
+			case "4":
+			case "5":
+			case "6":
+			case "7":
+				sum += 3;
+				break;
+			case "9":
+			case "a":
+			case "b":
+			case "c":
+				sum += 5;
+				break;
+			case "d":
+			case "e":
+			case "f":
+				sum += 2;
+				break;
+		}
+
+	}
+
+	return 1024+sum;
 }
 
 function getPassword(pass) {
-
+	
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
 	let secLevel = getSecLevel(pass);
@@ -29,50 +64,29 @@ function returnHash(seed) {
 		let currentChar = seed.charAt(i).toLowerCase();
 		switch (currentChar) {
 			case "0":
-				key = CryptoJS.MD5(key).toString();
-				break;
 			case "1":
 				key = CryptoJS.MD5(key).toString();
 				break;
 			case "2":
-				key = CryptoJS.SHA1(key).toString();
-				break;
 			case "3":
 				key = CryptoJS.SHA1(key).toString();
 				break;
 			case "4":
-				key = CryptoJS.SHA3(key).toString();
-				break;
 			case "5":
-				key = CryptoJS.SHA3(key).toString();
-				break;
 			case "6":
-				key = CryptoJS.SHA224(key).toString();
+				key = CryptoJS.SHA3(key).toString();
 				break;
 			case "7":
-				key = CryptoJS.SHA224(key).toString();
-				break;
-			case "8":
-				key = CryptoJS.SHA256(key).toString();
-				break;
 			case "9":
 				key = CryptoJS.SHA256(key).toString();
 				break;
 			case "a":
-				key = CryptoJS.SHA256(key).toString();
-				break;
 			case "b":
-				key = CryptoJS.SHA512(key).toString();
-				break;
 			case "c":
 				key = CryptoJS.SHA512(key).toString();
 				break;
 			case "d":
-				key = CryptoJS.SHA512(key).toString();
-				break;
 			case "e":
-				key = CryptoJS.SHA384(key).toString();
-				break;
 			case "f":
 				key = CryptoJS.SHA384(key).toString();
 				break;
@@ -80,6 +94,31 @@ function returnHash(seed) {
 	}
 
 	return key;
+}
+
+function em_encrypt(message, key) {
+	let testHex;
+	let encryptedHex;
+	let encryptedString;
+	let emojiString;
+
+	do {
+		encryptedString = CryptoJS.AES.encrypt(message, key).toString();
+		encryptedHex = base64ToHex(encryptedString);
+		emojiString = hexToEmo(encryptedHex, emo_array);
+		testHex = emoToHex(emojiString, emo_array);
+	} while (testHex != encryptedHex)
+
+	return emojiString;
+
+}
+
+function em_decrypt(message, key) {
+	let hexString = emoToHex(message, emo_array);
+	let baseString = hexToBase64(hexString);
+	let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
+
+	return decrypted;
 }
 
 function base64ToHex(str) {

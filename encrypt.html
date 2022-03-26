@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="bootstrap4.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<title>🚀 - to the moon!</title>
 </head>
 
@@ -20,6 +20,7 @@
 	<hr>
 	<form class="form">
 		Text 📄 ➡️ 🌈 Emoji
+		<hr>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text">✉️</span>
@@ -49,12 +50,12 @@
 	<div class="input-group mb-3">
 		<textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
 		<div class="input-group-append">
-			<button id="copyMessage" type="button" class="btn bg-dark btn-block">Copy <br>to clipboard</button>
+			<button id="copyMessage" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
 		</div>
 	</div>
 	<hr>
 	<p class="text-center">
-		<b id="footer">On device AES encryption.</b>
+		<b id="footer">On device AES encryption. V0.4</b>
 	</p>
 	<div class="text-center">
 		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
@@ -68,10 +69,10 @@
 		- save password as a cookie
 		- languages (ger, span, port, rus, japan etc)
 	-->
-	<script src="jquery.js"></script>
-	<script src="bootstrap4.css"></script>
-	<script src="emo.js"></script>
-	<script src="crypto.js"></script>
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/emo.js"></script>
+	<script src="js/crypto.js"></script>
 
 	<script>
 		let emo =
@@ -94,16 +95,9 @@
 				await new Promise(r => setTimeout(r, 15));
 
 				let message = $("#inputText").val();
-				let key1 = getPassword($("#inputKey").val());
-
-				let textHex;
-
-				do {
-					let encryptedString = CryptoJS.AES.encrypt(message, key1).toString();
-					let encryptedHex = base64ToHex(encryptedString);
-					let emojiString = hexToEmo(encryptedHex, emo_array);
-					testHex = emoToHex(emojiString, emo_array);
-				} while (testHex != encryptedHex)
+				let key = getPassword($("#inputKey").val());
+				
+				let emojiString = em_encrypt(message,key);
 
 				$("#out").val(emojiString);
 				$(this).html("💚 Encrypted!");
