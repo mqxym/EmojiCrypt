@@ -116,13 +116,13 @@ function em_encrypt(message, key) {
 		testHex = emoToHex(emojiString, emo_array);
 	} while (testHex != encryptedHex)
 
-	return emojiString;
+	return emojiString.slice(16);
 
 }
 
 function em_decrypt(message, key) {
 
-	let hexString = emoToHex(message, emo_array);
+	let hexString = emoToHex("🥳🍿📠🚼😸🥛💾📳" + message, emo_array);
 	let baseString = hexToBase64(hexString);
 
 	let BlowfishDecryptedString = CryptoJS.Blowfish.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
