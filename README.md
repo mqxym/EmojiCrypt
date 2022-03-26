@@ -4,6 +4,6 @@
 - Uses multiple chained hash-functions to calculate the final key and prevents bruteforce attacks
 - No backwards compatability to older versions
 
-https://nasaemoji.com
+http://nasaemoji.com
 
 (c) All rights reserved.
