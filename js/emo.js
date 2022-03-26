@@ -6,7 +6,11 @@ function getSecLevel(pass) {
 
 	seed = CryptoJS.MD5(pass).toString();
 
+	console.log(seed);
 	sum = 0;
+
+	console.log(parseInt(seed,16));
+	//maybe use parseInt(hex)
 
 	for (let i = 0; i < seed.length; i++) {
 		let currentChar = seed.charAt(i).toLowerCase();
@@ -51,7 +55,10 @@ function getPassword(pass) {
 		hashPass = returnHash(hashPass)
 	}
 
-	return CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();
+	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();
+	console.log("Hashed Password:\n" + hashPass);
+
+	return hashPass;
 }
 
 function returnHash(seed) {
@@ -99,12 +106,12 @@ function returnHash(seed) {
 function em_encrypt(message, key) {
 	let testHex;
 	let encryptedHex;
-	let encryptedString;
 	let emojiString;
 
 	do {
-		encryptedString = CryptoJS.AES.encrypt(message, key).toString();
-		encryptedHex = base64ToHex(encryptedString);
+		AESString = CryptoJS.AES.encrypt(message, key).toString();
+		BlowfishString = CryptoJS.Blowfish.encrypt(AESString, key).toString();
+		encryptedHex = base64ToHex(BlowfishString);
 		emojiString = hexToEmo(encryptedHex, emo_array);
 		testHex = emoToHex(emojiString, emo_array);
 	} while (testHex != encryptedHex)
@@ -114,9 +121,12 @@ function em_encrypt(message, key) {
 }
 
 function em_decrypt(message, key) {
+
 	let hexString = emoToHex(message, emo_array);
 	let baseString = hexToBase64(hexString);
-	let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
+
+	let BlowfishDecryptedString = CryptoJS.Blowfish.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
+	let decrypted = CryptoJS.AES.decrypt(BlowfishDecryptedString, key).toString(CryptoJS.enc.Utf8);
 
 	return decrypted;
 }
