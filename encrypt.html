@@ -11,10 +11,10 @@
 <body class="d-block p-3">
 	<ul class="nav nav-pills nav-fill">
 		<li class="nav-item">
-			<a class="nav-link active bg-dark" id="txt_encrypt" href="encrypt.html">Encrypt 📤</a>
+			<a class="nav-link active bg-dark" id="headerEncrypt" href="encrypt.html">Encrypt 📤</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="decrypt.html" id="txt_decrypt">Decrypt 📥</a>
+			<a class="nav-link" href="decrypt.html" id="headerDecrypt">Decrypt 📥</a>
 		</li>
 	</ul>
 	<hr>
@@ -28,8 +28,7 @@
 			<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
 		</div>
 		<label for="emcode">
-			<div class="text-center">Encrypt messages with an optional password. Use the generate button when you need a
-				good one.</div>
+			<div class="text-center" id="encryptExplanation">Encrypt messages with an optional password. Use the generate button when you need a good one.</div>
 		</label>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
@@ -55,7 +54,7 @@
 	</div>
 	<hr>
 	<p class="text-center">
-		<b id="footer">Secure on device text encryption! Version 0.4</b>
+		<b id="footerHigh">Secure on device text encryption! Version 0.4</b>
 	</p>
 	<div class="text-center">
 		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
@@ -73,13 +72,23 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/emo.js"></script>
 	<script src="js/crypto.js"></script>
+	<script src="js/lang.js"></script>
 
 	<script>
 		let emo ="😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
 
+		function setLanguage (id) {
+			$("#footerHigh").html(getFooterHigh(id));
+			$("#footerSource").html(getFooterSource(id));
+			$("#headerEncrypt").html(getHeaderEncrypt(id));
+			$("#headerDecrypt").html(getHeaderDecrypt(id));
+
+			$("#encryptExplanation").html(getEncryptExplanation(id));
+		}
+
 		$(document).ready(function () {
 
-			$("#footer").html(getFooter());
+			setLanguage(1);
 
 			emo_array = stringToArray(emo);
 			emo_array = cleanArray(emo_array);

@@ -2,10 +2,6 @@ function isDebug() {
 	return false;
 }
 
-function getFooter() {
-	return "Secure on device AES/BF encryption! Version 0.5";
-}
-
 function getSecLevel(pass) {
 
 	seed = CryptoJS.MD5(pass).toString();
