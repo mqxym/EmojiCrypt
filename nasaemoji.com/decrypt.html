@@ -1,32 +1,97 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel="stylesheet" href="bootstrap4.css"><title>🚀 - to the moon!</title></head><body class="d-block p-3"><ul class="nav nav-pills nav-fill"><li class="nav-item"><a class="nav-link" id="txt_encrypt" href="encrypt.html">Encrypt 📤</a></li><li class="nav-item"><a class="nav-link active bg-dark" id="txt_decrypt" href="decrypt.html">Decrypt 📥</a></li></ul><hr><form class="form">Emoji 🌈 ➡️ 📄 Text<div class="input-group"><div class="input-group-prepend"><span class="input-group-text">✉️</span></div><textarea class="form-control" placeholder="Paste message" aria-label="Emoji" id="inputText" rows="5"></textarea></div><label for="emcode">Decrypt messages with an optional password</label><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" id="emcode">🔑</span></div><input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode"></div><button id="btnDecode" type="button" class="btn bg-dark btn-block">🔀 Decrypt</button></form><hr><div class="input-group mb-3"><textarea class="form-control" aria-label="Emoji" id="messageOut" rows="10" readonly>Your message</textarea></div><hr><p class="text-center"><b id="footer">On device AES encryption.</b></p><div class="text-center"><a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a></div><!-- Optional JavaScript --><!-- jQuery first, then Popper.js, then Bootstrap JS --><script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script><script src="crypto.js"></script><script src="emo.js"></script><script>let emo = "😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
+<!doctype html>
+<html lang="en">
 
-	$(document).ready(function(){
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<title>🚀 - to the moon!</title>
+</head>
 
-		emo_array = stringToArray(emo);
-		emo_array = cleanArray(emo_array);
+<body class="d-block p-3">
+	<ul class="nav nav-pills nav-fill">
+		<li class="nav-item">
+			<a class="nav-link" id="txt_encrypt" href="encrypt.html">Encrypt 📤</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link active bg-dark" id="txt_decrypt" href="decrypt.html">Decrypt 📥</a>
+		</li>
+	</ul>
+	<hr>
+	<form class="form">
+		Emoji 🌈 ➡️ 📄 Text
+		<hr>
+		<div class="input-group">
+			<div class="input-group-prepend">
+				<span class="input-group-text">✉️</span>
+			</div>
+			<textarea class="form-control" placeholder="Paste message" aria-label="Emoji" id="inputText"
+				rows="5"></textarea>
+		</div>
+		<label for="emcode">Decrypt messages with an optional password</label>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<span class="input-group-text" id="emcode">🔑</span>
+			</div>
+			<input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
+		</div>
+		<button id="btnDecode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Decrypt</button>
+	</form>
+	<hr>
+	<div class="input-group mb-3">
+		<textarea class="form-control" aria-label="Emoji" id="messageOut" rows="10" readonly>Your message</textarea>
+	</div>
+	<hr>
+	<p class="text-center">
+		<b id="footer">Secure on device text encryption! Version 0.4</b>
+	</p>
+	<div class="text-center">
+		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
+	</div>
 
-		if (isDebug()) {
-			$("#inputText").val("🥳🍿📠🚼😸🥛💾📳🦄🚞🗂👛🤔🎱📬🚸🌚🏍📃🚫🐋🪁🖲🖊🤮🏵🏭↔🐬🚗📀ℹ"); 
-			let key1 = $("#inputKey").val();
-			$("#inputKey").val("test")
-		}
 
-		$("#btnDecode").click(async function(){
-			$(this).html("⚙️ Decrypting...");
-			
-			await new Promise(r => setTimeout(r, 15));
-			let message = $("#inputText").val();
-			let key = getPassword($("#inputKey").val(), getSecLevel());
-			let hexString = emoToHex(message, emo_array);
-			let baseString = hexToBase64(hexString);
-			let decrypted = CryptoJS.AES.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
-			console.log(decrypted);
-			if (!decrypted) {
-				$(this).html("💔 Failed. Wrong key/password?");
-			} else {
-				$(this).html("💚 Decrypted!");
+
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/emo.min.js"></script>
+	<script src="js/crypto.min.js"></script>
+	<script>
+		let emo ="😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
+
+		$(document).ready(function () {
+
+			emo_array = stringToArray(emo);
+			emo_array = cleanArray(emo_array);
+
+			if (isDebug()) {
+				$("#inputText").val("🥳🍿📠🚼😸🥛💾📳🦁🍥💌🚾🐒🚙⛪↙😠⛸💽🆕🦉🚖🚪™😣🍶🕰🔜🌱🧀🖨™🤩🏍💎☣😕🥉⛱⏺💀🥙⛱🚻😄🥅🚧✏🦊🍇📓🔏😞🍴⏰🔳🌒🏍🖲🎒😦☀💶🆕");
+				let key1 = $("#inputKey").val();
+				$("#inputKey").val("test")
 			}
-			
-			$("#messageOut").val(decrypted);
+
+			$("#btnDecode").click(async function () {
+				$(this).html("⚙️ Decrypting...");
+
+				await new Promise(r => setTimeout(r, 15));
+				let message = $("#inputText").val();
+				let key = getPassword($("#inputKey").val());
+
+				decrypted = em_decrypt(message,key);
+
+				if (!decrypted) {
+					$(this).html("💔 Failed. Wrong key/password?");
+				} else {
+					$(this).html("💚 Decrypted!");
+				}
+
+				$("#messageOut").val(decrypted);
+			});
 		});
-	});</script></body></html>
+	</script>
+</body>
+
+</html>
