@@ -1,15 +1,17 @@
-function isDebug() {
+function getVersion () {
+	return "0.5.2";
+}
+
+function isDebug () {
 	return false;
 }
 
 function getSecLevel(pass) {
 
 	seed = CryptoJS.MD5(pass).toString();
-
-	console.log(seed);
 	sum = 0;
 
-	console.log(parseInt(seed,16));
+	//console.log(parseInt(seed,16));
 	//maybe use parseInt(hex)
 
 	for (let i = 0; i < seed.length; i++) {
@@ -109,10 +111,13 @@ function em_encrypt(message, key) {
 	let emojiString;
 
 	do {
+		console.log("Start AES Encryption...")
 		AESString = CryptoJS.AES.encrypt(message, key).toString();
+		console.log("Start Blowfish Encryption...")
 		BlowfishString = CryptoJS.Blowfish.encrypt(AESString, key).toString();
 		encryptedHex = base64ToHex(BlowfishString);
 		emojiString = hexToEmo(encryptedHex, emo_array);
+		console.log("Checking if encrypted String is emoji compatible...")
 		testHex = emoToHex(emojiString, emo_array);
 	} while (testHex != encryptedHex)
 
@@ -124,8 +129,9 @@ function em_decrypt(message, key) {
 
 	let hexString = emoToHex("🥳🍿📠🚼😸🥛💾📳" + message, emo_array);
 	let baseString = hexToBase64(hexString);
-
+	console.log("Start Blowfish Deryption...")
 	let BlowfishDecryptedString = CryptoJS.Blowfish.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
+	console.log("Start AES Deryption...")
 	let decrypted = CryptoJS.AES.decrypt(BlowfishDecryptedString, key).toString(CryptoJS.enc.Utf8);
 
 	return decrypted;
