@@ -1,9 +1,12 @@
-# EmojiCrypt Version 0.5.2
+# EmojiCrypt Version 0.6
 - Javascript based app to decrypt and encrypt text with AES and BlowFish.
 - Uses CryptoJS library
 - Uses multiple chained hash-functions to calculate the final key and prevents bruteforce attacks
 - No backwards compatability to older versions
+- Still in developement (Work in Progress)
 
-http://nasaemoji.com
+Thanks to all the people on stackoverflow and to the creators of the used libraries
+
+Working example: https://nasaemoji.com
 
 (c) All rights reserved.

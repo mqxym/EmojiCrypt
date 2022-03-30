@@ -1,13 +1,9 @@
 function getVersion () {
-	return "0.6";
+	return "0.6.1";
 }
 
 function isDebug () {
-	return false;
-}
-
-function getLanguage() {
-
+	return true;
 }
 
 function getSecLevel(pass) {
@@ -114,16 +110,15 @@ function em_encrypt(message, key) {
 	let encryptedHex;
 	let emojiString;
 
-	do {
-		console.log("Start AES Encryption...")
-		AESString = CryptoJS.AES.encrypt(message, key).toString();
-		console.log("Start Blowfish Encryption...")
-		BlowfishString = CryptoJS.Blowfish.encrypt(AESString, key).toString();
-		encryptedHex = base64ToHex(BlowfishString);
-		emojiString = hexToEmo(encryptedHex, emo_array);
-		console.log("Checking if encrypted String is emoji compatible...")
-		testHex = emoToHex(emojiString, emo_array);
-	} while (testHex != encryptedHex)
+	console.log("Start Blowfish Encryption...");
+	BlowfishString = CryptoJS.Blowfish.encrypt(message, key).toString();
+	console.log("Start AES Encryption...");
+	AESString = CryptoJS.AES.encrypt(BlowfishString, key).toString();
+	encryptedHex = base64ToHex(AESString);
+	console.log(encryptedHex);
+	emojiString = hexToEmo(encryptedHex, emoArray);
+	//console.log(emojiString);
+	//console.log("Checking if encrypted String is emoji compatible...");
 
 	return emojiString.slice(16);
 
@@ -131,7 +126,7 @@ function em_encrypt(message, key) {
 
 function em_decrypt(message, key) {
 
-	let hexString = emoToHex("🥳🍿📠🚼😸🥛💾📳" + message, emo_array);
+	let hexString = emoToHex("🥳🍿📠🚼😸🥛💾📳" + message, emoArray);
 	let baseString = hexToBase64(hexString);
 	console.log("Start Blowfish Deryption...")
 	let BlowfishDecryptedString = CryptoJS.Blowfish.decrypt(baseString, key).toString(CryptoJS.enc.Utf8);
@@ -141,41 +136,32 @@ function em_decrypt(message, key) {
 	return decrypted;
 }
 
-function base64ToHex(str) {
-	const raw = atob(str);
-	let result = '';
-	for (let i = 0; i < raw.length; i++) {
-		const hex = raw.charCodeAt(i).toString(16);
-		result += (hex.length === 2 ? hex : '0' + hex);
-	}
-	return result.toUpperCase();
-}
-
-function hexToBase64(str) {
-	return btoa(String.fromCharCode.apply(null,
-		str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-}
-
-function generateRandomEmo(emo_array) {
+function generateRandomEmo() {
 	let length = (2 + (Math.floor(Math.random() * 4))) * 32;
 
-	let emo_string = "";
+	let emoString = "";
 	let i = 0;
+
+	emoArray = getEmoArray();
 
 	while (i < length) {
 		let random = Math.floor(Math.random() * 1024);
-		emo_string = emo_string + emo_array[random];
+		emoString = emoString + emoArray[random];
 		++i;
 	}
 
-	return emo_string;
+	return emoString;
 }
 
-function hexToEmo(hex, emo_array) {
+function hexToEmo(hex) {
 	let i = 0;
 	let count_four = 0;
 	let double_hex = "";
-	let emo_string = "";
+	let emoString = "";
+
+	emoArray = getEmoArray();
+
+	console.log(hex.length);
 
 
 	while (i < hex.length) {
@@ -187,8 +173,8 @@ function hexToEmo(hex, emo_array) {
 		} else {
 
 			double_hex = double_hex + hex[i];
-			emo_match = emo_array[parseInt("0x" + double_hex) + (256 * count_four)];
-			emo_string = emo_string + emo_match;
+			emo_match = emoArray[parseInt("0x" + double_hex) + (256 * count_four)];
+			emoString = emoString + emo_match;
 
 			count_four++;
 			if (count_four > 3) {
@@ -200,18 +186,20 @@ function hexToEmo(hex, emo_array) {
 		++i;
 	}
 
-	return emo_string;
+	return emoString;
 }
 
-function emoToHex(emo_string, emo_array) {
-	emo_string_array = stringToArray(emo_string);
+function emoToHex(emoString) {
+	emoString_array = stringToArray(emoString);
 	let i = 0;
 	let count_four = 0;
 	let index = 0;
 	hex_string = "";
 
-	while (i < emo_string_array.length) {
-		index = emo_array.indexOf(emo_string_array[i]);
+	emoArray = getEmoArray();
+
+	while (i < emoString_array.length) {
+		index = emoArray.indexOf(emoString_array[i]);
 		index = index - 256 * count_four;
 		if (index < 16) {
 			hex_string = hex_string + "0";
@@ -229,33 +217,11 @@ function emoToHex(emo_string, emo_array) {
 	return hex_string.toUpperCase();
 }
 
-function stringToArray(s) {
-	const retVal = [];
-
-	for (const ch of s) {
-		retVal.push(ch);
-	}
-
-	return retVal;
-}
-
-function removeItemAll(arr, value) {
-	let i = 0;
-	while (i < arr.length) {
-		if (arr[i] === value) {
-			arr.splice(i, 1);
-		} else {
-			++i;
-		}
-	}
-	return arr;
-}
-
-function cleanArray(array) {
-
-	array = removeItemAll(array, "️");
-	array = removeItemAll(array, " ");
-	array = removeItemAll(array, "‍");
-	array = removeItemAll(array, "​");
-	return array;
+function getEmoArray(array) {
+	let emo ="😃😄😁😆😅😂🤣☺️😊😇🙂🙃😉😌😍😘😗😙😚😋😜😝😛🤑🤗🤓😎🤡🤠😏😒😞😔😟😕🙁☹️😣😖😫😩😤😠😡😶😐😑😯😦😧😮😲😵😳😱😨😰😢😥🤤😭😓😪😴🙄🤔🤥😬🤐🤢🤮🤧😷🤒🤕🤨🤩🤯🧐🤫🤪🤭🥱🥳🥴🥶🥵😈👿🤬👹👺💩👻💀☠️👽👾🤖🎃😺😸😹😻😼😽😿😾🙀🐶🐱🐭🐹🐰🦊🐻🐼🐨🐯🦁🐮🐷🐽🐸🐵🙈🙉🙊🐒🐔🐧🐦🐤🐣🐥🦆🦅🦉🦇🐺🐗🐴🦄🐝🐛🦋🐌🐚🐞🐜🕷🕸🐢🐍🦎🦂🦀🦑🐙🦐🐠🐟🐡🐬🦈🐳🐋🐊🐆🐅🐃🐂🐄🦌🐪🐫🐘🦏🦍🐎🐖🐐🐏🐑🐕🐩🐈🐓🦃🕊🐇🐁🐀🐿🐾🐉🐲🦖🦕🦒🦔🦓🦗🦧🦮🦥🦦🦨🦩🌵🎄🌲🌳🌴🌱🌿☘️🍀🎍🎋🍃🍂🍁🍄🌾💐🌷🌹🥀🌻🌼🌸🌺🌎🌍🌏🌕🌖🌗🌘🌑🌒🌓🌔🌚🌝🌞🌛🌜🌙💫⭐️🌟✨⚡️🔥💥☄️🛸☀️🌤⛅️🌥🌦🌈☁️🌧⛈🌩🌨☃️⛄️❄️🌬💨🌪🌫🌊💧💦☔️🍏🍎🍐🍊🍋🍌🍉🍇🍓🍈🍒🍑🍍🥝🥑🍅🍆🥒🥕🌽🌶🥔🍠🌰🥜🍯🥐🍞🥖🧀🥚🍳🥓🧄🧅🥞🧇🍤🍗🍖🍕🌭🍔🍟🥙🌮🌯🥗🥘🍝🍜🦪🍲🍥🍣🍱🍛🍚🧆🍙🍘🍢🍡🍧🍨🍦🍰🎂🍮🍭🍬🍫🍿🍩🍪🥛🧈🍼☕️🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🧉🧃🧊🥄🍴🍽⚽️🏀🏈⚾️🎾🏐🏉🎱🏓🏸🥅🏒🏑🏏⛳️🏹🎣🥊🥋⛸🎿⛷🏂🏋️‍♀️🏋️🤺🤼‍♀️🤼‍♂️🤸‍♀️🤸‍♂️⛹️‍♀️⛹️🤾‍♀️🤾‍♂️🏌️‍♀️🏌️🏄‍♀️🏄🏊‍♀️🏊🤽‍♀️🤽‍♂️🚣‍♀️🚣🤿🏇🚴‍♀️🚴🚵‍♀️🚵🎖🥇🥈🥉🏆🏵🎗🎫🎟🎪🤹‍♀️🤹‍♂️🎭🎨🎬🎤🎧🎼🎹🥁🎷🎺🎸🎻🪕🎲🎯🎳🪀🪁🎮🎰🚗🚕🚙🚌🚎🏎🚓🚑🚒🚐🚚🚛🚜🛴🚲🛵🏍🛺🚨🚔🚍🚘🚖🚡🚠🚟🚃🚋🚞🚝🚄🚅🚈🚂🚆🚇🚊🚉🚁🛩✈️🛫🛬🪂💺🛶⛵  🛳⛴🚢⚓️🚧⛽️🚏🚦🚥🗺🗿🗽⛲️🗼🏰🏯🏟🎡🎢🎠⛱🏖🏝⛰🏔🗻🌋🏜🏕⛺️🛤🛣🏗🏭🏠🏡🏘🏚🏢🏬🏣🏤🏥🏦🏨🏪🏫🏩💒🏛⛪️🕌🕍🛕🕋⛩🗾🎑🏞🌅🌄🌠🎇🎆🌇🌆🏙🌃🌌🪐🌉🌁⌚️📱📲💻⌨🖥🖨🖱🖲🕹🗜💽💾💿📀📼📷📸📹🎥📽🎞📞☎📟📠📺📻🎙🎚🎛⏱⏲⏰🕰⌛️⏳📡🔋🔌💡🔦🕯🗑🛢💸💵💴💶💷💰💳💎🧿⚖️🔧🔨⚒🛠⛏🪓🔩⚙️⛓🔫🪁💣🪒🔪🗡⚔️🛡🚬⚰️⚱️🏺🪔🔮📿💈⚗️🔭🔬🕳🦯🩺💊💉🩸🩹🦠🧫🧬🌡🚽🚰🚿🛁🛀🛎🔑🗝🚪🛋🛏🛌🪑🖼🛍🛒🎁🎈🎏🎀🎊🎉🎎🏮🎐✉️📩📨📧💌📥📤📦🏷📪📫📬📭📮📯📜📃📄📑📊📈📉🗒🗓📆📅📇🗃🗳🗄📋📁📂🗂🗞📰📓📔📒📕📗📘📙📚📖🔖🔗📎🖇📐📏📌📍🎌🏳️🏴🏁🏳️‍🌈✂️🖊🖋✒️🖌🖍📝✏️🔍🔎🔏🔐🔒🔓💄👚👕👖👔👗👙👘👠👡👢👞👟👒🎩🎓👑⛑🎒👝👛👜💼👓🕶🌂☂️💛💚💙💜🖤🤎🤍🧡💔❣️💕💞💓💗💖💘💝💟☮️✝️☪️🕉☸️✡️🔯🕎☯️☦️🛐⛎♈️♉️♊️♋️♌️♍️♎️♏️♐️♑️♒️♓️🆔⚛️🈳🉑☢️☣️📴📳🈶🈚️🈸🈺🈷️✴️🆚🉐㊙️㊗️🈴🈵🈹🈲🅰️🅱️🆎🆑🅾️🆘🚼❌⭕️🛑⛔️📛🚫💯💮💢♨️🚷🚯🚳🚱🔞📵🚭❗️❕❓❔‼️⁉️🔅🔆〽️⚠️🚸🔱⚜️🔰♻️✅🈯️💹❇️✳️❎🌐💠Ⓜ️🌀💤🏧🚾♿️🅿️🈂️🛂🛃🛄🛅🚹🚺🚻🚮➿🎦📶🈁🔣ℹ️🔤🔡🔠🆖🆙🆒🆕🆓▶️⏸⏯⏹⏺⏭⏮⏩⏪⏫⏬◀️🔼🔽➡️⬅️⬆️⬇️↗️↘️↙️↖️↪️↩️⤴️⤵️🔀🔁🔂🔄🔃🔚🔙🔛🔝🔜☑️↕️↔️🎵🎶➕➖➗✖️💲💱™️©️®️〰️➰✔️🔘⚫️⚪️🔴🔵🟣​🟠🟢🟣🔺🔻🔸🔹🔶🔷🔳🔲▪️▫️◾️◽️◼️◻️⬛️⬜️🟧🟩🟦🔈🔇🔉🔊🔔🔕📣📢👁‍🗨💬💭🗯♠️♣️♥️♦️🃏🎴🀄️🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕡🕢🕣🕤🕥🕦🕧"
+	emo = removeItemAll(emo, "️");
+	emo = removeItemAll(emo, " ");
+	emo = removeItemAll(emo, "‍");
+	emo = removeItemAll(emo, "​");
+	return emo;
 }
