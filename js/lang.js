@@ -106,6 +106,15 @@ function getBtnEncodeWorking(id) {
 	}
 }
 
+function getBtnEncodeFailed(id) {
+	switch (id) {
+		case 0:
+			return "💔 Failure. Try again?";
+		case 1:
+			return "💔 Fehler. Nochmal versuchen?";
+	}
+}
+
 function getBtnEncodeFinished(id) {
 	switch (id) {
 		case 0:
@@ -160,21 +169,39 @@ function getOut(id) {
 	}
 }
 
-function get(id) {
+function getSaveKey(id) {
 	switch (id) {
 		case 0:
-			return "";
+			return "Save the key in your browser for 1 year";
 		case 1:
-			return "";
+			return "Schlüssel im Browser für 1 Jahr speichern";
 	}
 }
 
-function get(id) {
+function getSaved(id) {
 	switch (id) {
 		case 0:
-			return "";
+			return "💾 Saved";
 		case 1:
-			return "";
+			return "💾 Gespeichert";
+	}
+}
+
+function getReadKey(id) {
+	switch (id) {
+		case 0:
+			return "Read key from your browser";
+		case 1:
+			return "Lade einen Schlüssel vom Browser";
+	}
+}
+
+function getLoadKey(id) {
+	switch (id) {
+		case 0:
+			return "💾 Loaded";
+		case 1:
+			return "💾 Geladen";
 	}
 }
 

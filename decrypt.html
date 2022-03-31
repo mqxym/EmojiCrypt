@@ -28,9 +28,26 @@
 			<textarea class="form-control" placeholder="Paste message" aria-label="Emoji" id="inputText"
 				rows="5"></textarea>
 		</div>
+		<br>
 		<label for="emcode">
 			<div class="text-center" id="decryptExplanation">Decrypt messages with an optional password</div>
 		</label>
+		<hr>
+		<div class="mb-2" id="readKey">
+			Read key from your browser
+		</div>
+		<div class="row">
+			<div class="col">
+				<button id="btnLoadKey1" type="button" onclick="slotButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
+			</div>
+			<div class="col">
+				<button id="btnLoadKey2" type="button" onclick="slotButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
+			</div>
+			<div class="col">
+				<button id="btnLoadKey3" type="button" onclick="slotButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
+			</div>
+		</div>
+		<hr>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="emcode">🔑</span>
@@ -76,30 +93,27 @@
 			
 			$("#decryptExplanation").html(getDecryptExplanation(lang));
 			$("#btnDecode").html(getBtnDecode(lang));
+			$("#readKey").html(getReadKey(lang));
 			
 		}
 
 		$(document).ready(function () {
 
 			setLanguage();
-			console.log("Language Packet Loaded.");
-
-			emo_array = stringToArray(emo);
-			emo_array = cleanArray(emo_array);
-
-			if (isDebug()) {
-				$("#inputText").val("🌚🚍🔪💖🤕🍛📧🏳✨🍅🎆💼🐠🥜✈↪🐭🍮🚧🔸🦓🚛☎↔😿🍇🗺🚻🦗🍻🛩👙🧐🍙⛏〽🦌🎾🗝❗🦕🍱📓🅾😢🎳🦯♻🐣🧆🏜❔😗🏇🚊♿");
-				$("#inputKey").val("🎈🥃📺🌹🈚🧄🎿🐪🥊🙊🏕⛹😜🛕⏱🌜🔴🚜📲🏵🏫🌼🔷📐🏡🎩🐉🚋📌👺🕎🐸🏫🎺🌇🦂🅱🤸🥜🕌📘🦃🎄🛫🍇🥜👜🍋〰🍧🌁🍠🤗🎥🥙🌕↪✔🐘🙃🖌🌽🧬🏊🦈🍮😖😨🌥🚧🌼♀🐕📹🌱🥗💚🥒🦆😸🪓🐈⛪🐯🌿🐥🚭➿🟠🎥📶🎱🦄🏦🕎💉🆕💛🚭🌡📉🎐🗾🎌➰🚫🗓🤹💱🎑😈🪕🐤🤽🍝🕳🥂🏷💓📚🤾🏆📛🍺🚢💕🍓💉🏏🏮👕🕶🛁🌫™👹🍽🥋👺🍫♎📀🛬🤕🌸🍪🤗🚹🍦🚵🧬🚁🏋📝🥞🅱🥉😼☀💾")
-			}
 
 			$("#btnDecode").click(async function () {
+				
 				$(this).html(getBtnDecodeWorking(lang));
+				
 				console.log("Started Calculating Password Hash.")
+				
 				await new Promise(r => setTimeout(r, 15));
+				
 				let message = $("#inputText").val();
 				let key = getPassword($("#inputKey").val());
-
-				decrypted = em_decrypt(message,key);
+				let mode = "emoji";
+				
+				decrypted = decrypt(message,key,mode);
 
 				if (!decrypted) {
 					$(this).html(getBtnDecodeFailed(lang));
@@ -110,6 +124,17 @@
 				$("#messageOut").val(decrypted);
 			});
 		});
+
+		function slotButton (id) {
+			
+			let button = $("#btnLoadKey"+id);
+			button.html(getLoadKey(lang));
+			button.removeClass("bg-dark");
+			button.addClass("bg-success");
+			let key = getCookie("key"+id);
+			$("#inputKey").val(key);
+
+		}
 	</script>
 </body>
 
