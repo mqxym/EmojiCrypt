@@ -82,7 +82,7 @@
 	<script src="js/lang.js"></script>
 	
 	<script>
-		const lang = 1;
+		const lang = 0;
 
 		function setLanguage () {
 			$("#footerHigh").html(getFooterHigh(lang));
@@ -127,6 +127,23 @@
 
 		function slotButton (id) {
 			
+			if (id == 1) {
+				$("#btnLoadKey2").removeClass("bg-success");
+				$("#btnLoadKey3").removeClass("bg-success");
+				$("#btnLoadKey2").addClass("bg-dark");
+				$("#btnLoadKey3").addClass("bg-dark");
+			} else if (id == 2) {
+				$("#btnLoadKey1").removeClass("bg-success");
+				$("#btnLoadKey3").removeClass("bg-success");
+				$("#btnLoadKey1").addClass("bg-dark");
+				$("#btnLoadKey3").addClass("bg-dark");
+			} else if (id == 3) {
+				$("#btnLoadKey1").removeClass("bg-success");
+				$("#btnLoadKey2").removeClass("bg-success");
+				$("#btnLoadKey1").addClass("bg-dark");
+				$("#btnLoadKey2").addClass("bg-dark");			
+			}
+
 			let button = $("#btnLoadKey"+id);
 			button.html(getLoadKey(lang));
 			button.removeClass("bg-dark");
@@ -135,6 +152,7 @@
 			$("#inputKey").val(key);
 
 		}
+
 	</script>
 </body>
 

@@ -53,13 +53,27 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<button id="btnSaveKey1" type="button" onclick="slotButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
+				<button id="btnSaveKey1" type="button" onclick="slotSaveButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
 			</div>
 			<div class="col">
-				<button id="btnSaveKey2" type="button" onclick="slotButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
+				<button id="btnSaveKey2" type="button" onclick="slotSaveButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
 			</div>
 			<div class="col">
-				<button id="btnSaveKey3" type="button" onclick="slotButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
+				<button id="btnSaveKey3" type="button" onclick="slotSaveButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
+			</div>
+		</div>
+		<div class="mb-2" id="readKey">
+			Read a key
+		</div>
+		<div class="row">
+			<div class="col">
+				<button id="btnReadKey1" type="button" onclick="slotReadButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
+			</div>
+			<div class="col">
+				<button id="btnReadKey2" type="button" onclick="slotReadButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
+			</div>
+			<div class="col">
+				<button id="btnReadKey3" type="button" onclick="slotReadButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
 			</div>
 		</div>
 		<hr>
@@ -95,7 +109,9 @@
 	<script src="js/lang.js"></script>
 
 	<script>
-		const lang = 1;
+		const lang = 0;
+
+		let passHash = "";
 
 		function setLanguage () {
 			$("#footerHigh").html(getFooterHigh(lang));
@@ -110,6 +126,7 @@
 			$("#copyMessage").html(getCopyMessage(lang));
 			$("#out").html(getOut(lang));
 			$("#saveKey").html(getSaveKey(lang));
+			$("#readKey").html(getReadKey(lang));
 			
 		}
 
@@ -131,10 +148,10 @@
 
 				if (!emojiString) {
 					$(this).html(getBtnEncodeFailed(lang))
+				} else {
+					$("#out").val(emojiString);
+					$(this).html(getBtnEncodeFinished(lang));
 				}
-
-				$("#out").val(emojiString);
-				$(this).html(getBtnEncodeFinished(lang));
 				
 			});
 
@@ -157,14 +174,56 @@
 			});
 		});
 	
-		function slotButton (id) {
-			
+		function slotSaveButton (id) {
+			if (id == 1) {
+				$("#btnSaveKey2").removeClass("bg-success");
+				$("#btnSaveKey3").removeClass("bg-success");
+				$("#btnSaveKey2").addClass("bg-dark");
+				$("#btnSaveKey3").addClass("bg-dark");
+			} else if (id == 2) {
+				$("#btnSaveKey1").removeClass("bg-success");
+				$("#btnSaveKey3").removeClass("bg-success");
+				$("#btnSaveKey1").addClass("bg-dark");
+				$("#btnSaveKey3").addClass("bg-dark");
+			} else if (id == 3) {
+				$("#btnSaveKey1").removeClass("bg-success");
+				$("#btnSaveKey2").removeClass("bg-success");
+				$("#btnSaveKey1").addClass("bg-dark");
+				$("#btnSaveKey2").addClass("bg-dark");			
+			}
+
 			let button = $("#btnSaveKey"+id);
 			button.html(getSaved(lang));
 			button.removeClass("bg-dark");
 			button.addClass("bg-success");
-			
 			setCookie("key"+id,$("#inputKey").val(),365);
+		}
+
+		function slotReadButton (id) {
+			
+			let button = $("#btnReadKey"+id);
+
+			if (id == 1) {
+				$("#btnReadKey2").removeClass("bg-success");
+				$("#btnReadKey3").removeClass("bg-success");
+				$("#btnReadKey2").addClass("bg-dark");
+				$("#btnReadKey3").addClass("bg-dark");
+			} else if (id == 2) {
+				$("#btnReadKey1").removeClass("bg-success");
+				$("#btnReadKey3").removeClass("bg-success");
+				$("#btnReadKey1").addClass("bg-dark");
+				$("#btnReadKey3").addClass("bg-dark");
+			} else if (id == 3) {
+				$("#btnReadKey1").removeClass("bg-success");
+				$("#btnReadKey2").removeClass("bg-success");
+				$("#btnReadKey1").addClass("bg-dark");
+				$("#btnReadKey2").addClass("bg-dark");			
+			}
+			button.html(getLoadKey(lang));
+			button.removeClass("bg-dark");
+			button.addClass("bg-success");
+			let key = getCookie("key"+id);
+			$("#inputKey").val(key);
 
 		}
 	</script>

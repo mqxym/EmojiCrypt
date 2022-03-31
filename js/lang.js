@@ -172,9 +172,9 @@ function getOut(id) {
 function getSaveKey(id) {
 	switch (id) {
 		case 0:
-			return "Save the key in your browser for 1 year";
+			return "<b>Save</b> the key in your browser for 1 year";
 		case 1:
-			return "Schlüssel im Browser für 1 Jahr speichern";
+			return "Schlüssel im Browser für 1 Jahr <b>speichern</b>";
 	}
 }
 
@@ -190,9 +190,9 @@ function getSaved(id) {
 function getReadKey(id) {
 	switch (id) {
 		case 0:
-			return "Read key from your browser";
+			return "<b>Read</b> key from your browser";
 		case 1:
-			return "Lade einen Schlüssel vom Browser";
+			return "<b>Lade</b> einen Schlüssel vom Browser";
 	}
 }
 
@@ -205,12 +205,12 @@ function getLoadKey(id) {
 	}
 }
 
-function get(id) {
+function getReadKey(id) {
 	switch (id) {
 		case 0:
-			return "";
+			return "<b>Read</b> a key";
 		case 1:
-			return "";
+			return "<b>Lade</b> einen Schlüssel";
 	}
 }
 

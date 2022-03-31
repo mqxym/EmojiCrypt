@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.6.1";
+	return "0.7.1";
 }
 
 function isDebug () {
@@ -45,8 +45,8 @@ function getSecLevel(pass) {
 
 	}
 	//REMOVE WHEN IN PRODUCTION
-	return 1;
-	//return 1024+sum;
+	//return 1;
+	return 1024+sum;
 }
 
 //calculates a password hash as a repeating hash algorithm
@@ -150,9 +150,9 @@ function encrypt(message, key, mode) {
 		//console.log (testHex);
 
 		//Killswitch when encryption fails
-		if (i > 100) {
+		if (i > 500) {
 			console.log("Encryption failed.")
-			return null;
+			return "";
 		}
 		i++;
 
@@ -348,7 +348,7 @@ function getEmojiArray(array) {
 		totalPack = totalPack.concat(emojis[i]);
 	}
 
-	console.log(totalPack.length);
+	//console.log(totalPack.length);
 	//console.log(totalPack);
 	return totalPack;
 
