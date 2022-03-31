@@ -3,7 +3,7 @@ function getFooterHigh(id) {
 		case 0:
 			return "Secure on device AES/BF encryption! Version " + getVersion();
 		case 1:
-			return "Sichere AES-Verschlüsselung auf dem Gerät! Version " + getVersion();
+			return "Sichere AES+Blowfish Verschlüsselung auf dem Gerät! Version " + getVersion();
 	}
 }
 
