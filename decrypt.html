@@ -38,13 +38,18 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<button id="btnLoadKey1" type="button" onclick="slotButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
+				<div class="form-group">
+					<select class="form-control" id="keySlot">
+					  <option value="1">Slot 1️⃣</option>
+					  <option value="2">Slot 2️⃣</option>
+					  <option value="3">Slot 3️⃣</option>
+					  <option value="4">Slot 4️⃣</option>
+					  <option value="5">Slot 5️⃣</option>
+					</select>
+				  </div>
 			</div>
 			<div class="col">
-				<button id="btnLoadKey2" type="button" onclick="slotButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
-			</div>
-			<div class="col">
-				<button id="btnLoadKey3" type="button" onclick="slotButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
+				<button id="btnLoad" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>
 			</div>
 		</div>
 		<hr>
@@ -94,6 +99,7 @@
 			$("#decryptExplanation").html(getDecryptExplanation(lang));
 			$("#btnDecode").html(getBtnDecode(lang));
 			$("#readKey").html(getReadKey(lang));
+			$("btnLoad").html(getBtnLoad(lang));
 			
 		}
 
@@ -123,36 +129,22 @@
 
 				$("#messageOut").val(decrypted);
 			});
+			$("#btnLoad").click(async function () {
+				let slot = $("#keySlot").val();
+				console.log(slot);
+				$(this).html(getLoadKey(lang));
+				$(this).removeClass("bg-dark");
+				$(this).addClass("bg-success");
+
+				let key = getCookie("key"+slot);
+				$("#inputKey").val(key);
+				
+				await new Promise(r => setTimeout(r, 1000));
+				$(this).removeClass("bg-success");
+				$(this).addClass("bg-dark");
+				$(this).html(getBtnLoad(lang));
+			});
 		});
-
-		function slotButton (id) {
-			
-			if (id == 1) {
-				$("#btnLoadKey2").removeClass("bg-success");
-				$("#btnLoadKey3").removeClass("bg-success");
-				$("#btnLoadKey2").addClass("bg-dark");
-				$("#btnLoadKey3").addClass("bg-dark");
-			} else if (id == 2) {
-				$("#btnLoadKey1").removeClass("bg-success");
-				$("#btnLoadKey3").removeClass("bg-success");
-				$("#btnLoadKey1").addClass("bg-dark");
-				$("#btnLoadKey3").addClass("bg-dark");
-			} else if (id == 3) {
-				$("#btnLoadKey1").removeClass("bg-success");
-				$("#btnLoadKey2").removeClass("bg-success");
-				$("#btnLoadKey1").addClass("bg-dark");
-				$("#btnLoadKey2").addClass("bg-dark");			
-			}
-
-			let button = $("#btnLoadKey"+id);
-			button.html(getLoadKey(lang));
-			button.removeClass("bg-dark");
-			button.addClass("bg-success");
-			let key = getCookie("key"+id);
-			$("#inputKey").val(key);
-
-		}
-
 	</script>
 </body>
 

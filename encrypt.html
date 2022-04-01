@@ -48,32 +48,24 @@
 			</div>
 		</div>
 		<hr>
-		<div class="mb-2" id="saveKey">
-			Save the key in your Browser for 1 year.
+		<div id="saveKey" class="mb-2">
+			Load or save keys 
 		</div>
 		<div class="row">
 			<div class="col">
-				<button id="btnSaveKey1" type="button" onclick="slotSaveButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
+				<div class="form-group">
+					<select class="form-control" id="keySlot">
+					  <option value="1">Slot 1️⃣</option>
+					  <option value="2">Slot 2️⃣</option>
+					  <option value="3">Slot 3️⃣</option>
+					  <option value="4">Slot 4️⃣</option>
+					  <option value="5">Slot 5️⃣</option>
+					</select>
+				  </div>
 			</div>
 			<div class="col">
-				<button id="btnSaveKey2" type="button" onclick="slotSaveButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
-			</div>
-			<div class="col">
-				<button id="btnSaveKey3" type="button" onclick="slotSaveButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
-			</div>
-		</div>
-		<div class="mb-2" id="readKey">
-			Read a key
-		</div>
-		<div class="row">
-			<div class="col">
-				<button id="btnReadKey1" type="button" onclick="slotReadButton(1)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 1</button>				
-			</div>
-			<div class="col">
-				<button id="btnReadKey2" type="button" onclick="slotReadButton(2)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 2</button>
-			</div>
-			<div class="col">
-				<button id="btnReadKey3" type="button" onclick="slotReadButton(3)" class="btn btn-primary bg-dark btn-block mb-2">💾 Slot 3</button>
+				<button id="btnLoad" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>				
+				<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
 			</div>
 		</div>
 		<hr>
@@ -126,7 +118,8 @@
 			$("#copyMessage").html(getCopyMessage(lang));
 			$("#out").html(getOut(lang));
 			$("#saveKey").html(getSaveKey(lang));
-			$("#readKey").html(getReadKey(lang));
+			$("btnLoad").html(getBtnLoad(lang));
+			$("btnSave").html(getBtnSave(lang));
 			
 		}
 
@@ -172,7 +165,41 @@
 				copyText.setSelectionRange(0, 99999);
 				document.execCommand("copy");
 			});
+
+			$("#btnLoad").click(async function () {
+				let slot = $("#keySlot").val();
+				console.log(slot);
+				$(this).html(getLoadKey(lang));
+				$(this).removeClass("bg-dark");
+				$(this).addClass("bg-success");
+
+				let key = getCookie("key"+slot);
+				$("#inputKey").val(key);
+				
+				await new Promise(r => setTimeout(r, 1000));
+				$(this).removeClass("bg-success");
+				$(this).addClass("bg-dark");
+				$(this).html(getBtnLoad(lang));
+			});
+
+			$("#btnSave").click(async function () {
+				let slot = $("#keySlot").val();
+				console.log(slot);
+				$(this).html(getSaved(lang));
+				$(this).removeClass("bg-dark");
+				$(this).addClass("bg-success");
+
+				setCookie("key"+slot,$("#inputKey").val(),777);
+
+				await new Promise(r => setTimeout(r, 1000));
+				$(this).removeClass("bg-success");
+				$(this).addClass("bg-dark");
+				$(this).html(getBtnSave(lang));
+			});
+
 		});
+
+
 	
 		function slotSaveButton (id) {
 			if (id == 1) {
@@ -196,7 +223,7 @@
 			button.html(getSaved(lang));
 			button.removeClass("bg-dark");
 			button.addClass("bg-success");
-			setCookie("key"+id,$("#inputKey").val(),365);
+			
 		}
 
 		function slotReadButton (id) {
@@ -223,7 +250,7 @@
 			button.removeClass("bg-dark");
 			button.addClass("bg-success");
 			let key = getCookie("key"+id);
-			$("#inputKey").val(key);
+			
 
 		}
 	</script>

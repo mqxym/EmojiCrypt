@@ -172,9 +172,9 @@ function getOut(id) {
 function getSaveKey(id) {
 	switch (id) {
 		case 0:
-			return "<b>Save</b> the key in your browser for 1 year";
+			return "<b>Load</b> or <b>save</b> keys from or to browser-cookie";
 		case 1:
-			return "Schlüssel im Browser für 1 Jahr <b>speichern</b>";
+			return "Schlüssel vom Browser-Cookie <b>speichern</b> oder <b>laden</b>";
 	}
 }
 
@@ -187,30 +187,48 @@ function getSaved(id) {
 	}
 }
 
-function getReadKey(id) {
-	switch (id) {
-		case 0:
-			return "<b>Read</b> key from your browser";
-		case 1:
-			return "<b>Lade</b> einen Schlüssel vom Browser";
-	}
-}
-
 function getLoadKey(id) {
 	switch (id) {
 		case 0:
-			return "💾 Loaded";
+			return "📲 Loaded";
 		case 1:
-			return "💾 Geladen";
+			return "📲 Geladen";
 	}
 }
 
 function getReadKey(id) {
 	switch (id) {
 		case 0:
-			return "<b>Read</b> a key";
+			return "<b>Read</b> a key from cookies";
 		case 1:
-			return "<b>Lade</b> einen Schlüssel";
+			return "<b>Lade</b> einen Schlüssel aus cookies";
+	}
+}
+
+function getBtnLoad(id) {
+	switch (id) {
+		case 0:
+			return "📲 Load";
+		case 1:
+			return "📲 Laden";
+	}
+}
+
+function getBtnSave(id) {
+	switch (id) {
+		case 0:
+			return "💾 Save";
+		case 1:
+			return "💾 Speichern";
+	}
+}
+
+function get(id) {
+	switch (id) {
+		case 0:
+			return "";
+		case 1:
+			return "";
 	}
 }
 
