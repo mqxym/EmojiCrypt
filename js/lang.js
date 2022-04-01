@@ -151,30 +151,21 @@ function getCopyMessage(id) {
 	}
 }
 
-function get(id) {
-	switch (id) {
-		case 0:
-			return "Message";
-		case 1:
-			return "Nachricht";
-	}
-}
-
 function getOut(id) {
 	switch (id) {
 		case 0:
-			return "Encrypted Message";
+			return "Decrypted/Encrypted message";
 		case 1:
-			return "Verschlüsselte Nachricht";
+			return "Entschlüsselte/Verschlüsselte Nachricht";
 	}
 }
 
 function getSaveKey(id) {
 	switch (id) {
 		case 0:
-			return "<b>Load</b> or <b>save</b> keys from or to browser-cookie";
+			return "<b>Load</b> or <b>save</b> keys from or to browser";
 		case 1:
-			return "Schlüssel vom Browser-Cookie <b>speichern</b> oder <b>laden</b>";
+			return "Schlüssel im Browser <b>speichern</b> oder <b>laden</b>";
 	}
 }
 

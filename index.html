@@ -14,6 +14,7 @@
 </head>
 
 <body class="d-block p-3">
+	<!--
 	<ul class="nav nav-pills nav-fill">
 		<li class="nav-item">
 			<a class="nav-link active bg-dark" id="headerEncrypt" href="encrypt.html">Encrypt 📤</a>
@@ -22,9 +23,11 @@
 			<a class="nav-link" href="decrypt.html" id="headerDecrypt">Decrypt 📥</a>
 		</li>
 	</ul>
+	
 	<hr>
+	-->
 	<form class="form">
-		Text 📄 ➡️ 🌈 Emoji
+		<div class="text-center"><h3>Text 📄 🔄 🌈 Emoji</h3></div>
 		<hr>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
@@ -69,8 +72,21 @@
 			</div>
 		</div>
 		<hr>
-		<button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt</button>
-	</form>
+		<div class="row">
+			<div class="col">
+				<div class="text-center mb-2">
+					Text 📄 ➡️ 🌈 Emoji
+				</div>
+				<button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt</button>
+			</div>
+			<div class="col">
+				<div class="text-center mb-2">
+					Emoji 🌈 ➡️ 📄 Text
+				</div>
+				<button id="btnDecode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Decrypt</button>
+			</div>
+		</div>
+		</form>
 	<hr>
 	<div class="input-group mb-3">
 		<textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
@@ -101,7 +117,7 @@
 	<script src="js/lang.js"></script>
 
 	<script>
-		const lang = 0;
+		const lang = 1;
 
 		let passHash = "";
 
@@ -113,13 +129,14 @@
 
 			$("#encryptExplanation").html(getEncryptExplanation(lang));
 			$("#btnEncode").html(getBtnEncode(lang));
+			$("#btnDecode").html(getBtnDecode(lang));
 			$("#btnKeyGenerate").html(getBtnKeyGenerate(lang));
 			$("#copyKey").html(getCopyKey(lang));
 			$("#copyMessage").html(getCopyMessage(lang));
 			$("#out").html(getOut(lang));
 			$("#saveKey").html(getSaveKey(lang));
-			$("btnLoad").html(getBtnLoad(lang));
-			$("btnSave").html(getBtnSave(lang));
+			$("#btnLoad").html(getBtnLoad(lang));
+			$("#btnSave").html(getBtnSave(lang));
 			
 		}
 
@@ -145,7 +162,36 @@
 					$("#out").val(emojiString);
 					$(this).html(getBtnEncodeFinished(lang));
 				}
+				await new Promise(r => setTimeout(r, 10000));
+				$("#btnEncode").html(getBtnEncode(lang));
 				
+			});
+
+			$("#btnDecode").click(async function () {
+				
+				$(this).html(getBtnDecodeWorking(lang));
+				
+				console.log("Started Calculating Password Hash.")
+				
+				await new Promise(r => setTimeout(r, 15));
+				
+				let message = $("#inputText").val();
+				let key = getPassword($("#inputKey").val());
+				let mode = "emoji";
+				
+				decrypted = decrypt(message,key,mode);
+
+				if (!decrypted) {
+					$(this).html(getBtnDecodeFailed(lang));
+				} else {
+					$(this).html(getBtnDecodeSuccess(lang));
+				}
+
+				$("#out").val(decrypted);
+
+				await new Promise(r => setTimeout(r, 10000));
+				$("#btnDecode").html(getBtnDecode(lang));
+
 			});
 
 			$("#btnKeyGenerate").click(function () {
@@ -173,7 +219,8 @@
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
-				let key = getCookie("key"+slot);
+				//let key = getCookie("key"+slot);
+				key = localStorage.getItem("key" + slot);
 				$("#inputKey").val(key);
 				
 				await new Promise(r => setTimeout(r, 1000));
@@ -189,8 +236,9 @@
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
-				setCookie("key"+slot,$("#inputKey").val(),777);
+				//setCookie("key"+slot,$("#inputKey").val(),777);
 
+				localStorage.setItem("key"+slot,$("#inputKey").val())
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");

@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.7.2";
+	return "0.8.1";
 }
 
 function isDebug () {
@@ -364,7 +364,7 @@ function generateRandomEmo() {
 	emoArray = getEmojiArray();
 
 	while (i < length) {
-		let random = Math.floor(Math.random() * 400);
+		let random = Math.floor(Math.random() * 255);
 		emoString = emoString + emoArray[random];
 		++i;
 	}

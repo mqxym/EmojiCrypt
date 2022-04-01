@@ -136,7 +136,10 @@
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
-				let key = getCookie("key"+slot);
+				key = localStorage.getItem("key" + slot);
+				//Use cookies
+				//let key = getCookie("key"+slot);
+
 				$("#inputKey").val(key);
 				
 				await new Promise(r => setTimeout(r, 1000));
