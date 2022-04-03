@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.8.1";
+	return "0.9";
 }
 
 function isDebug () {
@@ -8,6 +8,9 @@ function isDebug () {
 
 //calculates a security level based on the passwords md5 hash
 function getSecLevel(pass) {
+
+	//REMOVE IN PRODUCTION
+	return 1;
 
 	seed = CryptoJS.MD5(pass).toString();
 	sum = 0;
@@ -51,7 +54,7 @@ function getSecLevel(pass) {
 
 //calculates a password hash as a repeating hash algorithm
 function getPassword(pass) {
-	
+	console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
 	let secLevel = getSecLevel(pass);
@@ -250,8 +253,8 @@ REWRITE
 function emoToHex (emojiString) {
 
 	//console.log("emToHex:" + emojiString);
-	emojiArray = getEmojiArray();
-	indexArray = [];
+	let emojiArray = getEmojiArray();
+	let indexArray = [];
 	let string = "";
 
 	let j = 0;
@@ -370,4 +373,49 @@ function generateRandomEmo() {
 	}
 
 	return emoString;
+}
+
+function checkIfEmojiString (inputString) {
+
+	if (inputString == "") {
+		return false;
+	}
+	let emojiArray = getEmojiArray();
+	let emojiString = inputString;
+	let indexArray = [];
+	let string = "";
+
+	let j = 0;
+	
+
+	emojiString.split('​').forEach(function (c) {
+		string = c;
+		if (string) {
+			for (let i = 0; i < emojiArray.length; i++) {
+				if (string === emojiArray[i] ) {
+					indexArray[j] = i;
+				}
+			}
+			j++;
+		}
+	});
+
+	//counts how many times the emojis were in the base array
+	let true_count = 0;
+	let index;
+
+	for (let i = 0; i < indexArray.length; i++) {
+		
+		index = indexArray[i];
+		if (index < 256 && index > 0) {
+			true_count++;
+		}
+	}
+
+	if (true_count > 20) {
+		return true
+	}
+
+	return false;
+
 }

@@ -1,4 +1,4 @@
-# EmojiCrypt Version 0.8.1
+# EmojiCrypt Version 0.9
 - Javascript based app to decrypt and encrypt text with AES and BlowFish.
 - Keys can be stored in localStorage
 - Uses CryptoJS library

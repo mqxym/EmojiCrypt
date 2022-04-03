@@ -28,16 +28,17 @@
 	-->
 	<form class="form">
 		<div class="text-center"><h3>Text 📄 🔄 🌈 Emoji</h3></div>
+		<div class="text-center"><h6 id="explanation"></h6></div>
 		<hr>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text">✉️</span>
 			</div>
 			<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
+			<div class="input-group-append">
+				<button id="deleteText" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+			</div>
 		</div>
-		<label for="emcode">
-			<div class="text-center" id="encryptExplanation">Encrypt messages with an optional password. Use the generate button when you need a good one.</div>
-		</label>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="emcode">🔑</span>
@@ -72,20 +73,7 @@
 			</div>
 		</div>
 		<hr>
-		<div class="row">
-			<div class="col">
-				<div class="text-center mb-2">
-					Text 📄 ➡️ 🌈 Emoji
-				</div>
-				<button id="btnEncode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt</button>
-			</div>
-			<div class="col">
-				<div class="text-center mb-2">
-					Emoji 🌈 ➡️ 📄 Text
-				</div>
-				<button id="btnDecode" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Decrypt</button>
-			</div>
-		</div>
+		<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
 		</form>
 	<hr>
 	<div class="input-group mb-3">
@@ -122,8 +110,14 @@
 		let passHash = "";
 
 		function setLanguage () {
-			$("#footerHigh").html(getFooterHigh(lang));
-			$("#footerSource").html(getFooterSource(lang));
+			$("#deleteText").html(getTranslation("deleteText", lang));
+			$("#footerHigh").html(getTranslation("footerHigh", lang));
+			$("#footerSource").html(getTranslation("footerSource", lang));
+			$("#explanation").html(getTranslation("explanation", lang));
+			$("#inputText").attr("placeholder",getTranslation("inputText", lang));
+			$("#inputKey").attr("placeholder",getTranslation("inputKey", lang));
+			$("#btnConvert").html(getTranslation("btnConvert", lang))
+
 			$("#headerEncrypt").html(getHeaderEncrypt(lang));
 			$("#headerDecrypt").html(getHeaderDecrypt(lang));
 
@@ -144,54 +138,54 @@
 
 			setLanguage();
 
-			$("#btnEncode").click(async function () {
-				$(this).html(getBtnEncodeWorking(lang));
-				console.log("Started Calculating Password Hash.")
-				await new Promise(r => setTimeout(r, 15));
+			$("#btnConvert").click(async function () {
 
-				let message = $("#inputText").val();
-				let key = getPassword($("#inputKey").val());
-				let mode = "emoji";
+				if (!checkIfEmojiString($("#inputText").val())) {
+					$(this).html(getBtnEncodeWorking(lang));
+					await new Promise(r => setTimeout(r, 15));
 
-				let testHex = "";
-				let emojiString = encrypt(message,key, mode);
+					let message = $("#inputText").val();
+					let key = getPassword($("#inputKey").val());
+					let mode = "emoji";
 
-				if (!emojiString) {
-					$(this).html(getBtnEncodeFailed(lang))
+					let testHex = "";
+					let emojiString = encrypt(message,key, mode);
+
+					if (!emojiString) {
+						$(this).html(getBtnEncodeFailed(lang))
+					} else {
+						$("#out").val(emojiString);
+						$(this).html(getBtnEncodeFinished(lang));
+					}
+					await new Promise(r => setTimeout(r, 5000));
+					$(this).html(getBtnEncode(lang));
+
 				} else {
-					$("#out").val(emojiString);
-					$(this).html(getBtnEncodeFinished(lang));
+					$(this).html(getBtnDecodeWorking(lang));
+
+					await new Promise(r => setTimeout(r, 15));
+					
+					let message = $("#inputText").val();
+					let key = getPassword($("#inputKey").val());
+					let mode = "emoji";
+					
+					decrypted = decrypt(message,key,mode);
+
+					if (!decrypted) {
+						$(this).html(getBtnDecodeFailed(lang));
+					} else {
+						$(this).html(getBtnDecodeSuccess(lang));
+					}
+
+					$("#out").val(decrypted);
+
+					await new Promise(r => setTimeout(r, 10000));
+					$(this).html(getBtnDecode(lang));
 				}
-				await new Promise(r => setTimeout(r, 10000));
-				$("#btnEncode").html(getBtnEncode(lang));
-				
 			});
 
-			$("#btnDecode").click(async function () {
-				
-				$(this).html(getBtnDecodeWorking(lang));
-				
-				console.log("Started Calculating Password Hash.")
-				
-				await new Promise(r => setTimeout(r, 15));
-				
-				let message = $("#inputText").val();
-				let key = getPassword($("#inputKey").val());
-				let mode = "emoji";
-				
-				decrypted = decrypt(message,key,mode);
-
-				if (!decrypted) {
-					$(this).html(getBtnDecodeFailed(lang));
-				} else {
-					$(this).html(getBtnDecodeSuccess(lang));
-				}
-
-				$("#out").val(decrypted);
-
-				await new Promise(r => setTimeout(r, 10000));
-				$("#btnDecode").html(getBtnDecode(lang));
-
+			$("#deleteText").click(function () {
+				$("#inputText").val("");
 			});
 
 			$("#btnKeyGenerate").click(function () {

@@ -1,63 +1,73 @@
-function getFooterHigh(id) {
-	switch (id) {
-		case 0:
-			return "Secure on device AES/BF encryption! Version " + getVersion();
-		case 1:
-			return "Sichere AES+Blowfish Verschlüsselung auf dem Gerät! Version " + getVersion();
-	}
-}
+/*
 
-function getFooterSource(id) {
-	switch (id) {
-		case 0:
-			return "Sourcecode (Github)";
-		case 1:
-			return "Quellcode (Github)";
-	}
-}
+Translation
 
-function getEncryptExplanation(id) {
-	switch (id) {
-		case 0:
-			return "Encrypt messages with a password. Generate and Copy your password.";
-		case 1:
-			return "Verschlüssel Nachrichten mit einem Passwort, was generiert und kopiert werden kann.";
-	}
-}
 
-function getDecryptExplanation(id) {
-	switch (id) {
-		case 0:
-			return "Decrypt messages with an optional password.";
-		case 1:
-			return "Entschlüssel die Nachricht.";
-	}
-}
+*/
 
-function getHeaderEncrypt(id) {
-	switch (id) {
-		case 0:
-			return "Encrypt 📤";
-		case 1:
-			return "Verschlüsseln 📤";
-	}
-}
+function getTranslation (id, lang) {
+	let translation = [
+		[	"footerSource", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],
+		[	"explanation",
+			"<h6>Encrypt or decrypt texts or messages with a password. The emoji-output can be converted back again only with the right password.</h6>",
+			"<h6>Verschlüssele Text oder Nachrichten mit einem Passwort. Nur das richtige Passwort kann den Text wieder entschlüsseln.</h6>"],
+		[	"footerHigh", 
+			"Secure on device AES/BF encryption! Version " + getVersion(),
+			"Sichere AES+Blowfish Verschlüsselung auf dem Gerät! Version " + getVersion()],
+		[	"inputText", 
+			"message",
+			"Nachricht"],
+		[	"btnConvert", 
+			"🔀 Encrypt / Decrypt",
+			"🔀 Verschlüsseln / Entschlüsseln"],	
+		[	"deleteText", 
+			"Delete <br> Message",
+			"Text <br> löschen"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],	
+		[	"footerHigh", 
+			"Sourcecode (Github)",
+			"Quellcode (Github)"],		
+			
+	];
 
-function getHeaderDecrypt(id) {
-	switch (id) {
-		case 0:
-			return "Decrypt 📥";
-		case 1:
-			return "Entschlüsseln 📥";
-	}
-}
-
-function getBtnDecode(id) {
-	switch (id) {
-		case 0:
-			return "🔀 Decrypt";
-		case 1:
-			return "🔀 Entschlüsseln";
+	for (let i = 0; i < translation.length; i++) {
+		if (id == translation[i][0]) {
+			return translation[i][lang+1];
+		}
 	}
 }
 
@@ -85,15 +95,6 @@ function getBtnDecodeSuccess(id) {
 			return "💚 Decrypted!";
 		case 1:
 			return "💚 Entschlüsselt!";
-	}
-}
-
-function getBtnEncode(id) {
-	switch (id) {
-		case 0:
-			return "🔀 Encrypt";
-		case 1:
-			return "🔀 Verschlüsseln";
 	}
 }
 
@@ -184,15 +185,6 @@ function getLoadKey(id) {
 			return "📲 Loaded";
 		case 1:
 			return "📲 Geladen";
-	}
-}
-
-function getReadKey(id) {
-	switch (id) {
-		case 0:
-			return "<b>Read</b> a key from cookies";
-		case 1:
-			return "<b>Lade</b> einen Schlüssel aus cookies";
 	}
 }
 
