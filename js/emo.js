@@ -54,6 +54,9 @@ function getSecLevel(pass) {
 
 //calculates a password hash as a repeating hash algorithm
 function getPassword(pass) {
+	if (pass == "") {
+		return "";
+	}
 	console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
