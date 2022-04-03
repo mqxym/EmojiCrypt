@@ -5,7 +5,13 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<title>🚀 - to the moon!</title>
+	<title>🌘 - to the moon!</title>
+	
+	<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
+	<link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
+
+	<link rel="manifest" href="manifest.webmanifest">
+
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -14,18 +20,6 @@
 </head>
 
 <body class="d-block p-3">
-	<!--
-	<ul class="nav nav-pills nav-fill">
-		<li class="nav-item">
-			<a class="nav-link active bg-dark" id="headerEncrypt" href="encrypt.html">Encrypt 📤</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="decrypt.html" id="headerDecrypt">Decrypt 📥</a>
-		</li>
-	</ul>
-	
-	<hr>
-	-->
 	<form class="form">
 		<div class="text-center"><h3>Text 📄 🔄 🌈 Emoji</h3></div>
 		<div class="text-center"><h6 id="explanation"></h6></div>
@@ -72,6 +66,32 @@
 				<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
 			</div>
 		</div>
+		<!--
+
+			//Need checking to select the right encryption
+			//Add a marker infront of the b64 and hex!
+		<hr>
+		<div class="row">
+			<div class="col">
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="checkEmoji" checked>
+					<label class="form-check-label" for="checkEmoji">Use <b>Emojis</b></label>
+				  </div>
+			</div>
+			<div class="col">
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="checkHex">
+					<label class="form-check-label" for="checkHex">Use <b>Hexadecimal</b></label>
+				  </div>
+			</div>
+			<div class="col">
+				<div class="form-check">
+					<input type="checkbox" class="form-check-input" id="checkB64">
+					<label class="form-check-label" for="checkB64">Use <b>Base64</b></label>
+				  </div>
+			</div>
+		</div>
+		-->
 		<hr>
 		<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
 		</form>
@@ -107,7 +127,7 @@
 	<script>
 		const lang = 1;
 
-		let passHash = "";
+		let mode = "emoji";
 
 		function setLanguage () {
 			$("#deleteText").html(getTranslation("deleteText", lang));
@@ -134,13 +154,20 @@
 
 			$("#btnConvert").click(async function () {
 
+				if ($("#checkEmoji").is(':checked')) {
+					mode = "emoji";
+				} else if ($("#checkHex").is(':checked')) {
+					mode = "hex";
+				} else if ($("#checkB64").is(':checked')) {
+					mode = "b64";
+				}
+
 				if (!checkIfEmojiString($("#inputText").val())) {
 					$(this).html(getBtnEncodeWorking(lang));
 					await new Promise(r => setTimeout(r, 15));
 
 					let message = $("#inputText").val();
 					let key = getPassword($("#inputKey").val());
-					let mode = "emoji";
 
 					let testHex = "";
 					let emojiString = encrypt(message,key, mode);

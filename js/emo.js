@@ -9,9 +9,6 @@ function isDebug () {
 //calculates a security level based on the passwords md5 hash
 function getSecLevel(pass) {
 
-	//REMOVE IN PRODUCTION
-	return 1;
-
 	seed = CryptoJS.MD5(pass).toString();
 	sum = 0;
 
@@ -47,8 +44,6 @@ function getSecLevel(pass) {
 		}
 
 	}
-	//REMOVE WHEN IN PRODUCTION
-	//return 1;
 	return 1024+sum;
 }
 
