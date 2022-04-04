@@ -83,7 +83,7 @@ function getTranslation (id, lang) {
 	//Returns the translation (1 is english, 2 is german)
 
 	for (let i = 0; i < translation.length; i++) {
-		console.log(id + " " + translation[i][0]);
+		//console.log(id + " " + translation[i][0]);
 		if (id === translation[i][0]) {
 			//console.log(translation[i][lang+1]);
 			return translation[i][lang+1];
