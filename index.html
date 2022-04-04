@@ -118,7 +118,7 @@
 	<script src="js/lang.js"></script>
 
 	<script>
-		const lang = 0;
+		const lang = 1;
 
 		let mode = "emoji";
 
@@ -131,12 +131,12 @@
 			$("#inputKey").attr("placeholder",getTranslation("inputKey", lang));
 			$("#btnConvert").html(getTranslation("btnConvert", lang));
 
-			$("#copyKey").html(getTranslation("copyKey"),lang);
-			$("#out").html(getTranslation("out"),lang);
-			$("#saveKey").html(getTranslation("saveKey"),lang);
-			$("#btnLoad").html(getTranslation("btnLoad"),lang);
-			$("#btnSave").html(getTranslation("btnSave"),lang);
-			$("#copyMessage").html(getTranslation("copyMessage"),lang);
+			$("#copyKey").html(getTranslation("copyKey",lang));
+			$("#out").html(getTranslation("out",lang));
+			$("#saveKey").html(getTranslation("saveKey",lang));
+			$("#btnLoad").html(getTranslation("btnLoad",lang));
+			$("#btnSave").html(getTranslation("btnSave",lang));
+			$("#copyMessage").html(getTranslation("copyMessage",lang));
 			
 		}
 
@@ -148,7 +148,7 @@
 
 			setLanguage();
 
-			console.table(getTranslation(-1,0));
+			//console.table(getTranslation(-1,0));
 
 			$("#btnConvert").click(async function () {
 
@@ -164,7 +164,7 @@
 				}
 
 				if (!checkInputString($("#inputText").val())) {
-					$(this).html(getTranslation("btnEncodeWorking"),lang);
+					$(this).html(getTranslation("btnEncodeWorking",lang));
 					await new Promise(r => setTimeout(r, 15));
 
 					let message = $("#inputText").val();
@@ -173,16 +173,16 @@
 					let emojiString = encrypt(message,key, mode);
 
 					if (!emojiString) {
-						$(this).html(getTranslation("btnEncodeFailed"),lang)
+						$(this).html(getTranslation("btnEncodeFailed",lang));
 					} else {
 						$("#out").val(emojiString);
-						$(this).html(getTranslation("btnEncodeSuccess"),lang);
+						$(this).html(getTranslation("btnEncodeSuccess",lang));
 					}
 					await new Promise(r => setTimeout(r, 5000));
-					$(this).html(getTranslation("btnConvert", lang));
+					$(this).html(getTranslation("btnConvert",lang));
 
 				} else {
-					$(this).html(getTranslation("btnDecodeWorking"),lang);
+					$(this).html(getTranslation("btnDecodeWorking",lang));
 
 					await new Promise(r => setTimeout(r, 15));
 					
@@ -193,15 +193,15 @@
 					decrypted = decrypt(message,key,mode);
 
 					if (!decrypted) {
-						$(this).html(getTranslation("btnDecodeFailed"),lang);
+						$(this).html(getTranslation("btnDecodeFailed",lang));
 					} else {
-						$(this).html(getTranslation("btnDecodeSuccess"),lang);
+						$(this).html(getTranslation("btnDecodeSuccess",lang));
 					}
 
 					$("#out").val(decrypted);
 
 					await new Promise(r => setTimeout(r, 5000));
-					$(this).html(getTranslation("btnConvert", lang));
+					$(this).html(getTranslation("btnConvert",lang));
 				}
 			});
 
@@ -230,7 +230,7 @@
 			$("#btnLoad").click(async function () {
 				let slot = $("#keySlot").val();
 				console.log(slot);
-				$(this).html(getTranslation("loadKey"),lang);
+				$(this).html(getTranslation("loadKey",lang));
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
@@ -241,13 +241,13 @@
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
-				$(this).html(getTranslation("btnLoad"),lang);
+				$(this).html(getTranslation("btnLoad",lang));
 			});
 
 			$("#btnSave").click(async function () {
 				let slot = $("#keySlot").val();
 				console.log(slot);
-				$(this).html(getTranslation("saved"),lang);
+				$(this).html(getTranslation("saved",lang));
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
@@ -257,7 +257,7 @@
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
-				$(this).html(getTranslation("btnSave"),lang);
+				$(this).html(getTranslation("btnSave",lang));
 			});
 
 		});
