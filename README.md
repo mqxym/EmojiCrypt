@@ -8,6 +8,10 @@
 
 Thanks to all the people on stackoverflow and to the creators of the used libraries
 
+Donate to: https://pastebin.com/XrNZkb4s
+
+Homepage: https://maxim.omg.lol
+
 Working example: https://nasaemoji.com
 
 (c) All rights reserved.
