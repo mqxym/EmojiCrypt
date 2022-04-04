@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.10.1";
+	return "0.10.2";
 }
 
 function isDebug () {
@@ -52,7 +52,7 @@ function getPassword(pass) {
 	if (pass == "") {
 		return "";
 	}
-	//console.log("Started Calculating Password Hash.")
+	console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
 	let secLevel = getSecLevel(pass);
@@ -62,7 +62,7 @@ function getPassword(pass) {
 	}
 
 	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();;
-	//console.log("Hashed Password:\n" + hashPass);
+	console.log("Hashed Password:\n" + hashPass);
 
 	return hashPass;
 }
