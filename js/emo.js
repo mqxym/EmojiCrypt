@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.9";
+	return "0.10";
 }
 
 function isDebug () {
@@ -130,7 +130,7 @@ function encrypt(message, key, mode) {
 		b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
 	
 		if (mode == "b64") {
-			return b64Encrypted;
+			return "b64:" + b64Encrypted;
 		} 
 	
 		//console.log(b64Encrypted);
@@ -142,7 +142,7 @@ function encrypt(message, key, mode) {
 		//console.log(encryptedHex);
 	
 		if (mode == "hex") {
-			return encryptedHex;
+			return "0x:"+ encryptedHex;
 		}
 	
 		encryptedEmoji = hexToEmo(encryptedHex);
@@ -182,11 +182,11 @@ function decrypt(message, key, mode) {
 
 		//console.log(encryptedb64);
 	} else if (mode == "hex") {
-		encryptedHex = message;
+		encryptedHex = message.substr(3);
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
 		encryptedb64 = hexToBase64(encryptedHex);
 	} else if (mode == "b64") {
-		encryptedb64 = message;
+		encryptedb64 = message.substr(4);
 	}
 
 	console.log("Start AES Decryption...");
@@ -373,11 +373,23 @@ function generateRandomEmo() {
 	return emoString;
 }
 
-function checkIfEmojiString (inputString) {
+function checkInputString (inputString) {
 
 	if (inputString == "") {
+		console.log("Input is empty");
 		return false;
 	}
+
+	if (inputString.slice(0,3) === "0x:") {
+		console.log("Input is encoded Hex");
+		return true;
+	} 
+
+	if(inputString.slice(0,4) === "b64:") {
+		console.log("Input is encoded B64");
+		return true;
+	}
+
 	let emojiArray = getEmojiArray();
 	let emojiString = inputString;
 	let indexArray = [];
@@ -411,9 +423,9 @@ function checkIfEmojiString (inputString) {
 	}
 
 	if (true_count > 20) {
+		console.log("Input is Encoded Emoji");
 		return true
 	}
-
 	return false;
 
 }

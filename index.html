@@ -39,7 +39,7 @@
 			</div>
 			<input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
 			<div class="input-group-append">
-				<button id="btnKeyGenerate" type="button" class="btn btn-primary btn-block bg-dark">Generate</button>
+				<button id="btnKeyGenerate" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
 			</div>
 			<div class="input-group-append">
 				<button id="copyKey" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
@@ -66,10 +66,6 @@
 				<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
 			</div>
 		</div>
-		<!--
-
-			//Need checking to select the right encryption
-			//Add a marker infront of the b64 and hex!
 		<hr>
 		<div class="row">
 			<div class="col">
@@ -91,7 +87,6 @@
 				  </div>
 			</div>
 		</div>
-		-->
 		<hr>
 		<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
 		</form>
@@ -114,9 +109,7 @@
 	<!-- 
 		Todo:
 		- copy button for URL
-		- add colors for status message
-		- save password as a cookie
-		- save language as cookie
+		- save language in local storage
 		- languages (ger, span, port, rus, japan etc)
 	-->
 
@@ -125,7 +118,7 @@
 	<script src="js/lang.js"></script>
 
 	<script>
-		const lang = 1;
+		const lang = 0;
 
 		let mode = "emoji";
 
@@ -138,64 +131,71 @@
 			$("#inputKey").attr("placeholder",getTranslation("inputKey", lang));
 			$("#btnConvert").html(getTranslation("btnConvert", lang));
 
-			$("#btnKeyGenerate").html(getBtnKeyGenerate(lang));
-			$("#copyKey").html(getCopyKey(lang));
-			$("#copyMessage").html(getCopyMessage(lang));
-			$("#out").html(getOut(lang));
-			$("#saveKey").html(getSaveKey(lang));
-			$("#btnLoad").html(getBtnLoad(lang));
-			$("#btnSave").html(getBtnSave(lang));
+			$("#copyKey").html(getTranslation("copyKey"),lang);
+			$("#out").html(getTranslation("out"),lang);
+			$("#saveKey").html(getTranslation("saveKey"),lang);
+			$("#btnLoad").html(getTranslation("btnLoad"),lang);
+			$("#btnSave").html(getTranslation("btnSave"),lang);
+			$("#copyMessage").html(getTranslation("copyMessage"),lang);
 			
+		}
+
+		function test () {
+
 		}
 
 		$(document).ready(function () {
 
 			setLanguage();
 
+			console.table(getTranslation(-1,0));
+
 			$("#btnConvert").click(async function () {
 
 				if ($("#checkEmoji").is(':checked')) {
 					mode = "emoji";
+					console.log("Mode is: Emoji")
 				} else if ($("#checkHex").is(':checked')) {
 					mode = "hex";
+					console.log("Mode is: Hexadecimal")
 				} else if ($("#checkB64").is(':checked')) {
 					mode = "b64";
+					console.log("Mode is: Base64");
 				}
 
-				if (!checkIfEmojiString($("#inputText").val())) {
-					$(this).html(getBtnEncodeWorking(lang));
+				if (!checkInputString($("#inputText").val())) {
+					$(this).html(getTranslation("btnEncodeWorking"),lang);
 					await new Promise(r => setTimeout(r, 15));
 
 					let message = $("#inputText").val();
 					let key = getPassword($("#inputKey").val());
 
-					let testHex = "";
 					let emojiString = encrypt(message,key, mode);
 
 					if (!emojiString) {
-						$(this).html(getBtnEncodeFailed(lang))
+						$(this).html(getTranslation("btnEncodeFailed"),lang)
 					} else {
 						$("#out").val(emojiString);
-						$(this).html(getBtnEncodeFinished(lang));
+						$(this).html(getTranslation("btnEncodeSuccess"),lang);
 					}
 					await new Promise(r => setTimeout(r, 5000));
 					$(this).html(getTranslation("btnConvert", lang));
 
 				} else {
-					$(this).html(getBtnDecodeWorking(lang));
+					$(this).html(getTranslation("btnDecodeWorking"),lang);
 
 					await new Promise(r => setTimeout(r, 15));
 					
 					let message = $("#inputText").val();
 					let key = getPassword($("#inputKey").val());
-					let mode = "emoji";
+					let mode = checkInputString(message);
 					
 					decrypted = decrypt(message,key,mode);
 
 					if (!decrypted) {
-						$(this).html(getBtnDecodeFailed(lang));
+						$(this).html(getTranslation("btnDecodeFailed"),lang);
 					} else {
-						$(this).html(getBtnDecodeSuccess(lang));
+						$(this).html(getTranslation("btnDecodeSuccess"),lang);
 					}
 
 					$("#out").val(decrypted);
@@ -230,7 +230,7 @@
 			$("#btnLoad").click(async function () {
 				let slot = $("#keySlot").val();
 				console.log(slot);
-				$(this).html(getLoadKey(lang));
+				$(this).html(getTranslation("loadKey"),lang);
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
@@ -241,13 +241,13 @@
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
-				$(this).html(getBtnLoad(lang));
+				$(this).html(getTranslation("btnLoad"),lang);
 			});
 
 			$("#btnSave").click(async function () {
 				let slot = $("#keySlot").val();
 				console.log(slot);
-				$(this).html(getSaved(lang));
+				$(this).html(getTranslation("saved"),lang);
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
@@ -257,65 +257,10 @@
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
-				$(this).html(getBtnSave(lang));
+				$(this).html(getTranslation("btnSave"),lang);
 			});
 
 		});
-
-
-	
-		function slotSaveButton (id) {
-			if (id == 1) {
-				$("#btnSaveKey2").removeClass("bg-success");
-				$("#btnSaveKey3").removeClass("bg-success");
-				$("#btnSaveKey2").addClass("bg-dark");
-				$("#btnSaveKey3").addClass("bg-dark");
-			} else if (id == 2) {
-				$("#btnSaveKey1").removeClass("bg-success");
-				$("#btnSaveKey3").removeClass("bg-success");
-				$("#btnSaveKey1").addClass("bg-dark");
-				$("#btnSaveKey3").addClass("bg-dark");
-			} else if (id == 3) {
-				$("#btnSaveKey1").removeClass("bg-success");
-				$("#btnSaveKey2").removeClass("bg-success");
-				$("#btnSaveKey1").addClass("bg-dark");
-				$("#btnSaveKey2").addClass("bg-dark");			
-			}
-
-			let button = $("#btnSaveKey"+id);
-			button.html(getSaved(lang));
-			button.removeClass("bg-dark");
-			button.addClass("bg-success");
-			
-		}
-
-		function slotReadButton (id) {
-			
-			let button = $("#btnReadKey"+id);
-
-			if (id == 1) {
-				$("#btnReadKey2").removeClass("bg-success");
-				$("#btnReadKey3").removeClass("bg-success");
-				$("#btnReadKey2").addClass("bg-dark");
-				$("#btnReadKey3").addClass("bg-dark");
-			} else if (id == 2) {
-				$("#btnReadKey1").removeClass("bg-success");
-				$("#btnReadKey3").removeClass("bg-success");
-				$("#btnReadKey1").addClass("bg-dark");
-				$("#btnReadKey3").addClass("bg-dark");
-			} else if (id == 3) {
-				$("#btnReadKey1").removeClass("bg-success");
-				$("#btnReadKey2").removeClass("bg-success");
-				$("#btnReadKey1").addClass("bg-dark");
-				$("#btnReadKey2").addClass("bg-dark");			
-			}
-			button.html(getLoadKey(lang));
-			button.removeClass("bg-dark");
-			button.addClass("bg-success");
-			let key = getCookie("key"+id);
-			
-
-		}
 	</script>
 </body>
 
