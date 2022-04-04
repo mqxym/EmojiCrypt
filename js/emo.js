@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.10";
+	return "0.10.1";
 }
 
 function isDebug () {
@@ -52,7 +52,7 @@ function getPassword(pass) {
 	if (pass == "") {
 		return "";
 	}
-	console.log("Started Calculating Password Hash.")
+	//console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
 	let secLevel = getSecLevel(pass);
@@ -62,7 +62,7 @@ function getPassword(pass) {
 	}
 
 	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();;
-	console.log("Hashed Password:\n" + hashPass);
+	//console.log("Hashed Password:\n" + hashPass);
 
 	return hashPass;
 }
@@ -110,7 +110,6 @@ function returnHash(seed) {
 	return key;
 }
 
-
 //encrypts a text with Blowfish and AES
 //checks if the conversion to emoji succeeded (bad algorithm)
 function encrypt(message, key, mode) {
@@ -130,6 +129,7 @@ function encrypt(message, key, mode) {
 		b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
 	
 		if (mode == "b64") {
+			console.log("Encrypted b64: b64:" + b64Encrypted);
 			return "b64:" + b64Encrypted;
 		} 
 	
@@ -142,6 +142,7 @@ function encrypt(message, key, mode) {
 		//console.log(encryptedHex);
 	
 		if (mode == "hex") {
+			console.log("Encrypted Hex: 0x:"+ encryptedHex)
 			return "0x:"+ encryptedHex;
 		}
 	
@@ -173,6 +174,8 @@ function decrypt(message, key, mode) {
 	let encryptedb64 = "";
 
 	if (mode == "emoji") {
+		console.log("Decrypt as Emoji.");
+
 		encryptedHex = emoToHex(message);
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
 	
@@ -182,12 +185,18 @@ function decrypt(message, key, mode) {
 
 		//console.log(encryptedb64);
 	} else if (mode == "hex") {
+		console.log("Decrypt as Hexadecimal.");
 		encryptedHex = message.substr(3);
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
 		encryptedb64 = hexToBase64(encryptedHex);
 	} else if (mode == "b64") {
+		console.log("Decrypt as Base64.");
 		encryptedb64 = message.substr(4);
 	}
+
+	console.log("Message: " + message)
+	console.log("Encrypted Hex: "+ encryptedHex);
+	console.log("Encrypted B64: "+ encryptedb64);
 
 	console.log("Start AES Decryption...");
 	let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, key).toString(CryptoJS.enc.Utf8);
