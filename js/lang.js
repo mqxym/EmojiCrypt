@@ -14,8 +14,8 @@ function getTranslation (id, lang) {
 			"<h6>Encrypt or decrypt texts or messages with a password. The output can be converted back again only with the right password. For very long texts, hex or base64 encryption is recommended.</h6>",
 			"<h6>Verschlüssele Text oder Nachrichten mit einem Passwort. Nur das richtige Passwort kann den Text wieder entschlüsseln. Für lange Texte ist das Benutzen von Hexadezimal oder Base64 empfohlen.</h6>"],
 		[	"footerHigh", 
-			"Secure on device AES/BF encryption! Version " + getVersion(),
-			"Sichere AES+Blowfish Verschlüsselung auf dem Gerät! Version " + getVersion()],
+			"Secure on device AES/BF encryption! Version " + getVersion() + "<br><br>Change language",
+			"Sichere AES+Blowfish Verschlüsselung auf dem Gerät! Version " + getVersion() + "<br><br>Sprache wechseln"],
 		[	"inputText", 
 			"message",
 			"Nachricht"],
@@ -76,16 +76,10 @@ function getTranslation (id, lang) {
 			
 	];
 
-	if(id == -1) {
-		return translation;
-	}
-
 	//Returns the translation (1 is english, 2 is german)
 
 	for (let i = 0; i < translation.length; i++) {
-		//console.log(id + " " + translation[i][0]);
 		if (id === translation[i][0]) {
-			//console.log(translation[i][lang+1]);
 			return translation[i][lang+1];
 		}
 	}

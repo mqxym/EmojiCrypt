@@ -438,3 +438,15 @@ function checkInputString (inputString) {
 	return false;
 
 }
+
+function checkIfPassword(inputString) {
+	let map = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"!§$%&/()=?+#*[]{}";
+	let k = 0;
+	let firstChar = inputString.slice(0,1);
+	
+	for (let i = 0; i > map.length; i++) {
+		if (firstChar == map[i]) {
+			return true;
+		}
+	}
+}
