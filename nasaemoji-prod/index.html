@@ -5,13 +5,21 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<title>🌘 - to the moon!</title>
+	<title>🌘 - to the moon! AES & Blowfish Encryption Online</title>
 	
 	<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
 	<link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
 
 	<link rel="manifest" href="manifest.webmanifest">
 
+	<meta name="description" content="Encrypt and decrypt text with a key or a password. The output is converted into Emoji. The key can be a emoji too." />
+	<meta name="keywords" content="Encrypt,Decrypt,AES,Blowfish,AES256,Encryption,Online,HTML,Javascript,Offline,Download,Sourcecode,Emoji,Emo" />
+	<meta name="author" content="Marques Xiaomi" />
+	<meta name="copyright" content="Maxim Schulz" />
+	<meta name="page-topic" content="Computer" />
+	<meta http-equiv="Reply-to" content="maxim@omg.lol" />
+	<meta name="expires" content="" />
+	<meta name="revisit-after" content="2 days" />
 
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -22,7 +30,7 @@
 <body class="d-block p-3">
 	<form class="form">
 		<div class="text-center"><h3>Text 📄 🔄 🌈 Emoji</h3></div>
-		<div class="text-center"><h6 id="explanation"></h6></div>
+		<div class="text-center"><h6 id="explanation">Encrypt or decrypt texts or messages with a password. The output can be converted back again only with the right password. For very long texts, hex or base64 encryption is recommended.</h6></div>
 		<hr>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
@@ -99,8 +107,15 @@
 	</div>
 	<hr>
 	<p class="text-center">
-		<b id="footerHigh">Secure on device text encryption!</b>
+		<b id="footerHigh">Secure on device text encryption!<br>Change language</b>
 	</p>
+	<div class="form-group text-center">
+		<select class="form-control" id="lang">
+			<option value="0">English 🇺🇸</option>
+			<option value="1">German 🇩🇪</option>
+		</select>
+	</div>
+
 	<div class="text-center">
 		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
 	</div>
@@ -118,7 +133,10 @@
 	<script src="js/lang.js"></script>
 
 	<script>
-		const lang = 1;
+		let lang = 0;
+		if (localStorage.getItem("lang")) {
+			lang = parseInt(localStorage.getItem("lang"));
+		} 
 
 		let mode = "emoji";
 
@@ -140,7 +158,7 @@
 			
 		}
 
-		async function test () {
+		function test () {
 			if (false) {
 				$("#inputText").val("😒​🤮​🍓​🍠​🥠​🥬​🍳​🤔​😱​🍚​🤘​😠​😍​🍟​🤙​🍆​🍖​🙂​🤧​😷​🍜​🖕​😹​🧐​😉​🫐​🥭​🧄​👣​😥​🥙​😕​🥐​🍍​😻​🦵​🌽​🍕​💋​✋​👺​🥑​👹​😀​✊​💋​🤔​🥖​👣​✊​🌭​🤙​🥐​🍡​🥴​🍣​");
 				$("#inputKey").val("😅🦪🧇🍅😯😶👾😈🤜🎂🫐😽🍗✍️😵👾🥚🍜🍒😬🥠😓😻🥥👣🥩🤯🥴🍟😂🤐😴🤠🫓😾🍝🥺😰☠️💪🤬✋🥴🤤😄🤭🎃🤏🥭😁😤🧐☺️🤳🥔💩🍞🍟☺️🤲🤤🍞👋😍🌽🫐🤲🫁☹️🥨😗👂🥪🍏🌽🤠😣🍅💀🍜🤖🥩🤖🤖😑🧄🍉😺🥚😴🤝😥🥒😎🤫😹🤯👃🍎🙌🍱😸🤥🥕🍊👍🥺🤘👃🥴👉🤌🦻🤯😌👻😕🤙😺😢🙂🫁🤕👍🥭🎃🥠😯😇🫓🤢🤪🌮🖐😹👈👎😜😽🤬🤠🤨😹😶😓🍡👿🤕🍘👺🤞🧁🦿🍆🥧😁🦶🙌👺🤏");				
@@ -150,10 +168,6 @@
 		$(document).ready(function () {
 
 			setLanguage();
-
-			test();
-
-			//console.table(getTranslation(-1,0));
 
 			$("#btnConvert").click(async function () {
 
@@ -257,11 +271,17 @@
 
 				//setCookie("key"+slot,$("#inputKey").val(),777);
 
-				localStorage.setItem("key"+slot,$("#inputKey").val())
+				localStorage.setItem("key"+slot,$("#inputKey").val());
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
 				$(this).html(getTranslation("btnSave",lang));
+			});
+
+			$("#lang").change(function() {
+				localStorage.setItem("lang", parseInt($("#lang").val()));
+				lang = parseInt($("#lang").val());
+				setLanguage();
 			});
 
 		});
