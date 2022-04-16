@@ -10,7 +10,11 @@
 
 <body>
 
+	<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="in" rows="5"></textarea>
+
 	<button id="test" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt</button>
+
+	<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="out" rows="5"></textarea>
 	
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
@@ -28,7 +32,12 @@
 
 			$("#test").click(async function() {
 
-				getEmojiArraySalt("Penis");
+				testArray = getEmojiArraySalt($("#in").val());
+				let string = "";
+				for (let i = 0; i < testArray.length; i++) {
+					string += testArray[i];
+				}
+				$("#out").val(string);
 				/*
 				let encrypted1 = encrypt(txt1, pw1, "b64");
 
@@ -60,6 +69,7 @@
 				} else {
 					console.log("test 3 failed");
 				}
+				
 				
 				
 

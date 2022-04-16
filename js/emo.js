@@ -146,9 +146,9 @@ function encrypt(message, key, mode) {
 			return "0x:"+ encryptedHex;
 		}
 	
-		encryptedEmoji = hexToEmo(encryptedHex,key);
+		encryptedEmoji = hexToEmo(encryptedHex,CryptoJS.MD5(key));
 
-		testHex = emoToHex(encryptedEmoji);
+		testHex = emoToHex(encryptedEmoji, CryptoJS.MD5(key));
 		//console.log (testHex);
 
 		//Killswitch when encryption fails
@@ -176,7 +176,7 @@ function decrypt(message, key, mode) {
 	if (mode == "emoji") {
 		console.log("Decrypt as Emoji.");
 
-		encryptedHex = emoToHex(message,key);
+		encryptedHex = emoToHex(message,CryptoJS.MD5(key));
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
 	
 		//console.log(encryptedHex);
@@ -211,7 +211,6 @@ function decrypt(message, key, mode) {
 function hexToEmo(hex,salt) {
 	let emojiStringOutput = "";
 	let indexArray = [];
-
 	let emojiArray = getEmojiArraySalt(salt);
 	
 	//console.log("Encryption Hex Length: (/2)");
@@ -245,6 +244,7 @@ function emoToHex (emojiString, salt) {
 
 	//console.log("emToHex:" + emojiString);
 	let emojiArray = getEmojiArraySalt(salt);
+	console.log(emojiArray)
 	let indexArray = [];
 	let string = "";
 
@@ -320,11 +320,11 @@ function getEmojiArraySalt(salt) {
 
 	hash256Salt = CryptoJS.SHA256(salt);
 
-	for(let i = 0; i < 9; i++) {
+	for(let i = 0; i < 10; i++) {
 		hash256Salt = hash256Salt + CryptoJS.SHA256(salt + i)
 	}
 
-	console.log(hash256Salt);
+	//console.log(hash256Salt);
 	
 	let emojis = [["😀","😃","😄","😁","😆","😅","😂","🤣","🥲","☺️","😊","😇","🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚","😋","😛","😝","😜","🤪","🤨","🧐","🤓","😎","🥸","🤩","🥳","😏","😒","😞","😔","😟","😕","🙁","☹️","😣","😖","😫","😩","🥺","😢","😭","😤","😠","😡","🤬","🤯","😳","🥵","🥶","😱","😨","😰","😥","😓","🤗","🤔","🤭","🤫","🤥","😶","😐","😑","😬","🙄","😯","😦","😧","😮","😲","🥱","😴","🤤","😪","😵","🤐","🥴","🤢","🤮","🤧","😷","🤒","🤕","🤑","🤠","😈","👿","👹","👺","🤡","💩","👻","💀","☠️","👽","👾","🤖","🎃","😺","😸","😹","😻","😼","😽","🙀","😿","😾"],
 		["👋","🤚","🖐","✋","🖖","👌","🤌","🤏","✌️","🤞","🤟","🤘","🤙","👈","👉","👆","🖕","👇","☝️","👍","👎","✊","👊","🤛","🤜","👏","🙌","👐","🤲","🤝","🙏","✍️","💅","🤳","💪","🦾","🦵","🦿","🦶","👣","👂","🦻","👃","🫀","🫁","🧠","🦷","🦴","👀","👁","👅","👄","💋","🩸"],
@@ -350,27 +350,17 @@ function getEmojiArraySalt(salt) {
 		totalPack = totalPack.concat(emojis[i]);
 	}
 
-	returnPack = [];
-	countTo11 = 1;
+	let returnPack = [];
+	let countTo11 = 1;
 
 	for(let i = 1; i < hash256Salt.length; i+=2) {
 		let duplet = hash256Salt[i-1] + hash256Salt [i];
 		let index = parseInt("0x" + duplet);
+		let item = totalPack[index*countTo11]
+		if (!returnPack.includes(item)){
+			returnPack.push(item)
 
-		let item = "";
-		item = totalPack[index*countTo11]
-		while (!returnPack.includes(item) ){
-
-			item = totalPack[index*countTo11];
-			returnPack.push(item); 
-			if (i < 2000) {
-				index++;
-			} else {
-				index--;
-			}
-		}
-		
-
+		} 
 		if (countTo11 < 12) {
 			countTo11++;
 		} else {
@@ -380,7 +370,7 @@ function getEmojiArraySalt(salt) {
 
 	console.log(returnPack.length);
 	console.log(returnPack);
-	return totalPack;
+	return returnPack;
 
 
 }
