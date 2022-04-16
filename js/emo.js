@@ -320,7 +320,7 @@ function getEmojiArraySalt(salt) {
 
 	hash256Salt = CryptoJS.SHA256(salt);
 
-	for(let i = 0; i < 8; i++) {
+	for(let i = 0; i < 9; i++) {
 		hash256Salt = hash256Salt + CryptoJS.SHA256(salt + i)
 	}
 
@@ -358,11 +358,17 @@ function getEmojiArraySalt(salt) {
 		let index = parseInt("0x" + duplet);
 
 		let item = "";
-		do {
+		item = totalPack[index*countTo11]
+		while (!returnPack.includes(item) ){
+
 			item = totalPack[index*countTo11];
 			returnPack.push(item); 
-			index++;
-		} while (!returnPack.includes(item))
+			if (i < 2000) {
+				index++;
+			} else {
+				index--;
+			}
+		}
 		
 
 		if (countTo11 < 12) {
