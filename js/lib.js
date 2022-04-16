@@ -47,38 +47,3 @@ function stringToArray(s) {
 
 	return retVal;
 }
-
-function hexToEmoOld(hex) {
-	let counter_to_n = 0;
-	let n = 3;
-	let double_hex = "";
-	let emoString = "";
-
-	emoArray = getEmojiArray();
-	
-	console.log("Encryption Hex Length:");
-	console.log(hex.length);
-	
-	let i = 0;
-
-	while (i < hex.length) {
-		if (i % 2 == 0) {
-			double_hex = hex[i];
-		} else {
-
-			double_hex = double_hex + hex[i];
-			emo_match = emoArray[parseInt("0x" + double_hex) + (256 * counter_to_n)];
-			emoString = emoString + emo_match;
-
-			counter_to_n++;
-			if (counter_to_n > n) {
-				counter_to_n = 0;
-			}
-
-		}
-
-		++i;
-	}
-
-	return emoString;
-}

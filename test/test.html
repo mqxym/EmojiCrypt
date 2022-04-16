@@ -28,6 +28,8 @@
 
 			$("#test").click(async function() {
 
+				getEmojiArraySalt("Penis");
+				/*
 				let encrypted1 = encrypt(txt1, pw1, "b64");
 
 				let decrypted1 = decrypt(encrypted1, pw1, "b64");
@@ -47,7 +49,7 @@
 				} else {
 					console.log("test 2 failed");
 				}
-
+				*/
 				let encrypted3 = encrypt(txt1, pw1, "emoji");
 
 				let decrypted3 = decrypt(encrypted3, pw1, "emoji");
@@ -57,6 +59,8 @@
 				} else {
 					console.log("test 3 failed");
 				}
+
+				
 
 			});
 
