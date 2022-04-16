@@ -414,32 +414,15 @@ function checkInputString (inputString) {
 	let indexArray = [];
 	let string = "";
 
-	let j = 0;
+	let true_count = 0;
 	
 
 	emojiString.split('​').forEach(function (c) {
 		string = c;
-		if (string) {
-			for (let i = 0; i < emojiArray.length; i++) {
-				if (string === emojiArray[i] ) {
-					indexArray[j] = i;
-				}
-			}
-			j++;
-		}
+		true_count++;
 	});
 
 	//counts how many times the emojis were in the base array
-	let true_count = 0;
-	let index;
-
-	for (let i = 0; i < indexArray.length; i++) {
-		
-		index = indexArray[i];
-		if (index < 256 && index > 0) {
-			true_count++;
-		}
-	}
 
 	if (true_count > 20) {
 		console.log("Input is Encoded Emoji");
