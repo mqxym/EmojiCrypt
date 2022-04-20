@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.11.1";
+	return "0.12.0";
 }
 
 function isDebug () {
@@ -122,8 +122,11 @@ function encrypt(message, key, mode) {
 	let encryptedEmoji;
 
 	do {
+		console.log("Start XOR Encryption...");
+		XORString = XORencrypt(key, message);
+
 		console.log("Start Blowfish Encryption...");
-		BlowfishString = CryptoJS.Blowfish.encrypt(message, key).toString();
+		BlowfishString = CryptoJS.Blowfish.encrypt(XORString, key).toString();
 	
 		console.log("Start AES Encryption...");
 		b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
@@ -202,7 +205,10 @@ function decrypt(message, key, mode) {
 	let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, key).toString(CryptoJS.enc.Utf8);
 
 	console.log("Start Blowfish Decryption...");
-	let decrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, key).toString(CryptoJS.enc.Utf8);
+	let BFdecrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, key).toString(CryptoJS.enc.Utf8);
+
+	console.log("Start XOR Decryption")
+	let decrypted = XORdecrypt(key, BFdecrypted);
 	
 	return decrypted;
 }
