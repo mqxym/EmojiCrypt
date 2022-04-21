@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.12.1";
+	return "0.12.2";
 }
 
 function isDebug () {
@@ -50,7 +50,7 @@ function getSecLevel(pass) {
 //calculates a password hash as a repeating hash algorithm
 function getPassword(pass) {
 	if (pass == "") {
-		return "";
+		return CryptoJS.SHA512("Im looking for").toString() + CryptoJS.SHA224("friends").toString();
 	}
 	console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
