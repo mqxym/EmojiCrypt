@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.12.2";
+	return "0.12.3";
 }
 
 function isDebug () {
