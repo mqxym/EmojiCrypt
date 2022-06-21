@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.12.3";
+	return "0.12.4";
 }
 
 function isDebug () {
@@ -250,7 +250,6 @@ function emoToHex (emojiString, salt) {
 
 	//console.log("emToHex:" + emojiString);
 	let emojiArray = getEmojiArraySalt(salt);
-	console.log(emojiArray)
 	let indexArray = [];
 	let string = "";
 
@@ -314,9 +313,6 @@ function getEmojiArray() {
 	for (let i = 0; i < emojis.length; i++) {
 		totalPack = totalPack.concat(emojis[i]);
 	}
-
-	console.log(totalPack.length);
-	//console.log(totalPack);
 	return totalPack;
 
 
@@ -373,9 +369,6 @@ function getEmojiArraySalt(salt) {
 			countTo11 = 1;
 		}
 	}
-
-	//console.log(returnPack.length);
-	//console.log(returnPack);
 	return returnPack;
 
 
@@ -407,12 +400,12 @@ function checkInputString (inputString) {
 
 	if (inputString.slice(0,3) === "0x:") {
 		console.log("Input is encoded Hex");
-		return true;
+		return "hex";
 	} 
 
 	if(inputString.slice(0,4) === "b64:") {
 		console.log("Input is encoded B64");
-		return true;
+		return "b64";
 	}
 
 	let emojiArray = getEmojiArray();
@@ -432,7 +425,7 @@ function checkInputString (inputString) {
 
 	if (true_count > 20) {
 		console.log("Input is Encoded Emoji");
-		return true
+		return "emoji";
 	}
 	return false;
 

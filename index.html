@@ -111,9 +111,8 @@
 			<br>
 			No data sent. No cookies. No tracking. No logging.
 			<br>
-			Anti Bruteforce/Quantum/ASIC 
-			<br>
-			<br>Change language</b>
+			Change language
+		</b>
 	</p>
 	<div class="form-group text-center">
 		<select class="form-control" id="lang">
@@ -122,7 +121,7 @@
 			<option value="2">Modern Chinese 🇨🇳</option>
 			<option value="3">Russian 🇷🇺</option>
 			<option value="4">Spanish 🇪🇸</option>
-			<option value="5">France 🇫🇷</option>
+			<option value="5">Frensh 🇫🇷</option>
 		</select>
 	</div>
 
@@ -134,14 +133,6 @@
 		Copy Url: https://nasaemoji.com
 		<br>
 	</div>
-
-
-	<!-- 
-		Todo:
-		- copy button for URL
-		- save language in local storage
-		- languages (ger, span, port, rus, japan etc)
-	-->
 
 	<script src="js/lib.js"></script>
 	<script src="js/emo.js"></script>
@@ -186,18 +177,34 @@
 
 			$("#btnConvert").click(async function () {
 
-				if ($("#checkEmoji").is(':checked')) {
-					mode = "emoji";
-					console.log("Mode is: Emoji")
-				} else if ($("#checkHex").is(':checked')) {
-					mode = "hex";
-					console.log("Mode is: Hexadecimal")
-				} else if ($("#checkB64").is(':checked')) {
-					mode = "b64";
-					console.log("Mode is: Base64");
+				if(!$("#inputText").val()) {
+					$(this).html(getTranslation("error",lang));
+					await new Promise (r => setTimeout(r,1000));
+					$(this).html(getTranslation("btnConvert",lang));
+					return ;
 				}
 
-				if (!checkInputString($("#inputText").val())) {
+				inputCheck = checkInputString($("#inputText").val());
+
+				if (!inputCheck) {
+					if ($("#checkEmoji").is(':checked')) {
+						mode = "emoji";
+						console.log("Mode is: Emoji")
+					} else if ($("#checkHex").is(':checked')) {
+						mode = "hex";
+						console.log("Mode is: Hexadecimal")
+					} else if ($("#checkB64").is(':checked')) {
+						mode = "b64";
+						console.log("Mode is: Base64");
+					} else {
+						mode = "emoji";
+						console.log("Mode is: Emoji")
+					}
+				} else {
+					mode = inputCheck;
+				}
+
+				if (!inputCheck) {
 					$(this).html(getTranslation("btnEncodeWorking",lang));
 					await new Promise(r => setTimeout(r, 15));
 
@@ -227,11 +234,13 @@
 
 					if (!decrypted) {
 						$(this).html(getTranslation("btnDecodeFailed",lang));
+						$("#out").val("");
 					} else {
+						$("#out").val(decrypted);
 						$(this).html(getTranslation("btnDecodeSuccess",lang));
 					}
 
-					$("#out").val(decrypted);
+					
 
 					await new Promise(r => setTimeout(r, 5000));
 					$(this).html(getTranslation("btnConvert",lang));
@@ -262,32 +271,47 @@
 
 			$("#btnLoad").click(async function () {
 				let slot = $("#keySlot").val();
-				console.log(slot);
+
 				$(this).html(getTranslation("loadKey",lang));
 				$(this).removeClass("bg-dark");
 				$(this).addClass("bg-success");
 
-				//let key = getCookie("key"+slot);
-				key = localStorage.getItem("key" + slot);
-				$("#inputKey").val(key);
+				if (localStorage.getItem("key" + slot)) {
+					key = localStorage.getItem("key" + slot);
+					$(this).removeClass("bg-dark");
+					$(this).addClass("bg-success");
+					$("#inputKey").val(key);
+				} else {
+					$(this).removeClass("bg-dark");
+					$(this).addClass("bg-danger");
+					$(this).html(getTranslation("error",lang));
+				}
+				
 				
 				await new Promise(r => setTimeout(r, 1000));
 				$(this).removeClass("bg-success");
+				$(this).removeClass("bg-danger");
 				$(this).addClass("bg-dark");
 				$(this).html(getTranslation("btnLoad",lang));
 			});
 
 			$("#btnSave").click(async function () {
 				let slot = $("#keySlot").val();
-				console.log(slot);
-				$(this).html(getTranslation("saved",lang));
-				$(this).removeClass("bg-dark");
-				$(this).addClass("bg-success");
 
-				//setCookie("key"+slot,$("#inputKey").val(),777);
+				if($("#inputKey").val()) {
+					localStorage.setItem("key"+slot,$("#inputKey").val());
+					$(this).html(getTranslation("saved",lang));
+					$(this).removeClass("bg-dark");
+					$(this).addClass("bg-success");
+				} else {
+					$(this).removeClass("bg-dark");
+					$(this).addClass("bg-danger");
+					$(this).html(getTranslation("error",lang));
+				}
+				
 
-				localStorage.setItem("key"+slot,$("#inputKey").val());
 				await new Promise(r => setTimeout(r, 1000));
+				$(this).removeClass("bg-danger");
 				$(this).removeClass("bg-success");
 				$(this).addClass("bg-dark");
 				$(this).html(getTranslation("btnSave",lang));
