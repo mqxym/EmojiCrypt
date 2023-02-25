@@ -1,5 +1,5 @@
 function getVersion () {
-	return "0.12.5";
+	return "0.12.6";
 }
 
 function isDebug () {
@@ -132,6 +132,7 @@ function encrypt(message, key, mode) {
 		b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
 	
 		if (mode == "b64") {
+			b64Encrypted = b64Encrypted.substring(10);
 			console.log("Encrypted b64: b64:" + b64Encrypted);
 			return "b64:" + b64Encrypted;
 		} 
@@ -195,6 +196,7 @@ function decrypt(message, key, mode) {
 	} else if (mode == "b64") {
 		console.log("Decrypt as Base64.");
 		encryptedb64 = message.substr(4);
+		encryptedb64 = "U2FsdGVkX1" + encryptedb64;
 	}
 
 	console.log("Message: " + message)
