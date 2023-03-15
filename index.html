@@ -177,6 +177,7 @@
 
 			$("#btnConvert").click(async function () {
 
+				//throw error when txt input is empty
 				if(!$("#inputText").val()) {
 					$(this).html(getTranslation("error",lang));
 					await new Promise (r => setTimeout(r,1000));
@@ -184,6 +185,7 @@
 					return ;
 				}
 
+				//check if the input is b64, hex or emoji
 				inputCheck = checkInputString($("#inputText").val());
 
 				if (!inputCheck) {
@@ -203,7 +205,7 @@
 				} else {
 					mode = inputCheck;
 				}
-
+				//If there is no type for the input it must be encrypted
 				if (!inputCheck) {
 					$(this).html(getTranslation("btnEncodeWorking",lang));
 					await new Promise(r => setTimeout(r, 15));
@@ -223,6 +225,7 @@
 					$(this).html(getTranslation("btnConvert",lang));
 
 				} else {
+					//decryption
 					$(this).html(getTranslation("btnDecodeWorking",lang));
 
 					await new Promise(r => setTimeout(r, 15));
@@ -231,11 +234,13 @@
 					let key = getPassword($("#inputKey").val());
 					
 					decrypted = decrypt(message,key,mode);
-
+				
 					if (!decrypted) {
+						//encryption failed
 						$(this).html(getTranslation("btnDecodeFailed",lang));
 						$("#out").val("");
 					} else {
+						//encryption succeeded
 						$("#out").val(decrypted);
 						$(this).html(getTranslation("btnDecodeSuccess",lang));
 					}
