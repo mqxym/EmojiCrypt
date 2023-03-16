@@ -1,4 +1,4 @@
-# EmojiCrypt Version 0.13
+# EmojiCrypt Version 0.13.1
 - Javascript based app to decrypt and encrypt text using 3 encryption algorithms (XOR, BlowFish and AES).
 - Works in Whatsapp, Snapchat, Instagram
 - Keys can be stored in localStorage
