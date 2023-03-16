@@ -2,10 +2,6 @@ function getVersion () {
 	return "0.13.1";
 }
 
-function isDebug () {
-	return false;
-}
-
 //calculates a security level based on the passwords md5 hash
 function getSecLevel(pass) {
 
