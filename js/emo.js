@@ -177,17 +177,14 @@ function decrypt(message, key, mode) {
 	let encryptedHex = "";
 	let encryptedb64 = "";
 
+	console.log("Message: " + message)
+
 	if (mode == "emoji") {
 		console.log("Decrypt as Emoji.");
 
 		encryptedHex = emoToHex(message,CryptoJS.MD5(key));
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
-	
-		//console.log(encryptedHex);
-	
 		encryptedb64 = hexToBase64(encryptedHex);
-
-		//console.log(encryptedb64);
 	} else if (mode == "hex") {
 		console.log("Decrypt as Hexadecimal.");
 		encryptedHex = message.substr(3);
@@ -199,20 +196,26 @@ function decrypt(message, key, mode) {
 		encryptedb64 = "U2FsdGVkX1" + encryptedb64;
 	}
 
-	console.log("Message: " + message)
+	
 	console.log("Encrypted Hex: "+ encryptedHex);
 	console.log("Encrypted B64: "+ encryptedb64);
 
-	console.log("Start AES Decryption...");
-	let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, key).toString(CryptoJS.enc.Utf8);
-
-	console.log("Start Blowfish Decryption...");
-	let BFdecrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, key).toString(CryptoJS.enc.Utf8);
-
-	console.log("Start XOR Decryption")
-	let decrypted = XORdecrypt(key, BFdecrypted);
+	try {
+		console.log("Start AES Decryption...");
+		let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, key).toString(CryptoJS.enc.Utf8);
 	
-	return decrypted;
+		console.log("Start Blowfish Decryption...");
+		let BFdecrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, key).toString(CryptoJS.enc.Utf8);
+	
+		console.log("Start XOR Decryption")
+		let decrypted = XORdecrypt(key, BFdecrypted);
+		return decrypted;
+	}
+	catch(err) {
+		return "";
+	}
+
+	
 }
 
 
