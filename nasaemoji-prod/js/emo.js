@@ -112,55 +112,43 @@ function encrypt(message, key, mode) {
 
 	let testHex;
 	let encryptedHex; //encrypted data in HEX Format
-	let i = 0; //Killswitch
 	let BlowfishString; //Encrypted in Blowfish to Base64
 	let b64Encrypted; //Encrypted in AES
 	let encryptedEmoji;
 
-	do {
-		console.log("Start XOR Encryption...");
-		XORString = XORencrypt(key, message);
+	//console.log("Start XOR Encryption...");
+	XORString = XORencrypt(key, message);
 
-		console.log("Start Blowfish Encryption...");
-		BlowfishString = CryptoJS.Blowfish.encrypt(XORString, key).toString();
-	
-		console.log("Start AES Encryption...");
-		b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
-	
-		if (mode == "b64") {
-			b64Encrypted = b64Encrypted.substring(10);
-			console.log("Encrypted b64: b64:" + b64Encrypted);
-			return "b64:" + b64Encrypted;
-		} 
-	
-		//console.log(b64Encrypted);
-	
-		encryptedHex = base64ToHex(b64Encrypted);
-	
-		encryptedHex = encryptedHex.substring(16); //Remove first 16 chars because always same information
-	
-		//console.log(encryptedHex);
-	
-		if (mode == "hex") {
-			console.log("Encrypted Hex: 0x:"+ encryptedHex)
-			return "0x:"+ encryptedHex;
-		}
-	
-		encryptedEmoji = hexToEmo(encryptedHex,CryptoJS.MD5(key));
+	//console.log("Start Blowfish Encryption...");
+	BlowfishString = CryptoJS.Blowfish.encrypt(XORString, key).toString();
 
-		testHex = emoToHex(encryptedEmoji, CryptoJS.MD5(key));
-		//console.log (testHex);
+	//console.log("Start AES Encryption...");
+	b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
 
-		//Killswitch when encryption fails
-		if (i > 500) {
-			console.log("Encryption failed.")
-			return "";
-		}
-		i++;
+	if (mode == "b64") {
+		b64Encrypted = b64Encrypted.substring(10);
+		console.log("Encrypted b64: b64:" + b64Encrypted);
+		return "b64:" + b64Encrypted;
+	} 
 
-	} while (testHex != encryptedHex);
-	
+	//console.log(b64Encrypted);
+
+	encryptedHex = base64ToHex(b64Encrypted);
+
+	encryptedHex = encryptedHex.substring(16); //Remove first 16 chars because always same information
+
+	//console.log(encryptedHex);
+
+	if (mode == "hex") {
+		console.log("Encrypted Hex: 0x:"+ encryptedHex)
+		return "0x:"+ encryptedHex;
+	}
+
+	encryptedEmoji = hexToEmo(encryptedHex,CryptoJS.MD5(key));
 	//console.log(encryptedEmoji);
+	testHex = emoToHex(encryptedEmoji, CryptoJS.MD5(key));
+	console.log ("encryptedHex: " + encryptedHex);
+	console.log ("TestHex: 	" + testHex);
 
 	return encryptedEmoji;
 
@@ -179,6 +167,9 @@ function decrypt(message, key, mode) {
 		console.log("Decrypt as Emoji.");
 
 		encryptedHex = emoToHex(message,CryptoJS.MD5(key));
+
+		if (encryptedHex === "") return "";
+
 		encryptedHex = "53616C7465645F5F" + encryptedHex;
 		encryptedb64 = hexToBase64(encryptedHex);
 	} else if (mode == "hex") {
@@ -266,17 +257,18 @@ function emoToHex (emojiString, salt) {
 	for (let i = 0; i < indexArray.length; i++) {
 		
 		index = indexArray[i];
-
 		//if the message cant be converted to emoji because of a wrong key
 
-		if(!index) return "";
+		if(index === undefined) {
+			console.log("Failed!");
+			return "";
+		} 
 
 		//console.log ("Index: " + index);
 		if (index < 16) {
 			hexString = hexString + "0";
 		}
 		hexString = hexString + index.toString(16);
-		//console.log("HexString: "+ hexString);
 	}
 	return hexString.toUpperCase();
 }
