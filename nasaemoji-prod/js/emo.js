@@ -116,13 +116,13 @@ function encrypt(message, key, mode) {
 	let b64Encrypted; //Encrypted in AES
 	let encryptedEmoji;
 
-	//console.log("Start XOR Encryption...");
+	console.log("Start XOR Encryption...");
 	XORString = XORencrypt(key, message);
 
-	//console.log("Start Blowfish Encryption...");
+	console.log("Start Blowfish Encryption...");
 	BlowfishString = CryptoJS.Blowfish.encrypt(XORString, key).toString();
 
-	//console.log("Start AES Encryption...");
+	console.log("Start AES Encryption...");
 	b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
 
 	if (mode == "b64") {
@@ -131,13 +131,9 @@ function encrypt(message, key, mode) {
 		return "b64:" + b64Encrypted;
 	} 
 
-	//console.log(b64Encrypted);
-
 	encryptedHex = base64ToHex(b64Encrypted);
 
 	encryptedHex = encryptedHex.substring(16); //Remove first 16 chars because always same information
-
-	//console.log(encryptedHex);
 
 	if (mode == "hex") {
 		console.log("Encrypted Hex: 0x:"+ encryptedHex)
@@ -145,12 +141,13 @@ function encrypt(message, key, mode) {
 	}
 
 	encryptedEmoji = hexToEmo(encryptedHex,CryptoJS.MD5(key));
-	//console.log(encryptedEmoji);
 	testHex = emoToHex(encryptedEmoji, CryptoJS.MD5(key));
-	console.log ("encryptedHex: " + encryptedHex);
-	console.log ("TestHex: 	" + testHex);
-
-	return encryptedEmoji;
+	if (testHex == encryptedHex) {
+		return encryptedEmoji;
+	} else {
+		return "";
+	}
+	
 
 }
 
