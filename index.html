@@ -142,6 +142,7 @@
 		let lang = 0;
 		if (localStorage.getItem("lang")) {
 			lang = parseInt(localStorage.getItem("lang"));
+			$("#lang").val(lang);
 		} 
 
 		let mode = "emoji";
