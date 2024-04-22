@@ -1,4 +1,5 @@
-# EmojiCrypt Version 0.13.2 🌈
+# EmojiCrypt Version 1.0.0 🌈
+
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here: https://nasaemoji.com
 
@@ -24,6 +25,7 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - When encrypting, your key is hashed with 6 hashing methods in a long loop, which means it's hard to brute force the key.
 
 ## Includes ⤴️
+
 - CryptoJS library for encrypting methods Blowfish and AES, and for hashing methods
 - jQuery for html manipulation
 
