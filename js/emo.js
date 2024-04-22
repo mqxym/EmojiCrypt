@@ -40,7 +40,7 @@ function getSecLevel(pass) {
 		}
 
 	}
-	return 1024+sum;
+	return 512+sum;
 }
 
 //calculates a password hash as a repeating hash algorithm
@@ -57,7 +57,9 @@ function getPassword(pass) {
 		hashPass = returnHash(hashPass)
 	}
 
-	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA1(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString() + CryptoJS.MD5(hashPass).toString();;
+	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString();
+	
+	hashPass = hexToBase64(hashPass);
 	console.log("Hashed Password:\n" + hashPass);
 
 	return hashPass;
@@ -68,39 +70,68 @@ function returnHash(seed) {
 
 	let key = seed;
 
-	//console.log(key);
+	let pastHash = [];
+
+	pastHash.push(CryptoJS.SHA512(seed + "RXmYwGwm4Td9nVIpmA9NFI5wcoz9HO6X").toString())
+	pastHash.push(CryptoJS.SHA512(seed + "jYcXFLIgZSKOW5RD1N8GStcrQilZ7ezE").toString())
+	pastHash.push(CryptoJS.SHA512(seed + "QXpJWihh5j4wb8pJiD2JLN6ziBu6oLXq").toString())
 
 	for (let i = 0; i < seed.length; i++) {
 		let currentChar = seed.charAt(i).toLowerCase();
+		
 		switch (currentChar) {
 			case "0":
+				key = CryptoJS.SHA384(key + "SF39" + pastHash[0] + pastHash[1]).toString();
+				break;
 			case "1":
-				key = CryptoJS.MD5(key).toString();
+				key = CryptoJS.SHA384(key + "DS44" + pastHash[0] + pastHash[1]).toString();
 				break;
 			case "2":
+				key = CryptoJS.SHA384(key + "XL55" + pastHash[0] + pastHash[1]).toString();
+				break;
 			case "3":
-				key = CryptoJS.SHA1(key).toString();
+				key = CryptoJS.SHA512(key + "NC01" + pastHash[0] + pastHash[1]).toString();
 				break;
 			case "4":
+				key = CryptoJS.SHA512(key + "LU50" + pastHash[0] + pastHash[1]).toString();
+				break;
 			case "5":
+				key = CryptoJS.SHA512(key + "GL12" + pastHash[0] + pastHash[1]).toString();
+				break;
 			case "6":
-				key = CryptoJS.SHA3(key).toString();
+				key = CryptoJS.SHA256(key + "GG31" + pastHash[0] + pastHash[1]).toString();
 				break;
 			case "7":
-			case "9":
-				key = CryptoJS.SHA256(key).toString();
+				key = CryptoJS.SHA256(key + "HL11" + pastHash[0] + pastHash[1]).toString();
 				break;
-			case "a":
-			case "b":
-			case "c":
-				key = CryptoJS.SHA512(key).toString();
+			case "8":
+				key = CryptoJS.SHA256(key + "XF91" + pastHash[0] + pastHash[1]).toString();
+				break;
+			case "9":
+				key = CryptoJS.SHA3(key + "BM15" + pastHash[0] + pastHash[1]).toString();
+				break;
+			case "f":
+				key = CryptoJS.MD5(key + "TT85" + pastHash[0] + pastHash[1]).toString();
+				break;
+			case "e":
+				key = CryptoJS.MD5(key + "RF19" + pastHash[0] + pastHash[1]).toString();
 				break;
 			case "d":
-			case "e":
-			case "f":
-				key = CryptoJS.SHA384(key).toString();
+				key = CryptoJS.MD5(key + "MS25" + pastHash[0] + pastHash[1]).toString();
 				break;
+			case "c":
+				key = CryptoJS.SHA1(key + "0X80" + pastHash[0] + pastHash[1]).toString();
+				break;
+			case "b":
+				key = CryptoJS.SHA1(key + "MX55" + pastHash[0] + pastHash[1]).toString();
+				break;
+			case "a":
+				key = CryptoJS.SHA3(key + "WT66" + pastHash[0] + pastHash[1]).toString();
+				break;
+
 		}
+		pastHash.push(key);
+		pastHash.shift();
 	}
 
 	return key;
