@@ -1,5 +1,5 @@
 function getVersion () {
-	return "1.0.0";
+	return "1.1.0";
 }
 
 //calculates a security level based on the passwords md5 hash
@@ -7,9 +7,6 @@ function getSecLevel(pass) {
 
 	seed = CryptoJS.MD5(pass).toString();
 	sum = 0;
-
-	//console.log(parseInt(seed,16));
-	//maybe use parseInt(hex)
 
 	for (let i = 0; i < seed.length; i++) {
 		let currentChar = seed.charAt(i).toLowerCase();
@@ -30,44 +27,66 @@ function getSecLevel(pass) {
 			case "a":
 			case "b":
 			case "c":
-				sum += 5;
+				sum += 2;
 				break;
 			case "d":
 			case "e":
 			case "f":
-				sum += 2;
+				sum += 1;
 				break;
 		}
 
 	}
-	return 512+sum;
+	return 420+sum;
+}
+
+function getLongKey(hashPass) {
+	return  CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString();
 }
 
 //calculates a password hash as a repeating hash algorithm
 function getPassword(pass) {
+
+	let keys = [];
+
+	//Default key when empty
 	if (pass == "") {
-		return CryptoJS.SHA512("Im looking for").toString() + CryptoJS.SHA224("friends").toString();
+		return [
+			CryptoJS.SHA512("Im looking for").toString() + CryptoJS.SHA224("friends :)").toString(),
+			CryptoJS.SHA512("Do you").toString() + CryptoJS.SHA224("wanna be my friend?").toString(),
+			CryptoJS.SHA512("You are").toString() + CryptoJS.SHA224("a kind stranger.").toString()
+		];
 	}
 	console.log("Started Calculating Password Hash.")
 	let seed = CryptoJS.SHA512(pass).toString() + CryptoJS.SHA224(pass).toString() + CryptoJS.SHA256(pass).toString() + CryptoJS.SHA1(pass).toString() + CryptoJS.SHA3(pass).toString() + CryptoJS.SHA384(pass).toString() + CryptoJS.MD5(pass).toString();
 	let hashPass = returnHash(seed);
 	let secLevel = getSecLevel(pass);
 
+
 	for (let i = 0; i < secLevel; i++) {
-		hashPass = returnHash(hashPass)
+		hashPass = returnHash(hashPass + (i*69));
 	}
 
-	hashPass = CryptoJS.SHA512(hashPass).toString() + CryptoJS.SHA224(hashPass).toString() + CryptoJS.SHA256(hashPass).toString() + CryptoJS.SHA3(hashPass).toString() + CryptoJS.SHA384(hashPass).toString();
-	
-	hashPass = hexToBase64(hashPass);
-	console.log("Hashed Password:\n" + hashPass);
+	//Push xor key
+	keys.push(hexToBase64(getLongKey(hashPass)));
 
-	return hashPass;
+	for (let i = 0; i < 15; i++) {
+		hashPass = returnHash(hashPass + (i*420));
+	}
+	//Push blowfish key
+	keys.push(hexToBase64(getLongKey(hashPass)));
+
+	for (let i = 0; i < 15; i++) {
+		hashPass = returnHash(hashPass + (i*99));
+	}
+	//Push aes key
+	keys.push(hexToBase64(getLongKey(hashPass)));
+	
+	return keys;
 }
 
 //repeating hash algorithm
 function returnHash(seed) {
-
 	let key = seed;
 
 	let pastHash = [];
@@ -139,8 +158,13 @@ function returnHash(seed) {
 
 //encrypts a text with Blowfish and AES
 //checks if the conversion to emoji succeeded (bad algorithm)
-function encrypt(message, key, mode) {
+function encrypt(message, keys, mode) {
 
+	if (keys.length != 3) {
+		return;
+	}
+
+	let key = keys[0];
 	let testHex;
 	let encryptedHex; //encrypted data in HEX Format
 	let BlowfishString; //Encrypted in Blowfish to Base64
@@ -148,13 +172,13 @@ function encrypt(message, key, mode) {
 	let encryptedEmoji;
 
 	console.log("Start XOR Encryption...");
-	XORString = XORencrypt(key, message);
+	XORString = XORencrypt(keys[0] , message);
 
 	console.log("Start Blowfish Encryption...");
-	BlowfishString = CryptoJS.Blowfish.encrypt(XORString, key).toString();
+	BlowfishString = CryptoJS.Blowfish.encrypt(XORString, keys[1]).toString();
 
 	console.log("Start AES Encryption...");
-	b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, key).toString();
+	b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, keys[2]).toString();
 
 	if (mode == "b64") {
 		b64Encrypted = b64Encrypted.substring(10);
@@ -182,12 +206,15 @@ function encrypt(message, key, mode) {
 
 }
 
-function decrypt(message, key, mode) {
+function decrypt(message, keys, mode) {
 
-	//console.log(message);
+	if (keys.length != 3) {
+		return;
+	}
 
 	let encryptedHex = "";
 	let encryptedb64 = "";
+	let key = keys[0];
 
 	console.log("Message: " + message)
 
@@ -217,13 +244,13 @@ function decrypt(message, key, mode) {
 
 	try {
 		console.log("Start AES Decryption...");
-		let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, key).toString(CryptoJS.enc.Utf8);
+		let AESDecryptedString = CryptoJS.AES.decrypt(encryptedb64, keys[2]).toString(CryptoJS.enc.Utf8);
 	
 		console.log("Start Blowfish Decryption...");
-		let BFdecrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, key).toString(CryptoJS.enc.Utf8);
+		let BFdecrypted = CryptoJS.Blowfish.decrypt(AESDecryptedString, keys[1]).toString(CryptoJS.enc.Utf8);
 	
 		console.log("Start XOR Decryption")
-		let decrypted = XORdecrypt(key, BFdecrypted);
+		let decrypted = XORdecrypt(keys[0] , BFdecrypted);
 		return decrypted;
 	}
 	catch(err) {
