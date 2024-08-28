@@ -4,7 +4,7 @@ Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
 
 - (v2): [nasaemoji.com](https://nasaemoji.com)
-- (v1): [nasaemoji.com](https://v1.nasaemoji.com) (not recommended)
+- (v1): [v1.nasaemoji.com](https://v1.nasaemoji.com) (not recommended)
 
 ## Idea 💡
 
