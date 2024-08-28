@@ -16,14 +16,14 @@ The idea is to implement a protocol where only you and the receiver knows what t
 
 - Generate emoji keys which look like encrypted messages
 - Save keys within the browser
-- Site can be added to homescreen on Android and iOS to act as an app
+- Site can be added to homescreen on Android and iOS to act as an app (Webapp)
 - Works in Whatsapp, iMessage, Snapchat, Instagram for emojitastic communication
 - The web app is available in 6 languages (feel free to improve the automated translations)
 
 ### Security 🔐
 
 - All Encryption and decryption happens on the local device, no data is sent anywhere (Just be sure that there's no virus on your device)
-- Your text is encrypted with 3 chained encryption methods (AES256, Blowfish, XOR)
+- Your text is encrypted with 3 chained encryption methods (AES256, Blowfish, XOR) using the robust [CryptoJS library]( https://cryptojs.gitbook.io/docs)
 - When encrypting, your key is hashed with 7 algorithms in a long loop, which means it's hard to brute force the key (The length of the loop is key dependend).
 - Different hash loop length with different salt integers for each encryption algorithm (new in version 1.1.0)
 
