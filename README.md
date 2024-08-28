@@ -1,4 +1,4 @@
-# EmojiCrypt Version 2.0.0 🌈
+# EmojiCrypt Version 2.0.1 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
@@ -37,5 +37,10 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - jQuery for HTML manipulation
 - Bootstrap 4 for CSS
 - Algorithm to map binary output into emojis
+
+## Download for local execution
+
+- You can download the latest release [here](https://github.com/mqxym/EmojiCrypt/releases)
+- The download should contain all dependencies and does not need an internet connection to work
 
 Thanks to all the people on stackoverflow and to the creators of the used libraries and functions!

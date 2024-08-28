@@ -1,5 +1,5 @@
 function getVersion () {
-	return "2.0.0";
+	return "2.0.1";
 }
 
 //calculates a security level based on the passwords md5 hash
@@ -177,7 +177,7 @@ function encrypt(message, keys) {
 
 	//Reduce footprint by ~25%
 	encryptedEmoji = mapBytesToSymbols(bytesEncrypted, emojis);
-
+    console.log(encryptedEmoji)
 	return encryptedEmoji.join("​");
 }
 
@@ -189,8 +189,16 @@ function decrypt(message, keys) {
 
 	let encryptedb64 = "";
 	let emojis = getEmojiArray();
+	let encryptedBytes;
 
-	let encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis) //split into array and map emojis to byptes
+	try {
+		encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis) //split into array and map emojis to byptes
+	}
+	catch(err) {
+		return "";
+	}
+
+	
 
 	encryptedb64 = bytesToBase64(encryptedBytes);
 	encryptedb64 = "U2FsdGVk" + encryptedb64; //add header
