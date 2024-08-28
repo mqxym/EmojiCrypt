@@ -75,27 +75,6 @@
 			</div>
 		</div>
 		<hr>
-		<div class="row">
-			<div class="col">
-				<div class="form-check">
-					<input type="radio" class="form-check-input" name="outputType" id="checkEmoji" checked>
-					<label class="form-check-label" for="checkEmoji">Output: <b>Emojis</b></label>
-				  </div>
-			</div>
-			<div class="col">
-				<div class="form-check">
-					<input type="radio" class="form-check-input" name="outputType" id="checkHex">
-					<label class="form-check-label" for="checkHex">Output: <b>Hexadecimal</b></label>
-				  </div>
-			</div>
-			<div class="col">
-				<div class="form-check">
-					<input type="radio" class="form-check-input" name="outputType" id="checkB64">
-					<label class="form-check-label" for="checkB64">Output: <b>Base64</b></label>
-				  </div>
-			</div>
-		</div>
-		<hr>
 		<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
 		</form>
 	<hr>
@@ -107,7 +86,8 @@
 	</div>
 	<hr>
 	<p class="text-center">
-		<b id="footerHigh">Secure on device AES-256 encryption! 
+		<b id="footerHigh">Secure on device encryption! 
+			<br> Combined AES-256, Blowfish & XOR 
 			<br>
 			No data sent. No cookies. No tracking. No logging.
 			<br>
@@ -134,6 +114,7 @@
 		<br>
 	</div>
 
+	<script src="js/base-64.js" defer></script>
 	<script src="js/lib.js" defer></script>
 	<script src="js/emo.js" defer></script>
 	<script src="js/lang.js" defer></script>
@@ -181,24 +162,7 @@
 
 				//check if the input is b64, hex or emoji
 				inputCheck = checkInputString($("#inputText").val());
-
-				if (!inputCheck) {
-					if ($("#checkEmoji").is(':checked')) {
-						mode = "emoji";
-						console.log("Mode is: Emoji")
-					} else if ($("#checkHex").is(':checked')) {
-						mode = "hex";
-						console.log("Mode is: Hexadecimal")
-					} else if ($("#checkB64").is(':checked')) {
-						mode = "b64";
-						console.log("Mode is: Base64");
-					} else {
-						mode = "emoji";
-						console.log("Mode is: Emoji")
-					}
-				} else {
-					mode = inputCheck;
-				}
+				
 				//If there is no type for the input it must be encrypted
 				if (!inputCheck) {
 					// encryption
@@ -208,7 +172,7 @@
 					let message = $("#inputText").val();
 					let keys = getPassword($("#inputKey").val());
 
-					let emojiString = encrypt(message, keys, mode);
+					let emojiString = encrypt(message, keys);
 
 					//encrytion failed
 					if (!emojiString) {
@@ -230,7 +194,7 @@
 					let message = $("#inputText").val();
 					let keys = getPassword($("#inputKey").val());
 					
-					decrypted = decrypt(message, keys, mode);
+					decrypted = decrypt(message, keys);
 				
 					if (!decrypted) {
 						//decryption failed
@@ -254,7 +218,7 @@
 			});
 
 			$("#btnKeyGenerate").click(function () {
-				$("#inputKey").val(generateRandomEmo());
+				$("#inputKey").val(generateRandomKey());
 			});
 
 			$("#copyKey").click(function () {

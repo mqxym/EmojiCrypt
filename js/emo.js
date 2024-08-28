@@ -1,5 +1,5 @@
 function getVersion () {
-	return "1.1.0";
+	return "2.0.0";
 }
 
 //calculates a security level based on the passwords md5 hash
@@ -91,9 +91,9 @@ function returnHash(seed) {
 
 	let pastHash = [];
 
-	pastHash.push(CryptoJS.SHA512(seed + "RXmYwGwm4Td9nVIpmA9NFI5wcoz9HO6X").toString())
-	pastHash.push(CryptoJS.SHA512(seed + "jYcXFLIgZSKOW5RD1N8GStcrQilZ7ezE").toString())
-	pastHash.push(CryptoJS.SHA512(seed + "QXpJWihh5j4wb8pJiD2JLN6ziBu6oLXq").toString())
+	pastHash.push(CryptoJS.SHA3(seed + "RXmYwGwm4Td9nVIpmA9NFI5wcoz9HO6X").toString())
+	pastHash.push(CryptoJS.SHA3(seed + "jYcXFLIgZSKOW5RD1N8GStcrQilZ7ezE").toString())
+	pastHash.push(CryptoJS.SHA3(seed + "QXpJWihh5j4wb8pJiD2JLN6ziBu6oLXq").toString())
 
 	for (let i = 0; i < seed.length; i++) {
 		let currentChar = seed.charAt(i).toLowerCase();
@@ -158,89 +158,42 @@ function returnHash(seed) {
 
 //encrypts a text with Blowfish and AES
 //checks if the conversion to emoji succeeded (bad algorithm)
-function encrypt(message, keys, mode) {
+function encrypt(message, keys) {
 
 	if (keys.length != 3) {
 		return;
 	}
-
-	let key = keys[0];
-	let testHex;
-	let encryptedHex; //encrypted data in HEX Format
 	let BlowfishString; //Encrypted in Blowfish to Base64
 	let b64Encrypted; //Encrypted in AES
 	let encryptedEmoji;
 
-	console.log("Start XOR Encryption...");
 	XORString = XORencrypt(keys[0] , message);
-
-	console.log("Start Blowfish Encryption...");
 	BlowfishString = CryptoJS.Blowfish.encrypt(XORString, keys[1]).toString();
-
-	console.log("Start AES Encryption...");
 	b64Encrypted = CryptoJS.AES.encrypt(BlowfishString, keys[2]).toString();
 
-	if (mode == "b64") {
-		b64Encrypted = b64Encrypted.substring(10);
-		console.log("Encrypted b64: b64:" + b64Encrypted);
-		return "b64:" + b64Encrypted;
-	} 
+	b64Encrypted = b64Encrypted.substring(8);
+    let bytesEncrypted = base64ToBytes(b64Encrypted);
+	let emojis = getEmojiArray();
 
-	encryptedHex = base64ToHex(b64Encrypted);
+	//Reduce footprint by ~25%
+	encryptedEmoji = mapBytesToSymbols(bytesEncrypted, emojis);
 
-	encryptedHex = encryptedHex.substring(16); //Remove first 16 chars because always same information
-
-	if (mode == "hex") {
-		console.log("Encrypted Hex: 0x:"+ encryptedHex)
-		return "0x:"+ encryptedHex;
-	}
-
-	encryptedEmoji = hexToEmo(encryptedHex,CryptoJS.MD5(key));
-	testHex = emoToHex(encryptedEmoji, CryptoJS.MD5(key));
-	if (testHex == encryptedHex) {
-		return encryptedEmoji;
-	} else {
-		return "";
-	}
-	
-
+	return encryptedEmoji.join("​");
 }
 
-function decrypt(message, keys, mode) {
+function decrypt(message, keys) {
 
 	if (keys.length != 3) {
 		return;
 	}
 
-	let encryptedHex = "";
 	let encryptedb64 = "";
-	let key = keys[0];
+	let emojis = getEmojiArray();
 
-	console.log("Message: " + message)
+	let encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis) //split into array and map emojis to byptes
 
-	if (mode == "emoji") {
-		console.log("Decrypt as Emoji.");
-
-		encryptedHex = emoToHex(message,CryptoJS.MD5(key));
-
-		if (encryptedHex === "") return "";
-
-		encryptedHex = "53616C7465645F5F" + encryptedHex;
-		encryptedb64 = hexToBase64(encryptedHex);
-	} else if (mode == "hex") {
-		console.log("Decrypt as Hexadecimal.");
-		encryptedHex = message.substr(3);
-		encryptedHex = "53616C7465645F5F" + encryptedHex;
-		encryptedb64 = hexToBase64(encryptedHex);
-	} else if (mode == "b64") {
-		console.log("Decrypt as Base64.");
-		encryptedb64 = message.substr(4);
-		encryptedb64 = "U2FsdGVkX1" + encryptedb64;
-	}
-
-	
-	console.log("Encrypted Hex: "+ encryptedHex);
-	console.log("Encrypted B64: "+ encryptedb64);
+	encryptedb64 = bytesToBase64(encryptedBytes);
+	encryptedb64 = "U2FsdGVk" + encryptedb64; //add header
 
 	try {
 		console.log("Start AES Decryption...");
@@ -258,74 +211,6 @@ function decrypt(message, keys, mode) {
 	}
 
 	
-}
-
-
-function hexToEmo(hex,salt) {
-	let emojiStringOutput = "";
-	let indexArray = [];
-	let emojiArray = getEmojiArraySalt(salt);
-	
-	for (let i = 1; i< hex.length; i+=2) {
-		let duplet = hex[i-1] + hex [i];
-
-		let index = parseInt("0x" + duplet);
-		let j = (i-1)/2;
-		indexArray[j] = index;
-
-	}
-
-	for (let i = 0; i < indexArray.length; i++) {
-		let j = indexArray[i]
-		emojiStringOutput += emojiArray[j] + "​";
-	}
-	//remove last empty char
-	emojiStringOutput = emojiStringOutput.slice(0, -1);
-
-	return emojiStringOutput;
-}
-
-function emoToHex (emojiString, salt) {
-
-	let emojiArray = getEmojiArraySalt(salt);
-	let indexArray = [];
-	let string = "";
-
-	let j = 0;
-	
-
-	emojiString.split('​').forEach(function (c) {
-		string = c;
-		if (string) {
-			for (let i = 0; i < emojiArray.length; i++) {
-				if (string === emojiArray[i] ) {
-					indexArray[j] = i;
-				}
-			}
-			j++;
-		}
-	});
-
-	let hexString = "";
-	let index = 0;
-	
-	for (let i = 0; i < indexArray.length; i++) {
-		
-		index = indexArray[i];
-		//if the message cant be converted to emoji because of a wrong key
-
-		if(index === undefined) {
-			console.log("Failed!");
-			return "";
-		} 
-
-		//console.log ("Index: " + index);
-		if (index < 16) {
-			hexString = hexString + "0";
-		}
-		hexString = hexString + index.toString(16);
-	}
-	return hexString.toUpperCase();
 }
 
 
@@ -355,63 +240,20 @@ function getEmojiArray() {
 		totalPack = totalPack.concat(emojis[i]);
 	}
 	return totalPack;
-
-
 }
 
-function getEmojiArraySalt(salt) {
+function generateRandomKey() {
+	let key = []
 
-	hash256Salt = CryptoJS.SHA256(salt);
+	key[1] = generateRandomString();
+	key[2] = generateRandomString();
+	key[0] = generateRandomString();
 
-	for(let i = 0; i < 10; i++) {
-		hash256Salt = hash256Salt + CryptoJS.SHA256(salt + i)
-	}
+	let msg = generateRandomString();
 
-	//console.log(hash256Salt);
+	let keyString = encrypt(msg, key);
 
-	let totalPack = getEmojiArray();
-
-	let returnPack = [];
-	let countTo11 = 1;
-
-	for(let i = 1; i < hash256Salt.length; i+=2) {
-		let duplet = hash256Salt[i-1] + hash256Salt [i];
-		let index = parseInt("0x" + duplet);
-		let item = totalPack[index*countTo11]
-		if (!returnPack.includes(item)){
-			returnPack.push(item)
-
-		} 
-		if (countTo11 < 12) {
-			countTo11++;
-		} else {
-			countTo11 = 1;
-		}
-	}
-	return returnPack;
-
-
-}
-
-function generateRandomEmo() {
-	let length = (2 + (Math.floor(Math.random() * 4))) * 32;
-
-	let emoString = "";
-	let i = 0;
-
-	emoArray = getEmojiArray();
-
-	while (i < length) {
-		let random = Math.floor(Math.random() * 2946);
-		emoString = emoString + emoArray[random] + '​';
-		++i;
-	}
-
-	//remove last empty char
-
-	emoString = emoString.slice(0, -1);
-
-	return emoString;
+	return keyString;
 }
 
 function checkInputString (inputString) {
@@ -420,20 +262,7 @@ function checkInputString (inputString) {
 		console.log("Input is empty");
 		return false;
 	}
-
-	if (inputString.slice(0,3) === "0x:") {
-		console.log("Input is encoded Hex");
-		return "hex";
-	} 
-
-	if(inputString.slice(0,4) === "b64:") {
-		console.log("Input is encoded B64");
-		return "b64";
-	}
-
 	let true_count = 0;
-	
-
 	inputString.split('​').forEach(function (c) {
 		true_count++;
 	});
