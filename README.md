@@ -38,4 +38,9 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - Bootstrap 4 for CSS
 - Algorithm to map binary output into emojis
 
+## Download for local execution:
+
+- You can download the latest release [here](https://github.com/mqxym/EmojiCrypt/releases)
+- The download should contain all dependencies and does not need an internet connection to work
+
 Thanks to all the people on stackoverflow and to the creators of the used libraries and functions!
