@@ -26,7 +26,8 @@ The idea is to implement a protocol where only you and the receiver knows what t
 ### Security 🔐
 
 - All Encryption and decryption happens on the local device, no data is sent anywhere (Just be sure that there's no virus on your device)
-- Your text is encrypted with 3 chained encryption methods (AES256, Blowfish, XOR) using the robust [CryptoJS library]( https://cryptojs.gitbook.io/docs)
+- Emoji key generation has the same footprint as the encrypted output (it's generated using the encrypt function)
+- Your text is encrypted with 3 chained encryption methods (AES-256, Blowfish, XOR) using the robust [CryptoJS library]( https://cryptojs.gitbook.io/docs)
 - When encrypting, your key is hashed with 7 algorithms in a long loop, which means it's hard to brute force the key (The length of the loop is key dependend).
 - Different hash loop length with different salt integers for each encryption algorithm (new in version 1.1.0)
 
@@ -35,7 +36,6 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - CryptoJS library for encrypting methods Blowfish and AES, and for hashing methods
 - jQuery for HTML manipulation
 - Bootstrap 4 for CSS
-- Algorithm to convert hexadecimal data into emojis and generate a set of used emojis based on the key (key acts as an emoji seed)
-- Option to output the encrypted data in hexadecimal or base64 instead
+- Algorithm to map binary output into emojis
 
 Thanks to all the people on stackoverflow and to the creators of the used libraries and functions!
