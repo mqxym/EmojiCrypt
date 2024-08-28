@@ -1,7 +1,10 @@
-# EmojiCrypt Version 1.1.0 🌈
+# EmojiCrypt Version 2.0.0 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
-This repo is hosted here: [nasaemoji.com](https://nasaemoji.com)
+This repo is hosted here:
+
+- (v2): [nasaemoji.com](https://nasaemoji.com)
+- (v1): [nasaemoji.com](https://v1.nasaemoji.com) (not recommended)
 
 ## Idea 💡
 
