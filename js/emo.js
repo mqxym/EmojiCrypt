@@ -1,5 +1,5 @@
 function getVersion () {
-	return "2.0.0";
+	return "2.0.1";
 }
 
 //calculates a security level based on the passwords md5 hash
