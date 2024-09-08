@@ -26,7 +26,7 @@ function bytesToBase64(bytes) {
 }
 
 function mapSymbolsToBytes(symbolArray, uniqueSymbols) {
-    const base = uniqueSymbols.length; // e.g., base 3500
+    const base = uniqueSymbols.length;
     let bigIntValue = BigInt(0); // Big integer to accumulate the result
 
     // Convert symbol array to a large integer in the given base
@@ -45,16 +45,12 @@ function mapSymbolsToBytes(symbolArray, uniqueSymbols) {
         bigIntValue = bigIntValue / 256n; // Shift right by 8 bits (base 256)
     }
 
-    console.log(byteArray)
-
     return byteArray;
 }
 
 function mapBytesToSymbols(byteArray, uniqueSymbols) {
-    const base = uniqueSymbols.length; // e.g., base 3500
+    const base = uniqueSymbols.length; 
     let bigIntValue = BigInt(0);
-
-    console.log(byteArray)
 
     // Convert byte array (base 256) to a large integer
     for (let byte of byteArray) {
