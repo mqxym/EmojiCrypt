@@ -26,71 +26,52 @@ function bytesToBase64(bytes) {
 }
 
 function mapSymbolsToBytes(symbolArray, uniqueSymbols) {
-    const symbolArrayLength = uniqueSymbols.length;
+    const base = uniqueSymbols.length; // e.g., base 3500
+    let bigIntValue = BigInt(0); // Big integer to accumulate the result
 
-    // Determine how many bits per symbol we used
-    const bitsPerSymbol = Math.floor(Math.log2(symbolArrayLength));
-    const maxValuePerSymbol = Math.pow(2, bitsPerSymbol) - 1;
-
-    let buffer = 0;
-    let bufferLength = 0;
-    const byteArray = [];
-
+    // Convert symbol array to a large integer in the given base
     for (let symbol of symbolArray) {
         const symbolIndex = uniqueSymbols.indexOf(symbol);
         if (symbolIndex === -1) {
             throw new Error(`Symbol ${symbol} not found in uniqueSymbols array.`);
         }
-
-        // Add the symbol index to the buffer
-        buffer = (buffer << bitsPerSymbol) | symbolIndex;
-        bufferLength += bitsPerSymbol;
-
-        // Extract bytes from the buffer as long as we have full bytes
-        while (bufferLength >= 8) {
-            bufferLength -= 8;
-            byteArray.push((buffer >> bufferLength) & 0xFF);
-        }
+        bigIntValue = bigIntValue * BigInt(base) + BigInt(symbolIndex);
     }
 
-	if (byteArray[ byteArray.length - 1 ] == 0) { 
-		byteArray.pop();
-	}
+    // Convert the large integer to bytes (base 256)
+    const byteArray = [];
+    while (bigIntValue > 0n) {
+        byteArray.unshift(Number(bigIntValue % 256n)); // Extract the least significant byte
+        bigIntValue = bigIntValue / 256n; // Shift right by 8 bits (base 256)
+    }
+
+    console.log(byteArray)
+
     return byteArray;
 }
 
-
 function mapBytesToSymbols(byteArray, uniqueSymbols) {
-    const symbolArrayLength = uniqueSymbols.length;
-    const symbols = [];
+    const base = uniqueSymbols.length; // e.g., base 3500
+    let bigIntValue = BigInt(0);
 
-    // Determine how many bits per symbol we can map
-    const bitsPerSymbol = Math.floor(Math.log2(symbolArrayLength));
-    const maxValuePerSymbol = Math.pow(2, bitsPerSymbol) - 1;
+    console.log(byteArray)
 
-    let buffer = 0;
-    let bufferLength = 0;
-
+    // Convert byte array (base 256) to a large integer
     for (let byte of byteArray) {
-        // Add the current byte to the buffer
-        buffer = (buffer << 8) | byte;
-        bufferLength += 8;
-
-        // Extract symbols from the buffer as long as we have enough bits
-        while (bufferLength >= bitsPerSymbol) {
-            bufferLength -= bitsPerSymbol;
-            const symbolIndex = (buffer >> bufferLength) & maxValuePerSymbol;
-            symbols.push(uniqueSymbols[symbolIndex]);
-        }
+        bigIntValue = (bigIntValue * 256n) + BigInt(byte);
     }
 
-    // If there are remaining bits in the buffer, map them as well
-    if (bufferLength > 0) {
-        const symbolIndex = (buffer << (bitsPerSymbol - bufferLength)) & maxValuePerSymbol;
-        symbols.push(uniqueSymbols[symbolIndex]);
+    // Convert the large integer to the desired base (e.g., base 3500)
+    const symbols = [];
+    while (bigIntValue > 0n) {
+        const symbolIndex = Number(bigIntValue % BigInt(base));
+        symbols.unshift(uniqueSymbols[symbolIndex]);
+        bigIntValue = bigIntValue / BigInt(base);
     }
+
     return symbols;
 }
+
 
 // Super simple XOR encrypt function
 function XORencrypt(key, plaintext) {
