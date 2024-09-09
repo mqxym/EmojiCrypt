@@ -16,7 +16,7 @@
 	<meta name="keywords" content="Encrypt,Decrypt,AES,Blowfish,AES256,Encryption,Online,HTML,Javascript,Offline,Download,Sourcecode,Emoji,Emo" />
 	<meta name="author" content="Marques Xiaomi" />
 	<meta name="copyright" content="Maxim Schulz" />
-	<meta name="page-topic" content="Computer" />
+	<meta name="page-topic" crrontent="Computer" />
 	<meta http-equiv="Reply-to" content="maxim@omg.lol" />
 	<meta name="expires" content="" />
 	<meta name="revisit-after" content="2 days" />
@@ -25,94 +25,130 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap.bundle.js"></script>
 	<script src="js/crypto.js"></script>
+	<style>
+		body, html {
+		height: 100%;
+		overflow-x: hidden;
+		}
+		.infodiv {
+			left: 100%; 
+		}
+		.main {
+			position: absolute;
+			width: 100%;
+		}
+	</style>
 </head>
 
-<body class="d-block p-3">
-	<form class="form">
-		<div class="text-center"><h3>Text 📄 🔄 🌈 Emoji</h3></div>
-		<div class="text-center"><h6 id="explanation">Encrypt or decrypt texts or messages with a password. The output is Emojis, the key is Emojis. With NasaEmoji, you can send secret messages to anyone! Generate and share a common key with your recipient using a method of your choice. Save the key in one of the 5 slots for ease of access.</h6></div>
-		<hr>
-		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<span class="input-group-text">✉️</span>
-			</div>
-			<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
-			<div class="input-group-append">
-				<button id="deleteText" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+<body >
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Text 📄 🔄 🌈 Emoji</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+		  <ul class="navbar-nav ml-auto">
+			<li class="nav-item">
+			  <a class="nav-link" id="menuApp">App</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" id="menuInfo">About</a>
+			</li>
+			<li class="nav-item">
+				<select class="form-control" id="lang">
+					<option value="0">English 🇺🇸</option>
+					<option value="1">German 🇩🇪</option>
+					<option value="2">Modern Chinese 🇨🇳</option>
+					<option value="3">Russian 🇷🇺</option>
+					<option value="4">Spanish 🇪🇸</option>
+					<option value="5">French 🇫🇷</option>
+				</select>
+			</li>
+		  </ul>
+		</div>
+	  </nav>
+	
+		<div class="main p-3" id="divApp">
+			<form class="form">
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">✉️</span>
+					</div>
+					<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
+					<div class="input-group-append">
+						<button id="deleteText" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+					</div>
+				</div>
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="emcode">🔑</span>
+					</div>
+					<input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
+					<div class="input-group-append">
+						<button id="btnKeyGenerate" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
+					</div>
+					<div class="input-group-append">
+						<button id="copyKey" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
+					</div>
+				</div>
+				<hr>
+				<div id="saveKey" class="mb-2">
+					Load or save keys 
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group">
+							<select class="form-control" id="keySlot">
+							  <option value="1">Slot 1️⃣</option>
+							  <option value="2">Slot 2️⃣</option>
+							  <option value="3">Slot 3️⃣</option>
+							  <option value="4">Slot 4️⃣</option>
+							  <option value="5">Slot 5️⃣</option>
+							</select>
+						  </div>
+					</div>
+					<div class="col">
+						<button id="btnLoad" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>				
+						<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
+					</div>
+				</div>
+				<hr>
+				<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
+				</form>
+			<hr>
+			<div class="input-group mb-3">
+				<textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
+				<div class="input-group-append">
+					<button id="copyMessage" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
+				</div>
 			</div>
 		</div>
-		<div class="input-group mb-3">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="emcode">🔑</span>
+	
+		<div class="p-3 main infodiv" id="divInfo">
+			<div class="text-center"><h6 id="explanation">Encrypt or decrypt texts or messages with a password. The output is Emojis, the key is Emojis. With NasaEmoji, you can send secret messages to anyone! Generate and share a common key with your recipient using a method of your choice. Save the key in one of the 5 slots for ease of access.</h6></div>
+			<hr>
+			<p class="text-center">
+				<b id="footerHigh">Secure on device encryption! 
+					<br> Combined AES-256, Blowfish & XOR 
+					<br>
+					No data sent. No cookies. No tracking. No logging.
+				</b>
+			</p>
+			<div class="form-group text-center">
+				
 			</div>
-			<input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
-			<div class="input-group-append">
-				<button id="btnKeyGenerate" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
-			</div>
-			<div class="input-group-append">
-				<button id="copyKey" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
-			</div>
-		</div>
-		<hr>
-		<div id="saveKey" class="mb-2">
-			Load or save keys 
-		</div>
-		<div class="row">
-			<div class="col">
-				<div class="form-group">
-					<select class="form-control" id="keySlot">
-					  <option value="1">Slot 1️⃣</option>
-					  <option value="2">Slot 2️⃣</option>
-					  <option value="3">Slot 3️⃣</option>
-					  <option value="4">Slot 4️⃣</option>
-					  <option value="5">Slot 5️⃣</option>
-					</select>
-				  </div>
-			</div>
-			<div class="col">
-				<button id="btnLoad" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>				
-				<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
+			<hr>
+			<div class="text-center">
+				<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
+				<br>
+				Copy Url: https://nasaemoji.com
+				<br>
 			</div>
 		</div>
-		<hr>
-		<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
-		</form>
-	<hr>
-	<div class="input-group mb-3">
-		<textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
-		<div class="input-group-append">
-			<button id="copyMessage" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
-		</div>
-	</div>
-	<hr>
-	<p class="text-center">
-		<b id="footerHigh">Secure on device encryption! 
-			<br> Combined AES-256, Blowfish & XOR 
-			<br>
-			No data sent. No cookies. No tracking. No logging.
-			<br>
-			Change language
-		</b>
-	</p>
-	<div class="form-group text-center">
-		<select class="form-control" id="lang">
-			<option value="0">English 🇺🇸</option>
-			<option value="1">German 🇩🇪</option>
-			<option value="2">Modern Chinese 🇨🇳</option>
-			<option value="3">Russian 🇷🇺</option>
-			<option value="4">Spanish 🇪🇸</option>
-			<option value="5">French 🇫🇷</option>
-		</select>
-	</div>
-	<hr>
-	<div class="text-center">
-		<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
-		<br>
-		<a href="https://privnote.com" target="_blank">Privnote</a>
-		<br>
-		Copy Url: https://nasaemoji.com
-		<br>
-	</div>
+	
+
+
+
 
 	<script src="js/base-64.js" defer></script>
 	<script src="js/lib.js" defer></script>
@@ -282,6 +318,18 @@
 				$(this).addClass("bg-dark");
 				$(this).html(getTranslation("btnSave",lang));
 			});
+
+			$("#menuInfo").click(function () {
+				$("#divApp").animate({left: '-100%'}, 500);
+				$("#divInfo").animate({left: '0%'}, 500);
+			});			
+			
+			$("#menuApp").click(function () {
+				$("#divApp").animate({left: '0%'}, 500);
+				$("#divInfo").animate({left: '100%'}, 500);
+			});
+
+
 
 			$("#lang").change(function() {
 				localStorage.setItem("lang", parseInt($("#lang").val()));
