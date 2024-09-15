@@ -1,349 +1,877 @@
 <!doctype html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<title>🌘 - to the moon! Secure online AES encryption</title>
-	
-	<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
-	<link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon and Manifest -->
+    <link rel="icon" type="image/x-icon" href="icon/favicon.ico">
+    <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Convert text to emojis or encrypt text with emojis and turn them to even more emojis." />
+    <meta name="keywords" content="Encrypt,Decrypt,AES,Blowfish,AES256,Encryption,Online,HTML,Javascript,Offline,Download,Sourcecode,Emoji,Emo" />
+    <meta name="author" content="Marques Xiaomi" />
+    <meta name="copyright" content="Maxim Schulz" />
+    <meta name="page-topic" content="Computer" />
+    <meta http-equiv="Reply-to" content="maxim@omg.lol" />
+    <meta name="expires" content="" />
+    <meta name="revisit-after" content="2 days" />
+    <!-- CSS and JS Links -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>🌘 - to the moon! Text to Emoji and Emoji-Encryption</title>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="js/crypto.js"></script>
+    <style>
+        body,
+        html {
+            height: 100%;
+            overflow-x: hidden;
+        }
 
-	<link rel="manifest" href="manifest.webmanifest">
+        .info-section {
+            left: 100%;
+        }
 
-	<meta name="description" content="Encrypt and decrypt text with a key or a password. The output is Emojis. The key is Emojis. Perfect!" />
-	<meta name="keywords" content="Encrypt,Decrypt,AES,Blowfish,AES256,Encryption,Online,HTML,Javascript,Offline,Download,Sourcecode,Emoji,Emo" />
-	<meta name="author" content="Marques Xiaomi" />
-	<meta name="copyright" content="Maxim Schulz" />
-	<meta name="page-topic" crrontent="Computer" />
-	<meta http-equiv="Reply-to" content="maxim@omg.lol" />
-	<meta name="expires" content="" />
-	<meta name="revisit-after" content="2 days" />
+        .encrypt-section {
+            left: -100%;
+        }
 
-	<script src="js/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/bootstrap.bundle.js"></script>
-	<script src="js/crypto.js"></script>
-	<style>
-		body, html {
-			height: 100%;
-			overflow-x: hidden;
-		}
-		.infodiv {
-			left: 100%; 
-		}
-		.overmain {
-			position:relative;
-		}
-		.main {
-			position: absolute;
-			width: 100%;
-		}
-	</style>
+        .main-container {
+            position: relative;
+        }
+
+        .main-content {
+            position: absolute;
+            width: 100%;
+        }
+    </style>
 </head>
 
-<body >
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Text 📄 🔄 🌈 Emoji</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		  <span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-		  <ul class="navbar-nav ml-auto">
-			<li class="nav-item">
-			  <a class="nav-link" id="menuApp">App</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" id="menuInfo">About</a>
-			</li>
-			<li class="nav-item">
-				<select class="form-control" id="lang">
-					<option value="0">English 🇺🇸</option>
-					<option value="1">German 🇩🇪</option>
-					<option value="2">Modern Chinese 🇨🇳</option>
-					<option value="3">Russian 🇷🇺</option>
-					<option value="4">Spanish 🇪🇸</option>
-					<option value="5">French 🇫🇷</option>
-				</select>
-			</li>
-		  </ul>
-		</div>
-	  </nav>
-	<div class="overmain">
-		<div class="main p-3" id="divApp">
-			<form class="form">
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text">✉️</span>
-					</div>
-					<textarea class="form-control" placeholder="Message" aria-label="Emoji" id="inputText" rows="5"></textarea>
-					<div class="input-group-append">
-						<button id="deleteText" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
-					</div>
-				</div>
-				<div class="input-group mb-3">
-					<div class="input-group-prepend">
-						<span class="input-group-text" id="emcode">🔑</span>
-					</div>
-					<input type="text" placeholder="(optional)" class="form-control" id="inputKey" aria-describedby="emcode">
-					<div class="input-group-append">
-						<button id="btnKeyGenerate" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
-					</div>
-					<div class="input-group-append">
-						<button id="copyKey" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
-					</div>
-				</div>
-				<hr>
-				<div id="saveKey" class="mb-2">
-					Load or save keys 
-				</div>
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<select class="form-control" id="keySlot">
-							  <option value="1">Slot 1️⃣</option>
-							  <option value="2">Slot 2️⃣</option>
-							  <option value="3">Slot 3️⃣</option>
-							  <option value="4">Slot 4️⃣</option>
-							  <option value="5">Slot 5️⃣</option>
-							</select>
-						  </div>
-					</div>
-					<div class="col">
-						<button id="btnLoad" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>				
-						<button id="btnSave" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
-					</div>
-				</div>
-				<hr>
-				<button id="btnConvert" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
-				</form>
-			<hr>
-			<div class="input-group mb-3">
-				<textarea class="form-control" aria-label="Emoji" id="out" rows="10" readonly>Copy from here</textarea>
-				<div class="input-group-append">
-					<button id="copyMessage" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
-				</div>
-			</div>
-		</div>
-	
-		<div class="p-3 main infodiv" id="divInfo">
-			<div class="text-center"><h6 id="explanation">Encrypt or decrypt texts or messages with a password. The output is Emojis, the key is Emojis. With NasaEmoji, you can send secret messages to anyone! Generate and share a common key with your recipient using a method of your choice. Save the key in one of the 5 slots for ease of access.</h6></div>
-			<hr>
-			<p class="text-center">
-				<b id="footerHigh">Secure on device encryption! 
-					<br> Combined AES-256, Blowfish & XOR 
-					<br>
-					No data sent. No cookies. No tracking. No logging.
-				</b>
-			</p>
-			<div class="form-group text-center">
-				
-			</div>
-			<hr>
-			<div class="text-center">
-				<a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
-				<br>
-				Copy Url: https://nasaemoji.com
-				<br>
-			</div>
-		</div>
-	</div>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" id="navbarBrand" href="#">Text 📄 🔄 🌈 Emoji</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- Choose App Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="chooseAppMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Choose App
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="appMenu">
+                        <a class="dropdown-item" id="convertMenu">🔄 Convert</a>
+                        <a class="dropdown-item" id="encryptMenu">🔐 Encrypt</a>
+                    </div>
+                </li>
+                <!-- About Menu Item -->
+                <li class="nav-item">
+                    <a class="nav-link" id="aboutMenu">About</a>
+                </li>
+                <!-- Language Selector -->
+                <li class="nav-item">
+                    <select class="form-control" id="languageSelect">
+                        <option value="0">English 🇺🇸</option>
+                        <option value="1">German 🇩🇪</option>
+                        <option value="2">Modern Chinese 🇨🇳</option>
+                        <option value="3">Russian 🇷🇺</option>
+                        <option value="4">Spanish 🇪🇸</option>
+                        <option value="5">French 🇫🇷</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Encryption/Decryption Section -->
+        <div class="main-content p-3 encrypt-section" id="encryptSection">
+            <form class="form">
+                <!-- Message Input -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">✉️</span>
+                    </div>
+                    <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="encryptMessageInput" rows="5"></textarea>
+                    <div class="input-group-append">
+                        <button id="clearEncryptInputButton" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+                    </div>
+                </div>
+                <!-- Key Input -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="keyIcon">🔑</span>
+                    </div>
+                    <input type="text" placeholder="(optional)" class="form-control" id="keyInput" aria-describedby="keyIcon">
+                    <div class="input-group-append">
+                        <button id="generateKeyButton" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
+                    </div>
+                    <div class="input-group-append">
+                        <button id="copyKeyButton" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
+                    </div>
+                </div>
+                <hr>
+                <!-- Key Storage Instructions -->
+                <div id="keyInstructions" class="mb-2">
+                    Load or save keys
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <select class="form-control" id="keySlotSelect">
+                                <option value="1">Slot 1️⃣</option>
+                                <option value="2">Slot 2️⃣</option>
+                                <option value="3">Slot 3️⃣</option>
+                                <option value="4">Slot 4️⃣</option>
+                                <option value="5">Slot 5️⃣</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button id="loadKeyButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>
+                        <button id="saveKeyButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
+                    </div>
+                </div>
+                <hr>
+                <!-- Encrypt/Decrypt Button -->
+                <button id="encryptDecryptButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
+            </form>
+            <hr>
+            <!-- Output Message -->
+            <div class="input-group mb-3">
+                <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
+                <div class="input-group-append">
+                    <button id="copyEncryptOutputButton" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
+                </div>
+            </div>
+        </div>
+        <!-- Conversion Section -->
+        <div class="main-content p-3 convert-section" id="convertSection">
+            <form class="form">
+                <!-- Message Input -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">✉️</span>
+                    </div>
+                    <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="convertMessageInput" rows="5"></textarea>
+                    <div class="input-group-append">
+                        <button id="clearConvertInputButton" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+                    </div>
+                </div>
+                <hr>
+                <!-- Convert Button -->
+                <button id="convertButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔄 Convert</button>
+            </form>
+            <hr>
+            <!-- Output Message -->
+            <div class="input-group mb-3">
+                <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
+                <div class="input-group-append">
+                    <button id="copyConvertOutputButton" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
+                </div>
+            </div>
+        </div>
+        <!-- About Section -->
+		<div class="p-3 main-content info-section" id="aboutSection">
+            <div class="text-center">
+                <h6 id="explanation">[Explanation text]</h6>
+            </div>
+            <hr>
+            <!-- FAQ Section -->
+            <div class="accordion" id="faqAccordion">
+                <!-- FAQ Item 1 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading1">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                                <span id="faqQuestion1">What is NasaEmoji?</span>
+                            </button>
+                        </h5>
+                    </div>
 
-	
+                    <div id="faqCollapse1" class="collapse show" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer1">NasaEmoji is a secure encryption tool that allows you to encrypt and decrypt messages using emojis as keys and output.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading2">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                                <span id="faqQuestion2">How do I encrypt a message?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer2">To encrypt a message, enter your message in the input field, generate or enter a key, and click the "Encrypt" button. The encrypted message will be displayed in emojis.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                                <span id="faqQuestion3">How do I decrypt a message?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer3">To decrypt a message, paste the emoji-encrypted message into the input field, enter the key used to encrypt it, and click the "Decrypt" button.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading4">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                                <span id="faqQuestion4">How do I generate an emoji key?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse4" class="collapse" aria-labelledby="faqHeading4" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer4">You can generate a random emoji key by clicking the "Generate Key" button. The key is used to encrypt and decrypt messages.</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- FAQ Item 5 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading5">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                                <span id="faqQuestion5">Is my data secure?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse5" class="collapse" aria-labelledby="faqHeading5" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer5">Yes, all encryption and decryption happen locally on your device. No data is sent anywhere, ensuring your messages remain private.</span>
+                        </div>
+                    </div>
+                </div>
+                 <!-- FAQ Item 6 -->
+				 <div class="card">
+                    <div class="card-header" id="faqHeading6">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                                <span id="faqQuestion6">Can I convert text to emojis without encryption?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse6" class="collapse" aria-labelledby="faqHeading6" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer6">Yes, NasaEmoji allows you to convert any text to emojis and back without encryption using the "Convert" feature.</span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- FAQ Item 7 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading7">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
+                                <span id="faqQuestion7">What encryption algorithms does NasaEmoji use?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse7" class="collapse" aria-labelledby="faqHeading7" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer7">NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.</span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- FAQ Item 8 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading8">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse8" aria-expanded="false" aria-controls="faqCollapse8">
+                                <span id="faqQuestion8">Why are multiple encryption algorithms used?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse8" class="collapse" aria-labelledby="faqHeading8" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer8">Using multiple algorithms enhances security by adding layers of encryption, making it more difficult for unauthorized parties to decrypt the message.</span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- FAQ Item 9 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading9">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
+                                <span id="faqQuestion9">What is key hashing and why is it used?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse9" class="collapse" aria-labelledby="faqHeading9" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer9">Key hashing transforms your key into a fixed-size hash using multiple algorithms, enhancing security by preventing direct access to the original key and making brute-force attacks more difficult.</span>
+                        </div>
+                    </div>
+                </div>
 
-	<script src="js/base-64.js" defer></script>
-	<script src="js/lib.js" defer></script>
-	<script src="js/emo.js" defer></script>
-	<script src="js/lang.js" defer></script>
+                <!-- FAQ Item 10 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading10">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
+                                <span id="faqQuestion10">How does key hashing prevent brute-force attacks?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse10" class="collapse" aria-labelledby="faqHeading10" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer10">By hashing the key multiple times with different algorithms and salts, it increases the computational effort required to guess the key, thus deterring brute-force attempts.</span>
+                        </div>
+                    </div>
+                </div>
 
-	<script>
-		let lang = 0;
-		if (localStorage.getItem("lang")) {
-			lang = parseInt(localStorage.getItem("lang"));
-			$("#lang").val(lang);
-		} 
+                <!-- FAQ Item 11 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading11">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
+                                <span id="faqQuestion11">What is the CryptoJS library?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse11" class="collapse" aria-labelledby="faqHeading11" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer11">CryptoJS is a widely used JavaScript library that provides standard and secure cryptographic algorithms for encryption and hashing.</span>
+                        </div>
+                    </div>
+                </div>
 
-		let mode = "emoji";
+                <!-- FAQ Item 12 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading12">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
+                                <span id="faqQuestion12">How secure is the CryptoJS library?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse12" class="collapse" aria-labelledby="faqHeading12" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer12">CryptoJS is considered secure as it implements well-known cryptographic algorithms correctly. It is used in many applications for secure data handling.</span>
+                        </div>
+                    </div>
+                </div>
 
-		function setLanguage () {
-			$("#deleteText").html(getTranslation("deleteText", lang));
-			$("#footerHigh").html(getTranslation("footerHigh", lang));
-			$("#footerSource").html(getTranslation("footerSource", lang));
-			$("#explanation").html(getTranslation("explanation", lang));
-			$("#inputText").attr("placeholder",getTranslation("inputText", lang));
-			$("#inputKey").attr("placeholder",getTranslation("inputKey", lang));
-			$("#btnConvert").html(getTranslation("btnConvert", lang));
+                <!-- FAQ Item 13 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading13">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
+                                <span id="faqQuestion13">How does NasaEmoji handle key storage?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse13" class="collapse" aria-labelledby="faqHeading13" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer13">You can save keys locally in one of the 5 available slots using your browser's local storage for quick access.</span>
+                        </div>
+                    </div>
+                </div>
 
-			$("#copyKey").html(getTranslation("copyKey",lang));
-			$("#out").html(getTranslation("out",lang));
-			$("#saveKey").html(getTranslation("saveKey",lang));
-			$("#btnLoad").html(getTranslation("btnLoad",lang));
-			$("#btnSave").html(getTranslation("btnSave",lang));
-			$("#copyMessage").html(getTranslation("copyMessage",lang));
-			
-		}
+                <!-- FAQ Item 14 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading14">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
+                                <span id="faqQuestion14">Does NasaEmoji send any data over the internet?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse14" class="collapse" aria-labelledby="faqHeading14" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer14">No, all operations are performed locally on your device. NasaEmoji does not send any data over the internet.</span>
+                        </div>
+                    </div>
+                </div>
 
-		$(document).ready(function () {
+                <!-- FAQ Item 15 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading15">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
+                                <span id="faqQuestion15">Can I use NasaEmoji offline?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse15" class="collapse" aria-labelledby="faqHeading15" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer15">Yes, you can download NasaEmoji for local execution and use it offline without an internet connection.</span>
+                        </div>
+                    </div>
+                </div>
 
-			setLanguage();
+                <!-- FAQ Item 17 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading17">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse17" aria-expanded="false" aria-controls="faqCollapse17">
+                                <span id="faqQuestion17">Is the encryption standardized?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse17" class="collapse" aria-labelledby="faqHeading17" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer17">NasaEmoji uses standard encryption algorithms but combines them in a unique way. While secure, it is recommended for casual use rather than critical security applications.</span>
+                        </div>
+                    </div>
+                </div>
 
-			$("#btnConvert").click(async function () {
+                <!-- FAQ Item 18 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading18">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
+                                <span id="faqQuestion18">Can I trust NasaEmoji for highly sensitive information?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse18" class="collapse" aria-labelledby="faqHeading18" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer18">While NasaEmoji employs strong encryption, it is primarily designed for personal and casual use. For highly sensitive information, consult security professionals.</span>
+                        </div>
+                    </div>
+                </div>
 
-				//throw error when txt input is empty
-				if(!$("#inputText").val()) {
-					$(this).html(getTranslation("error",lang));
-					await new Promise (r => setTimeout(r,1000));
-					$(this).html(getTranslation("btnConvert",lang));
-					return ;
-				}
+                <!-- FAQ Item 19 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading19">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
+                                <span id="faqQuestion19">Is NasaEmoji open-source?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse19" class="collapse" aria-labelledby="faqHeading19" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer19">Yes, NasaEmoji's source code is available on GitHub, allowing you to review and contribute to its development.</span>
+                        </div>
+                    </div>
+                </div>
 
-				//check if the input is b64, hex or emoji
-				inputCheck = checkInputString($("#inputText").val());
-				
-				//If there is no type for the input it must be encrypted
-				if (!inputCheck) {
-					// encryption
-					$(this).html(getTranslation("btnEncodeWorking",lang));
-					await new Promise(r => setTimeout(r, 15));
+                <!-- FAQ Item 20 -->
+                <div class="card">
+                    <div class="card-header" id="faqHeading20">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
+                                <span id="faqQuestion20">How can I contribute to NasaEmoji?</span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="faqCollapse20" class="collapse" aria-labelledby="faqHeading20" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            <span id="faqAnswer20">You can contribute by visiting the GitHub repository, reporting issues, suggesting improvements, or submitting pull requests.</span>
+                        </div>
+                    </div>
+                </div>
 
-					let message = $("#inputText").val();
-					let keys = getPassword($("#inputKey").val());
+            </div>
+            <hr>
+            <p class="text-center">
+                <b id="footerHighlight">[Footer Highlight]</b>
+            </p>
+            <div class="form-group text-center">
+            </div>
+            <hr>
+            <div class="text-center">
+                <a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
+                <br>
+                Copy Url: https://nasaemoji.com
+                <br>
+            </div>
+        </div>
+    </div>
+    <!-- External Scripts -->
+    <script src="js/base-64.js" defer></script>
+    <script src="js/lib.js" defer></script>
+    <script src="js/emo.js" defer></script>
+    <script src="js/lang.js" defer></script>
 
-					let emojiString = encrypt(message, keys);
+    <script>
+        // Language index, default to 0 (English)
+        let languageIndex = 0;
 
-					//encrytion failed
-					if (!emojiString) {
-						$(this).html(getTranslation("btnEncodeFailed",lang));
-					} else {
-						//encryption succeeded
-						$("#out").val(emojiString);
-						$(this).html(getTranslation("btnEncodeSuccess",lang));
-					}
-					await new Promise(r => setTimeout(r, 5000));
-					$(this).html(getTranslation("btnConvert",lang));
+        // Load language index from local storage if available
+        if (localStorage.getItem("lang")) {
+            languageIndex = parseInt(localStorage.getItem("lang"));
+            $("#languageSelect").val(languageIndex);
+        }
 
-				} else {
-					//decryption
-					$(this).html(getTranslation("btnDecodeWorking",lang));
+        /**
+         * Update the UI elements with the translations based on the selected language.
+         */
+        function updateUILanguage() {
+            $("#navbarBrand").html(getTranslation("navbarBrand", languageIndex));
+            $("#chooseAppMenu").html(getTranslation("chooseAppMenu", languageIndex));
+            $("#encryptMenu").html(getTranslation("encryptMenu", languageIndex));
+            $("#convertMenu").html(getTranslation("convertMenu", languageIndex));
+            $("#aboutMenu").html(getTranslation("aboutMenu", languageIndex));
 
-					await new Promise(r => setTimeout(r, 15));
-					
-					let message = $("#inputText").val();
-					let keys = getPassword($("#inputKey").val());
-					
-					decrypted = decrypt(message, keys);
-				
-					if (!decrypted) {
-						//decryption failed
-						$(this).html(getTranslation("btnDecodeFailed",lang));
-						$("#out").val("");
-					} else {
-						//decryption succeeded
-						$("#out").val(decrypted);
-						$(this).html(getTranslation("btnDecodeSuccess",lang));
-					}
+            $("#clearEncryptInputButton").html(getTranslation("clearEncryptInputButton", languageIndex));
+            $("#encryptMessageInput").attr("placeholder", getTranslation("encryptMessageInput", languageIndex));
+            $("#keyInput").attr("placeholder", getTranslation("keyInput", languageIndex));
+            $("#encryptDecryptButton").html(getTranslation("encryptDecryptButton", languageIndex));
 
-					
+            $("#copyKeyButton").html(getTranslation("copyKeyButton", languageIndex));
+            $("#keyInstructions").html(getTranslation("keyInstructions", languageIndex));
+            $("#loadKeyButton").html(getTranslation("loadKeyButton", languageIndex));
+            $("#saveKeyButton").html(getTranslation("saveKeyButton", languageIndex));
+            $("#encryptOutputTextarea").html(getTranslation("encryptOutputTextarea", languageIndex));
+            $("#copyEncryptOutputButton").html(getTranslation("copyEncryptOutputButton", languageIndex));
 
-					await new Promise(r => setTimeout(r, 5000));
-					$(this).html(getTranslation("btnConvert",lang));
-				}
-			});
+            $("#clearConvertInputButton").html(getTranslation("clearConvertInputButton", languageIndex));
+            $("#convertMessageInput").attr("placeholder", getTranslation("convertMessageInput", languageIndex));
+            $("#convertButton").html(getTranslation("convertButton", languageIndex));
+            $("#convertOutputTextarea").html(getTranslation("convertOutputTextarea", languageIndex));
+            $("#copyConvertOutputButton").html(getTranslation("copyConvertOutputButton", languageIndex));
 
-			$("#deleteText").click(function () {
-				$("#inputText").val("");
-			});
+            $("#explanation").html(getTranslation("explanation", languageIndex));
+            $("#footerHighlight").html(getTranslation("footerHighlight", languageIndex));
+            $("#footerSource").html(getTranslation("footerSource", languageIndex));
 
-			$("#btnKeyGenerate").click(function () {
-				$("#inputKey").val(generateRandomKey());
-			});
+			// Update FAQ items
+			for (let i = 1; i <= 20; i++) {
+                $("#faqQuestion" + i).html(getTranslation("faqQuestion" + i, languageIndex));
+                $("#faqAnswer" + i).html(getTranslation("faqAnswer" + i, languageIndex));
+            }
+        }
 
-			$("#copyKey").click(function () {
-				let copyText = document.getElementById("inputKey");
-				copyText.select();
-				copyText.setSelectionRange(0, 99999);
-				document.execCommand("copy");
-			});
+        $(document).ready(function () {
 
-			$("#copyMessage").click(function () {
-				let copyText = document.getElementById("out");
-				copyText.select();
-				copyText.setSelectionRange(0, 99999);
-				document.execCommand("copy");
-			});
+            updateUILanguage();
 
-			$("#btnLoad").click(async function () {
-				let slot = $("#keySlot").val();
+            // Encrypt/Decrypt Button Click Handler
+            $("#encryptDecryptButton").click(async function () {
+                const $thisButton = $(this);
+                const inputText = $("#encryptMessageInput").val();
 
-				$(this).html(getTranslation("loadKey",lang));
-				$(this).removeClass("bg-dark");
-				$(this).addClass("bg-success");
+                // Show error if input text is empty
+                if (!inputText) {
+                    $thisButton.html(getTranslation("error", languageIndex));
+                    await new Promise(r => setTimeout(r, 1000));
+                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
+                    return;
+                }
 
-				if (localStorage.getItem("key" + slot)) {
-					key = localStorage.getItem("key" + slot);
-					$(this).removeClass("bg-dark");
-					$(this).addClass("bg-success");
-					$("#inputKey").val(key);
-				} else {
-					$(this).removeClass("bg-dark");
-					$(this).addClass("bg-danger");
-					$(this).html(getTranslation("error",lang));
-				}
-				
-				
-				await new Promise(r => setTimeout(r, 1000));
-				$(this).removeClass("bg-success");
-				$(this).removeClass("bg-danger");
-				$(this).addClass("bg-dark");
-				$(this).html(getTranslation("btnLoad",lang));
-			});
+                const inputType = checkInputString(inputText);
 
-			$("#btnSave").click(async function () {
-				let slot = $("#keySlot").val();
+                if (!inputType) {
+                    // Encryption
+                    $thisButton.html(getTranslation("btnEncodeWorking", languageIndex));
+                    await new Promise(r => setTimeout(r, 15));
 
-				if($("#inputKey").val()) {
-					localStorage.setItem("key"+slot,$("#inputKey").val());
-					$(this).html(getTranslation("saved",lang));
-					$(this).removeClass("bg-dark");
-					$(this).addClass("bg-success");
-				} else {
-					$(this).removeClass("bg-dark");
-					$(this).addClass("bg-danger");
-					$(this).html(getTranslation("error",lang));
-				}
-				
+                    const message = inputText;
+                    const key = getPassword($("#keyInput").val());
 
-				await new Promise(r => setTimeout(r, 1000));
-				$(this).removeClass("bg-danger");
-				$(this).removeClass("bg-success");
-				$(this).addClass("bg-dark");
-				$(this).html(getTranslation("btnSave",lang));
-			});
+                    const emojiString = encrypt(message, key);
 
-			$("#menuInfo").click(function () {
-				$("#divApp").animate({left: '-100%'}, 500);
-				$("#divInfo").animate({left: '0%'}, 500);
-			});			
-			
-			$("#menuApp").click(function () {
-				$("#divApp").animate({left: '0%'}, 500);
-				$("#divInfo").animate({left: '100%'}, 500);
-			});
+                    if (!emojiString) {
+                        // Encryption failed
+                        $thisButton.html(getTranslation("btnEncodeFailed", languageIndex));
+                    } else {
+                        // Encryption succeeded
+                        $("#encryptOutputTextarea").val(emojiString);
+                        $thisButton.html(getTranslation("btnEncodeSuccess", languageIndex));
+                    }
+                    await new Promise(r => setTimeout(r, 5000));
+                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
+                } else {
+                    // Decryption
+                    $thisButton.html(getTranslation("btnDecodeWorking", languageIndex));
+                    await new Promise(r => setTimeout(r, 15));
 
+                    const message = inputText;
+                    const key = getPassword($("#keyInput").val());
 
+                    const decryptedText = decrypt(message, key);
 
-			$("#lang").change(function() {
-				localStorage.setItem("lang", parseInt($("#lang").val()));
-				lang = parseInt($("#lang").val());
-				setLanguage();
-			});
+                    if (!decryptedText) {
+                        // Decryption failed
+                        $thisButton.html(getTranslation("btnDecodeFailed", languageIndex));
+                        $("#encryptOutputTextarea").val("");
+                    } else {
+                        // Decryption succeeded
+                        $("#encryptOutputTextarea").val(decryptedText);
+                        $thisButton.html(getTranslation("btnDecodeSuccess", languageIndex));
+                    }
+                    await new Promise(r => setTimeout(r, 5000));
+                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
+                }
+            });
 
-		});
-	</script>
+            // Convert Button Click Handler
+            $("#convertButton").click(async function () {
+                const $thisButton = $(this);
+                const inputText = $("#convertMessageInput").val();
+
+                // Show error if input text is empty
+                if (!inputText) {
+                    $thisButton.html(getTranslation("error", languageIndex));
+                    await new Promise(r => setTimeout(r, 1000));
+                    $thisButton.html(getTranslation("convertButton", languageIndex));
+                    return;
+                }
+
+                // Check if the input is base64, hex, or emoji
+                const inputType = checkInputString(inputText);
+
+                if (!inputType) {
+                    // Encoding
+                    $thisButton.html(getTranslation("btnEncodeWorkingConvert", languageIndex));
+                    await new Promise(r => setTimeout(r, 15));
+
+                    const message = inputText;
+
+                    const encodedText = encode(message);
+
+                    if (!encodedText) {
+                        // Encoding failed
+                        $thisButton.html(getTranslation("btnEncodeFailedConvert", languageIndex));
+                    } else {
+                        // Encoding succeeded
+                        $("#convertOutputTextarea").val(encodedText);
+                        $thisButton.html(getTranslation("btnEncodeSuccessConvert", languageIndex));
+                    }
+                    await new Promise(r => setTimeout(r, 5000));
+                    $thisButton.html(getTranslation("convertButton", languageIndex));
+                } else {
+                    // Decoding
+                    $thisButton.html(getTranslation("btnDecodeWorkingConvert", languageIndex));
+                    await new Promise(r => setTimeout(r, 15));
+
+                    const message = inputText;
+
+                    const decodedText = decode(message);
+
+                    if (!decodedText) {
+                        // Decoding failed
+                        $thisButton.html(getTranslation("btnDecodeFailedConvert", languageIndex));
+                        $("#convertOutputTextarea").val("");
+                    } else {
+                        // Decoding succeeded
+                        $("#convertOutputTextarea").val(decodedText);
+                        $thisButton.html(getTranslation("btnDecodeSuccessConvert", languageIndex));
+                    }
+                    await new Promise(r => setTimeout(r, 5000));
+                    $thisButton.html(getTranslation("convertButton", languageIndex));
+                }
+            });
+
+            // Clear input text
+            $("#clearEncryptInputButton").click(function () {
+                $("#encryptMessageInput").val("");
+            });
+
+            $("#clearConvertInputButton").click(function () {
+                $("#convertMessageInput").val("");
+            });
+
+            // Generate random key
+            $("#generateKeyButton").click(function () {
+                $("#keyInput").val(generateRandomKey());
+            });
+
+            // Copy key to clipboard
+            $("#copyKeyButton").click(function () {
+                const copyText = document.getElementById("keyInput");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+            });
+
+            // Copy output message to clipboard
+            $("#copyEncryptOutputButton").click(function () {
+                const copyText = document.getElementById("encryptOutputTextarea");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+            });
+
+            $("#copyConvertOutputButton").click(function () {
+                const copyText = document.getElementById("convertOutputTextarea");
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+            });
+
+            // Load key from local storage
+            $("#loadKeyButton").click(async function () {
+                const $thisButton = $(this);
+                const slot = $("#keySlotSelect").val();
+
+                $thisButton.html(getTranslation("loadKey", languageIndex));
+                $thisButton.removeClass("bg-dark").addClass("bg-success");
+
+                const storedKey = localStorage.getItem("key" + slot);
+                if (storedKey) {
+                    $("#keyInput").val(storedKey);
+                } else {
+                    $thisButton.removeClass("bg-success").addClass("bg-danger");
+                    $thisButton.html(getTranslation("error", languageIndex));
+                }
+
+                await new Promise(r => setTimeout(r, 1000));
+                $thisButton.removeClass("bg-success bg-danger").addClass("bg-dark");
+                $thisButton.html(getTranslation("loadKeyButton", languageIndex));
+            });
+
+            // Save key to local storage
+            $("#saveKeyButton").click(async function () {
+                const $thisButton = $(this);
+                const slot = $("#keySlotSelect").val();
+                const key = $("#keyInput").val();
+
+                if (key) {
+                    localStorage.setItem("key" + slot, key);
+                    $thisButton.html(getTranslation("saved", languageIndex));
+                    $thisButton.removeClass("bg-dark").addClass("bg-success");
+                } else {
+                    $thisButton.removeClass("bg-dark").addClass("bg-danger");
+                    $thisButton.html(getTranslation("error", languageIndex));
+                }
+
+                await new Promise(r => setTimeout(r, 1000));
+                $thisButton.removeClass("bg-success bg-danger").addClass("bg-dark");
+                $thisButton.html(getTranslation("saveKeyButton", languageIndex));
+            });
+
+            // Change language
+            $("#languageSelect").change(function () {
+                const selectedLang = parseInt($("#languageSelect").val());
+                localStorage.setItem("lang", selectedLang);
+                languageIndex = selectedLang;
+                updateUILanguage();
+            });
+
+            // Navigation menu handling
+            let currentMenu = 'convertSection'; // Initialize to 'encryptSection'
+
+            // Flag to prevent multiple simultaneous transitions
+            let isTransitioning = false;
+
+            // Mapping of menu IDs to their corresponding div IDs and their order
+            const menuOrder = ['encryptSection', 'convertSection', 'aboutSection'];
+            const menuMap = {
+                'encryptMenu': 'encryptSection',
+                'convertMenu': 'convertSection',
+                'aboutMenu': 'aboutSection'
+            };
+
+            /**
+             * Determines if two menus are adjacent.
+             * @param {string} from - The current menu ID.
+             * @param {string} to - The target menu ID.
+             * @returns {boolean} - True if adjacent, false otherwise.
+             */
+            function areAdjacent(from, to) {
+                const fromIndex = menuOrder.indexOf(from);
+                const toIndex = menuOrder.indexOf(to);
+                return Math.abs(fromIndex - toIndex) === 1;
+            }
+
+            /**
+             * Transitions from the current menu to the target menu.
+             * If the transition is between non-adjacent menus, it first transitions to convertSection.
+             * @param {string} targetMenuId - The ID of the target menu button.
+             */
+            function transitionTo(targetMenuId) {
+                if (isTransitioning) return; // Prevent initiating another transition
+                const targetDiv = menuMap[targetMenuId];
+                if (!targetDiv || targetDiv === currentMenu) return; // Invalid target or already active
+
+                isTransitioning = true; // Set the flag to indicate a transition is in progress
+
+                const needsIntermediate = !areAdjacent(currentMenu, targetDiv);
+
+                if (needsIntermediate) {
+                    // First transition to convertSection
+                    animateTransition(currentMenu, 'convertSection', function () {
+                        // Then transition from convertSection to targetDiv
+                        animateTransition('convertSection', targetDiv, function () {
+                            currentMenu = targetDiv; // Update the current menu
+                            isTransitioning = false; // Reset the flag
+                        });
+                    });
+                } else {
+                    // Direct transition to adjacent menu
+                    animateTransition(currentMenu, targetDiv, function () {
+                        currentMenu = targetDiv; // Update the current menu
+                        isTransitioning = false; // Reset the flag
+                    });
+                }
+
+                // Collapse the navbar if in mobile mode
+                if ($('.navbar-toggler').is(':visible')) {
+                    $('.navbar-collapse').collapse('hide');
+                }
+            }
+
+            /**
+             * Animates the transition between two divs by adjusting their 'left' properties.
+             * @param {string} fromDiv - The ID of the current active div.
+             * @param {string} toDiv - The ID of the target div.
+             * @param {function} callback - Function to execute after the animation completes.
+             */
+            function animateTransition(fromDiv, toDiv, callback) {
+                // Determine the direction of the transition
+                const fromIndex = menuOrder.indexOf(fromDiv);
+                const toIndex = menuOrder.indexOf(toDiv);
+                const direction = toIndex > fromIndex ? 'left' : 'right';
+
+                // Define the animation properties based on the direction
+                const animations = {};
+                if (direction === 'left') {
+                    animations[fromDiv] = { left: '-100%' };
+                    animations[toDiv] = { left: '0%' };
+                } else {
+                    animations[fromDiv] = { left: '100%' };
+                    animations[toDiv] = { left: '0%' };
+                }
+
+                // Animate the 'fromDiv' out of view
+                $(`#${fromDiv}`).animate(animations[fromDiv], 500, function () {
+                    // Ensure the 'fromDiv' is completely out of view
+                    $(this).css('left', direction === 'left' ? '-100%' : '100%');
+                });
+
+                // Animate the 'toDiv' into view
+                $(`#${toDiv}`).animate(animations[toDiv], 500, function () {
+                    // Callback after both animations complete
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
+            }
+
+            // Attach click handlers to menu buttons
+            $('#encryptMenu, #convertMenu, #aboutMenu').click(function (e) {
+                e.preventDefault(); // Prevent default anchor behavior
+                const targetMenuId = $(this).attr('id');
+                transitionTo(targetMenuId);
+            });
+        });
+    </script>
 </body>
 
 </html>
