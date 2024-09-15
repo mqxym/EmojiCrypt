@@ -1,4 +1,4 @@
-# EmojiCrypt Version 2.1.1 🌈
+# EmojiCrypt Version 2.2.0 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
@@ -17,10 +17,10 @@ The idea is to implement a protocol where only you and the receiver knows what t
 
 ### Usability ☺️
 
+- Convert text to emojis and back using the convert option
 - Generate emoji keys which look like encrypted messages
 - Save keys within the browser
 - Site can be added to homescreen on Android and iOS to act as an app (Webapp)
-- Works in Whatsapp, iMessage, Snapchat, Instagram for emojitastic communication
 - The web app is available in 6 languages (feel free to improve the automated translations)
 
 ### Security 🔐
