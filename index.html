@@ -96,13 +96,13 @@
                         Choose App
                     </a>
                     <div class="dropdown-menu" aria-labelledby="appMenu">
-                        <a class="dropdown-item" id="convertMenu">🔄 Convert</a>
-                        <a class="dropdown-item" id="encryptMenu">🔐 Encrypt</a>
+                        <a class="dropdown-item" id="convertMenu" href="?convert">🔄 Convert</a>
+                        <a class="dropdown-item" id="encryptMenu" href="?encrypt">🔐 Encrypt</a>
                     </div>
                 </li>
                 <!-- About Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link" id="aboutMenu">About</a>
+                    <a class="nav-link" id="aboutMenu" href="?about">About</a>
                 </li>
                 <!-- Dark Mode Toggle -->
                 <li class="nav-item">
@@ -660,9 +660,220 @@
             $("#darkModeMenu").html(getTranslation("enableDarkMode", languageIndex));
         }
 
+        // Mapping of menu IDs to their corresponding div IDs and their order
+        const menuOrder = ['encryptSection', 'convertSection', 'aboutSection'];
+        const menuMap = {
+            'encryptMenu': 'encryptSection',
+            'convertMenu': 'convertSection',
+            'aboutMenu': 'aboutSection'
+        };
+
+        // Flag to prevent multiple simultaneous transitions
+        let isTransitioning = false;
+
+        // Initialize currentMenu based on URL parameter
+        let currentMenu = getSectionFromURL();
+
+        /**
+         * Parses the URL parameters to determine which section to display.
+         * @returns {string} - The ID of the section to display.
+         */
+        function getSectionFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('about')) {
+                return 'aboutSection';
+            } else if (params.has('encrypt')) {
+                return 'encryptSection';
+            } else if (params.has('convert')) {
+                return 'convertSection';
+            } else {
+                return 'convertSection'; // Default section
+            }
+        }
+
+        /**
+         * Sets the initial positions of the sections based on the current menu.
+         * Positions other sections off-screen to the left or right.
+         */
+        function setInitialSectionPositions() {
+            const currentIndex = menuOrder.indexOf(currentMenu);
+            menuOrder.forEach(function(section, index) {
+                const offset = index - currentIndex;
+                const leftPosition = offset * 100; // Offset in percent
+                $('#' + section).css('left', leftPosition + '%');
+            });
+        }
+
+        /**
+         * Updates the URL parameter to reflect the current section.
+         */
+        function updateURLParameter() {
+            const paramName = getURLParamNameForSection(currentMenu);
+            const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + paramName;
+            window.history.pushState({ path: newURL }, '', newURL);
+        }
+        
+        /**
+         * Gets the URL parameter name corresponding to a section.
+         * @param {string} section - The ID of the section.
+         * @returns {string} - The URL parameter name.
+         */
+        function getURLParamNameForSection(section) {
+            if (section === 'encryptSection') {
+                return 'encrypt';
+            } else if (section === 'convertSection') {
+                return 'convert';
+            } else if (section === 'aboutSection') {
+                return 'about';
+            }
+        }
+
+        /**
+         * Checks if two sections are adjacent in the menu order.
+         * @param {string} from - The ID of the current section.
+         * @param {string} to - The ID of the target section.
+         * @returns {boolean} - True if the sections are adjacent.
+         */
+        function areAdjacent(from, to) {
+            const fromIndex = menuOrder.indexOf(from);
+            const toIndex = menuOrder.indexOf(to);
+            return Math.abs(fromIndex - toIndex) === 1;
+        }
+
+        /**
+         * Animates the transition between two sections by adjusting their positions.
+         * @param {string} fromDiv - The ID of the current section.
+         * @param {string} toDiv - The ID of the target section.
+         * @param {function} callback - Callback function after animation completes.
+         */
+        function animateTransition(fromDiv, toDiv, callback) {
+            const fromIndex = menuOrder.indexOf(fromDiv);
+            const toIndex = menuOrder.indexOf(toDiv);
+            const direction = toIndex > fromIndex ? 'left' : 'right';
+
+            const fromAnimation = {};
+            const toAnimation = {};
+
+            if (direction === 'left') {
+                fromAnimation.left = '-100%';
+                toAnimation.left = '0%';
+                $('#' + toDiv).css('left', '100%');
+            } else {
+                fromAnimation.left = '100%';
+                toAnimation.left = '0%';
+                $('#' + toDiv).css('left', '-100%');
+            }
+
+            $('#' + fromDiv).animate(fromAnimation, 500);
+            $('#' + toDiv).animate(toAnimation, 500, function () {
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
+        }
+
+        /**
+         * Transitions to the target section with an animation.
+         * @param {string} targetDiv - The ID of the target section.
+         * @param {boolean} [pushState=true] - Whether to update the browser history.
+         */
+        function transitionToSection(targetDiv, pushState = true) {
+            if (isTransitioning || targetDiv === currentMenu) return;
+
+            isTransitioning = true;
+
+            const needsIntermediate = !areAdjacent(currentMenu, targetDiv);
+
+            if (needsIntermediate) {
+                const intermediate = 'convertSection';
+                animateTransition(currentMenu, intermediate, function () {
+                    currentMenu = intermediate;
+                    animateTransition(intermediate, targetDiv, function () {
+                        currentMenu = targetDiv;
+                        isTransitioning = false;
+
+                        if (pushState) {
+                            updateURLParameter();
+                        }
+                    });
+                });
+            } else {
+                animateTransition(currentMenu, targetDiv, function () {
+                    currentMenu = targetDiv;
+                    isTransitioning = false;
+
+                    if (pushState) {
+                        updateURLParameter();
+                    }
+                });
+            }
+
+            // Collapse the navbar if in mobile mode
+            if ($('.navbar-toggler').is(':visible')) {
+                $('.navbar-collapse').collapse('hide');
+            }
+
+            // Update metadata
+            updateMetadata();
+        }
+
+        /**
+         * Parses a URL string to determine which section to display.
+         * @param {string} url - The URL string to parse.
+         * @returns {string} - The ID of the section to display.
+         */
+        function getSectionFromURLString(url) {
+            const params = new URLSearchParams(url.substring(1)); // Remove '?' from the start
+            if (params.has('about')) {
+                return 'aboutSection';
+            } else if (params.has('encrypt')) {
+                return 'encryptSection';
+            } else if (params.has('convert')) {
+                return 'convertSection';
+            } else {
+                return 'convertSection'; // Default section
+            }
+        }
+
+        /**
+         * Updates the page's metadata based on the current section.
+         */
+        function updateMetadata() {
+            let title, description;
+
+            if (currentMenu === 'encryptSection') {
+                title = 'Encrypt Text with Emojis - Emoji Encryption Tool';
+                description = 'Securely encrypt and decrypt messages using emojis.';
+            } else if (currentMenu === 'convertSection') {
+                title = 'Convert Text to Emojis - Emoji Conversion Tool';
+                description = 'Easily convert your text into emojis and back.';
+            } else if (currentMenu === 'aboutSection') {
+                title = 'About Emoji Encryption Tool';
+                description = 'Learn more about our emoji encryption and conversion tool.';
+            }
+
+            document.title = title;
+            $('meta[name="description"]').attr('content', description);
+        }
+
         $(document).ready(function () {
 
             updateUILanguage();
+
+            // Initialize currentMenu based on URL parameter
+            currentMenu = getSectionFromURL();
+
+            // Set initial positions of sections
+            setInitialSectionPositions();
+
+            // Update metadata
+            updateMetadata();
+
+            // Handle popstate events (back/forward buttons)
+            window.onpopstate = function(event) {
+                const targetSection = getSectionFromURL();
+                transitionToSection(targetSection, false);
+            };
 
             if (isDarkModeEnabled()) {
                 enableDarkMode();
@@ -882,111 +1093,16 @@
                 updateUILanguage();
             });
 
-            // Navigation menu handling
-            let currentMenu = 'convertSection'; // Initialize to 'encryptSection'
+                // Attach click handlers to menu links
+            $('a.nav-link, a.dropdown-item').click(function (e) {
+                const href = $(this).attr('href');
 
-            // Flag to prevent multiple simultaneous transitions
-            let isTransitioning = false;
-
-            // Mapping of menu IDs to their corresponding div IDs and their order
-            const menuOrder = ['encryptSection', 'convertSection', 'aboutSection'];
-            const menuMap = {
-                'encryptMenu': 'encryptSection',
-                'convertMenu': 'convertSection',
-                'aboutMenu': 'aboutSection'
-            };
-
-            /**
-             * Determines if two menus are adjacent.
-             * @param {string} from - The current menu ID.
-             * @param {string} to - The target menu ID.
-             * @returns {boolean} - True if adjacent, false otherwise.
-             */
-            function areAdjacent(from, to) {
-                const fromIndex = menuOrder.indexOf(from);
-                const toIndex = menuOrder.indexOf(to);
-                return Math.abs(fromIndex - toIndex) === 1;
-            }
-
-            /**
-             * Transitions from the current menu to the target menu.
-             * If the transition is between non-adjacent menus, it first transitions to convertSection.
-             * @param {string} targetMenuId - The ID of the target menu button.
-             */
-            function transitionTo(targetMenuId) {
-                if (isTransitioning) return; // Prevent initiating another transition
-                const targetDiv = menuMap[targetMenuId];
-                if (!targetDiv || targetDiv === currentMenu) return; // Invalid target or already active
-
-                isTransitioning = true; // Set the flag to indicate a transition is in progress
-
-                const needsIntermediate = !areAdjacent(currentMenu, targetDiv);
-
-                if (needsIntermediate) {
-                    // First transition to convertSection
-                    animateTransition(currentMenu, 'convertSection', function () {
-                        // Then transition from convertSection to targetDiv
-                        animateTransition('convertSection', targetDiv, function () {
-                            currentMenu = targetDiv; // Update the current menu
-                            isTransitioning = false; // Reset the flag
-                        });
-                    });
-                } else {
-                    // Direct transition to adjacent menu
-                    animateTransition(currentMenu, targetDiv, function () {
-                        currentMenu = targetDiv; // Update the current menu
-                        isTransitioning = false; // Reset the flag
-                    });
+                // Only handle internal links with query parameters
+                if (href && href.startsWith('?')) {
+                    e.preventDefault();
+                    const targetSection = getSectionFromURLString(href);
+                    transitionToSection(targetSection);
                 }
-
-                // Collapse the navbar if in mobile mode
-                if ($('.navbar-toggler').is(':visible')) {
-                    $('.navbar-collapse').collapse('hide');
-                }
-            }
-
-            /**
-             * Animates the transition between two divs by adjusting their 'left' properties.
-             * @param {string} fromDiv - The ID of the current active div.
-             * @param {string} toDiv - The ID of the target div.
-             * @param {function} callback - Function to execute after the animation completes.
-             */
-            function animateTransition(fromDiv, toDiv, callback) {
-                // Determine the direction of the transition
-                const fromIndex = menuOrder.indexOf(fromDiv);
-                const toIndex = menuOrder.indexOf(toDiv);
-                const direction = toIndex > fromIndex ? 'left' : 'right';
-
-                // Define the animation properties based on the direction
-                const animations = {};
-                if (direction === 'left') {
-                    animations[fromDiv] = { left: '-100%' };
-                    animations[toDiv] = { left: '0%' };
-                } else {
-                    animations[fromDiv] = { left: '100%' };
-                    animations[toDiv] = { left: '0%' };
-                }
-
-                // Animate the 'fromDiv' out of view
-                $(`#${fromDiv}`).animate(animations[fromDiv], 500, function () {
-                    // Ensure the 'fromDiv' is completely out of view
-                    $(this).css('left', direction === 'left' ? '-100%' : '100%');
-                });
-
-                // Animate the 'toDiv' into view
-                $(`#${toDiv}`).animate(animations[toDiv], 500, function () {
-                    // Callback after both animations complete
-                    if (typeof callback === 'function') {
-                        callback();
-                    }
-                });
-            }
-
-            // Attach click handlers to menu buttons
-            $('#encryptMenu, #convertMenu, #aboutMenu').click(function (e) {
-                e.preventDefault(); // Prevent default anchor behavior
-                const targetMenuId = $(this).attr('id');
-                transitionTo(targetMenuId);
             });
         });
     </script>
