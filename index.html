@@ -47,6 +47,35 @@
             position: absolute;
             width: 100%;
         }
+
+        .faq-button {
+            text-align: left;
+            width: 100%;
+            border: none;
+            background: none;
+            padding: 0;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .btn {
+            border-color: #ced4da; /* Light gray border */
+        }
+
+        .btn:hover {
+            background-color: #e2e6ea; /* Slightly darker on hover */
+        }
+
+        /* Default placeholder color */
+        .form-control::placeholder {
+            color: #6c757d; /* Bootstrap's default placeholder color */
+        }
+
+        /* Placeholder color in dark mode */
+        .dark-mode .form-control::placeholder {
+            color: #cccccc; /* Light gray placeholder color for dark mode */
+        }
+
     </style>
 </head>
 
@@ -75,6 +104,10 @@
                 <li class="nav-item">
                     <a class="nav-link" id="aboutMenu">About</a>
                 </li>
+                <!-- Dark Mode Toggle -->
+                <li class="nav-item">
+                    <a class="nav-link" id="darkModeMenu">Enable Dark Mode</a>
+                </li>
                 <!-- Language Selector -->
                 <li class="nav-item">
                     <select class="form-control" id="languageSelect">
@@ -101,7 +134,7 @@
                     </div>
                     <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="encryptMessageInput" rows="5"></textarea>
                     <div class="input-group-append">
-                        <button id="clearEncryptInputButton" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+                        <button id="clearEncryptInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
                     </div>
                 </div>
                 <!-- Key Input -->
@@ -111,10 +144,10 @@
                     </div>
                     <input type="text" placeholder="(optional)" class="form-control" id="keyInput" aria-describedby="keyIcon">
                     <div class="input-group-append">
-                        <button id="generateKeyButton" type="button" class="btn btn-primary btn-block bg-dark">🔄</button>
+                        <button id="generateKeyButton" type="button" class="btn btn-secondary btn-block bg-dark">🔄</button>
                     </div>
                     <div class="input-group-append">
-                        <button id="copyKeyButton" type="button" class="btn btn-primary bg-dark btn-block">Copy</button>
+                        <button id="copyKeyButton" type="button" class="btn btn-secondary bg-dark btn-block">Copy</button>
                     </div>
                 </div>
                 <hr>
@@ -135,20 +168,20 @@
                         </div>
                     </div>
                     <div class="col">
-                        <button id="loadKeyButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">📲 Load</button>
-                        <button id="saveKeyButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">💾 Save</button>
+                        <button id="loadKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">📲 Load</button>
+                        <button id="saveKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">💾 Save</button>
                     </div>
                 </div>
                 <hr>
                 <!-- Encrypt/Decrypt Button -->
-                <button id="encryptDecryptButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
+                <button id="encryptDecryptButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
             </form>
             <hr>
             <!-- Output Message -->
             <div class="input-group mb-3">
                 <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
                 <div class="input-group-append">
-                    <button id="copyEncryptOutputButton" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
+                    <button id="copyEncryptOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
                 </div>
             </div>
         </div>
@@ -162,19 +195,19 @@
                     </div>
                     <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="convertMessageInput" rows="5"></textarea>
                     <div class="input-group-append">
-                        <button id="clearConvertInputButton" type="button" class="btn btn-primary btn-block bg-dark">Delete <br> Message</button>
+                        <button id="clearConvertInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
                     </div>
                 </div>
                 <hr>
                 <!-- Convert Button -->
-                <button id="convertButton" type="button" class="btn btn-primary bg-dark btn-block mb-2">🔄 Convert</button>
+                <button id="convertButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔄 Convert</button>
             </form>
             <hr>
             <!-- Output Message -->
             <div class="input-group mb-3">
                 <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
                 <div class="input-group-append">
-                    <button id="copyConvertOutputButton" type="button" class="btn btn-primary btn-block bg-dark">Copy <br>to clipboard</button>
+                    <button id="copyConvertOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
                 </div>
             </div>
         </div>
@@ -190,8 +223,8 @@
                 <div class="card">
                     <div class="card-header" id="faqHeading1">
                         <h5 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
-                                <span id="faqQuestion1">What is NasaEmoji?</span>
+                            <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                                <strong id="faqQuestion1">What is NasaEmoji?</strong>
                             </button>
                         </h5>
                     </div>
@@ -206,8 +239,8 @@
                 <div class="card">
                     <div class="card-header" id="faqHeading2">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
-                                <span id="faqQuestion2">How do I encrypt a message?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                                <strong id="faqQuestion2">How do I encrypt a message?</strong>
                             </button>
                         </h5>
                     </div>
@@ -221,8 +254,8 @@
                 <div class="card">
                     <div class="card-header" id="faqHeading3">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
-                                <span id="faqQuestion3">How do I decrypt a message?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                                <strong id="faqQuestion3">How do I decrypt a message?</strong>
                             </button>
                         </h5>
                     </div>
@@ -236,8 +269,8 @@
                 <div class="card">
                     <div class="card-header" id="faqHeading4">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
-                                <span id="faqQuestion4">How do I generate an emoji key?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                                <strong id="faqQuestion4">How do I generate an emoji key?</strong>
                             </button>
                         </h5>
                     </div>
@@ -251,8 +284,8 @@
                 <div class="card">
                     <div class="card-header" id="faqHeading5">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
-                                <span id="faqQuestion5">Is my data secure?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                                <strong id="faqQuestion5">Is my data secure?</strong>
                             </button>
                         </h5>
                     </div>
@@ -262,12 +295,12 @@
                         </div>
                     </div>
                 </div>
-                 <!-- FAQ Item 6 -->
-				 <div class="card">
+                <!-- FAQ Item 6 -->
+                <div class="card">
                     <div class="card-header" id="faqHeading6">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
-                                <span id="faqQuestion6">Can I convert text to emojis without encryption?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                                <strong id="faqQuestion6">Can I convert text to emojis without encryption?</strong>
                             </button>
                         </h5>
                     </div>
@@ -277,13 +310,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 7 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading7">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
-                                <span id="faqQuestion7">What encryption algorithms does NasaEmoji use?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse7" aria-expanded="false" aria-controls="faqCollapse7">
+                                <strong id="faqQuestion7">What encryption algorithms does NasaEmoji use?</strong>
                             </button>
                         </h5>
                     </div>
@@ -293,13 +325,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 8 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading8">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse8" aria-expanded="false" aria-controls="faqCollapse8">
-                                <span id="faqQuestion8">Why are multiple encryption algorithms used?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse8" aria-expanded="false" aria-controls="faqCollapse8">
+                                <strong id="faqQuestion8">Why are multiple encryption algorithms used?</strong>
                             </button>
                         </h5>
                     </div>
@@ -309,13 +340,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 9 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading9">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
-                                <span id="faqQuestion9">What is key hashing and why is it used?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
+                                <strong id="faqQuestion9">What is key hashing and why is it used?</strong>
                             </button>
                         </h5>
                     </div>
@@ -325,13 +355,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 10 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading10">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
-                                <span id="faqQuestion10">How does key hashing prevent brute-force attacks?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
+                                <strong id="faqQuestion10">How does key hashing prevent brute-force attacks?</strong>
                             </button>
                         </h5>
                     </div>
@@ -341,13 +370,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 11 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading11">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
-                                <span id="faqQuestion11">What is the CryptoJS library?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
+                                <strong id="faqQuestion11">What is the CryptoJS library?</strong>
                             </button>
                         </h5>
                     </div>
@@ -357,13 +385,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 12 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading12">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
-                                <span id="faqQuestion12">How secure is the CryptoJS library?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
+                                <strong id="faqQuestion12">How secure is the CryptoJS library?</strong>
                             </button>
                         </h5>
                     </div>
@@ -373,13 +400,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 13 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading13">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
-                                <span id="faqQuestion13">How does NasaEmoji handle key storage?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
+                                <strong id="faqQuestion13">How does NasaEmoji handle key storage?</strong>
                             </button>
                         </h5>
                     </div>
@@ -389,13 +415,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 14 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading14">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
-                                <span id="faqQuestion14">Does NasaEmoji send any data over the internet?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
+                                <strong id="faqQuestion14">Does NasaEmoji send any data over the internet?</strong>
                             </button>
                         </h5>
                     </div>
@@ -405,13 +430,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 15 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading15">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
-                                <span id="faqQuestion15">Can I use NasaEmoji offline?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
+                                <strong id="faqQuestion15">Can I use NasaEmoji offline?</strong>
                             </button>
                         </h5>
                     </div>
@@ -421,13 +445,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 17 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading17">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse17" aria-expanded="false" aria-controls="faqCollapse17">
-                                <span id="faqQuestion17">Is the encryption standardized?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse17" aria-expanded="false" aria-controls="faqCollapse17">
+                                <strong id="faqQuestion17">Is the encryption standardized?</strong>
                             </button>
                         </h5>
                     </div>
@@ -437,13 +460,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 18 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading18">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
-                                <span id="faqQuestion18">Can I trust NasaEmoji for highly sensitive information?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
+                                <strong id="faqQuestion18">Can I trust NasaEmoji for highly sensitive information?</strong>
                             </button>
                         </h5>
                     </div>
@@ -453,13 +475,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 19 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading19">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
-                                <span id="faqQuestion19">Is NasaEmoji open-source?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
+                                <strong id="faqQuestion19">Is NasaEmoji open-source?</strong>
                             </button>
                         </h5>
                     </div>
@@ -469,13 +490,12 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- FAQ Item 20 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading20">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
-                                <span id="faqQuestion20">How can I contribute to NasaEmoji?</span>
+                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
+                                <strong id="faqQuestion20">How can I contribute to NasaEmoji?</strong>
                             </button>
                         </h5>
                     </div>
@@ -485,8 +505,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+
             <hr>
             <p class="text-center">
                 <b id="footerHighlight">[Footer Highlight]</b>
@@ -550,6 +571,13 @@
             $("#footerHighlight").html(getTranslation("footerHighlight", languageIndex));
             $("#footerSource").html(getTranslation("footerSource", languageIndex));
 
+            // Update Dark Mode Menu Text
+            if (isDarkModeEnabled()) {
+                $("#darkModeMenu").html(getTranslation("disableDarkMode", languageIndex));
+            } else {
+                $("#darkModeMenu").html(getTranslation("enableDarkMode", languageIndex));
+            }
+
 			// Update FAQ items
 			for (let i = 1; i <= 20; i++) {
                 $("#faqQuestion" + i).html(getTranslation("faqQuestion" + i, languageIndex));
@@ -557,9 +585,99 @@
             }
         }
 
+        /**
+         * Check if dark mode is enabled.
+         * @returns {boolean} - True if dark mode is enabled.
+         */
+         function isDarkModeEnabled() {
+            return localStorage.getItem('darkMode') === 'true';
+        }
+
+        /**
+         * Enable dark mode by adding appropriate classes.
+         */
+         function enableDarkMode() {
+            $('body').addClass('bg-dark text-light dark-mode');
+            $('.navbar').removeClass('navbar-light bg-light').addClass('navbar-dark bg-dark');
+
+            $('.main-content').addClass('bg-dark text-light');
+
+            // Dropdown menu
+            $('.dropdown-menu').addClass('bg-dark');
+            $('.dropdown-item').addClass('text-light');
+
+            // FAQ section
+            $('.card').addClass('bg-dark text-light');
+            $('.card-header').addClass('bg-dark');
+            $('.card-body').addClass('bg-dark text-light');
+            $('.faq-button').addClass('text-light');
+            $('.collapse').addClass('bg-dark text-light');
+
+            $('.input-group-text').addClass('bg-dark text-light');
+            $('.form-control').addClass('bg-secondary text-light');
+
+            // Make hr divider lighter
+            $('hr').css('border-top', '1px solid #666'); // Adjust the color as needed
+
+            // Save dark mode state
+            localStorage.setItem('darkMode', 'true');
+
+            // Update dark mode menu text
+            $("#darkModeMenu").html(getTranslation("disableDarkMode", languageIndex));
+        }
+
+        /**
+         * Disable dark mode by removing appropriate classes.
+         */
+         function disableDarkMode() {
+            $('body').removeClass('bg-dark text-light dark-mode');
+            $('.navbar').removeClass('navbar-dark bg-dark').addClass('navbar-light bg-light');
+
+            $('.main-content').removeClass('bg-dark text-light');
+
+            // Dropdown menu
+            $('.dropdown-menu').removeClass('bg-dark');
+            $('.dropdown-item').removeClass('text-light');
+
+            // FAQ section
+            $('.card').removeClass('bg-dark text-light');
+            $('.card-header').removeClass('bg-dark');
+            $('.card-body').removeClass('bg-dark text-light');
+            $('.faq-button').removeClass('text-light');
+            $('.collapse').removeClass('bg-dark text-light');
+
+            $('.input-group-text').removeClass('bg-dark text-light');
+            $('.form-control').removeClass('bg-secondary text-light');
+
+            // Reset hr divider color
+            $('hr').css('border-top', '');
+
+
+            // Save dark mode state
+            localStorage.setItem('darkMode', 'false');
+
+            // Update dark mode menu text
+            $("#darkModeMenu").html(getTranslation("enableDarkMode", languageIndex));
+        }
+
         $(document).ready(function () {
 
             updateUILanguage();
+
+            if (isDarkModeEnabled()) {
+                enableDarkMode();
+            } else {
+                disableDarkMode();
+            }
+
+            // Dark Mode Toggle
+            $("#darkModeMenu").click(function () {
+                if (isDarkModeEnabled()) {
+                    disableDarkMode();
+                } else {
+                    enableDarkMode();
+                }
+            });
 
             // Encrypt/Decrypt Button Click Handler
             $("#encryptDecryptButton").click(async function () {

@@ -17,6 +17,26 @@ function getTranslation(key, langIndex) {
             "", // Placeholder for additional languages
             ""
         ],
+        "enableDarkMode": [
+            "Dark Mode",
+            "Dunkler Modus",
+            "深色模式",
+            "Тёмный режим",
+            "Modo Oscuro",
+            "Mode Sombre",
+            "",
+            ""
+        ],
+        "disableDarkMode": [
+            "Light Mode",
+            "Heller Modus",
+            "浅色模式",
+            "Светлый режим",
+            "Modo Claro",
+            "Mode Clair",
+            "",
+            ""
+        ],
         "chooseAppMenu": [
             "Choose App",
             "App auswählen",
@@ -236,7 +256,7 @@ function getTranslation(key, langIndex) {
             "<h6>使用密码加密或解密文本或消息。输出是表情符号，密钥是表情符号。使用 NasaEmoji，你可以向任何人发送秘密消息！使用你选择的方法生成并与你的收件人分享一个共同的密钥。将密钥保存在 5 个插槽中的一个，以方便访问。</h6>",
             "<h6>Шифруйте или расшифровывайте тексты или сообщения с помощью пароля. Выводятся эмодзи, ключ — эмодзи. С NasaEmoji вы можете отправлять секретные сообщения кому угодно! Создайте и поделитесь общим ключом с получателем любым удобным способом. Сохраните ключ в одном из 5 слотов для удобного доступа.</h6>",
             "<h6>¡Cifra o descifra textos o mensajes con una contraseña! La salida son emojis, la clave son emojis. Con NasaEmoji, ¡puedes enviar mensajes secretos a cualquiera! Genera y comparte una clave común con tu destinatario usando el método que prefieras. Guarda la clave en uno de los 5 espacios para acceder fácilmente.</h6>",
-            "<h6>Chiffrez ou déchiffrez des textes ou des messages avec un mot de passe. Le résultat est des emojis, la clé est des emojis. Avec NasaEmoji, vous pouvez envoyer des messages secrets à n'importe qui ! Générez et partagez une clé commune avec votre destinataire en utilisant la méthode de votre choix. Enregistrez la clé dans l'un des 5 emplacements pour y accéder facilement.</h6>",
+            "<h6>Tu peux chiffrer ou déchiffrer des textes ou des messages avec un mot de passe. Le résultat ? Des emojis, et la clé, c'est aussi des emojis. Avec NasaEmoji, tu peux envoyer des messages secrets à qui tu veux ! Crée et partage une clé avec ton destinataire comme tu veux. Garde la clé dans un des 5 emplacements pour la retrouver facilement.</h6>",
             "",
             ""
         ],
