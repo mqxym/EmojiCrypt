@@ -139,12 +139,12 @@ function getTranslation(key, langIndex) {
             ""
         ],
         "copyEncryptOutputButton": [
-            "Copy <br>to clipboard",
-            "In Zwischenablage <br> kopieren",
+            "Copy <br>to <br>clipboard",
+            "In <br> Zwischenablage <br> kopieren",
             "复制<br>到剪贴板",
-            "Копировать <br>в буфер обмена",
-            "Copiar <br>al portapapeles",
-            "Copier <br>dans le presse-papiers",
+            "Копировать <br>в буфер <br> обмена",
+            "Copiar <br>al <br>portapapeles",
+            "Copier <br>dans le <br> presse-papiers",
             "",
             ""
         ],

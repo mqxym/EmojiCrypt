@@ -108,16 +108,19 @@
                 <li class="nav-item">
                     <a class="nav-link" id="darkModeMenu">Enable Dark Mode</a>
                 </li>
-                <!-- Language Selector -->
-                <li class="nav-item">
-                    <select class="form-control" id="languageSelect">
-                        <option value="0">English 🇺🇸</option>
-                        <option value="1">German 🇩🇪</option>
-                        <option value="2">Modern Chinese 🇨🇳</option>
-                        <option value="3">Russian 🇷🇺</option>
-                        <option value="4">Spanish 🇪🇸</option>
-                        <option value="5">French 🇫🇷</option>
-                    </select>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="languageMenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="languageMenu" id="languageMenuItems">
+                        <!-- Language links with full site links -->
+                        <a class="dropdown-item" href="?convert" data-lang-code="en">English 🇺🇸</a>
+                        <a class="dropdown-item" href="?convert&lang=de" data-lang-code="de">German 🇩🇪</a>
+                        <a class="dropdown-item" href="?convert&lang=zh" data-lang-code="zh">Chinese 🇨🇳</a>
+                        <a class="dropdown-item" href="?convert&lang=ru" data-lang-code="ru">Russian 🇷🇺</a>
+                        <a class="dropdown-item" href="?convert&lang=es" data-lang-code="es">Spanish 🇪🇸</a>
+                        <a class="dropdown-item" href="?convert&lang=fr" data-lang-code="fr">French 🇫🇷</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -530,216 +533,314 @@
     <script src="js/lang.js" defer></script>
 
     <script>
-        // Language index, default to 0 (English)
-        let languageIndex = 0;
-
-        // Load language index from local storage if available
-        if (localStorage.getItem("lang")) {
-            languageIndex = parseInt(localStorage.getItem("lang"));
-            $("#languageSelect").val(languageIndex);
+        // =======================================
+        // Language Handling
+        // =======================================
+    
+        /**
+         * Available languages with their codes and names.
+         */
+        const languages = [
+            { code: 'en', name: 'English 🇺🇸' },
+            { code: 'de', name: 'German 🇩🇪' },
+            { code: 'zh', name: 'Chinese 🇨🇳' },
+            { code: 'ru', name: 'Russian 🇷🇺' },
+            { code: 'es', name: 'Spanish 🇪🇸' },
+            { code: 'fr', name: 'French 🇫🇷' },
+        ];
+    
+        /**
+         * Get the language code from the URL parameter 'lang'.
+         * @returns {string|null} The language code from URL or null if not present.
+         */
+        function getLanguageCodeFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.has('lang') ? params.get('lang').toLowerCase() : null;
         }
-
+    
+        /**
+         * Map language code to index in the languages array.
+         * @param {string} code - Language code.
+         * @returns {number} Index of language in languages array, or -1 if not found.
+         */
+        function getLanguageIndexFromCode(code) {
+            return languages.findIndex((lang) => lang.code === code);
+        }
+    
+        /**
+         * Initialize language settings, determine the current language code and index.
+         * @returns {Object} An object containing languageCode and languageIndex.
+         */
+        function initializeLanguage() {
+            let languageCode = getLanguageCodeFromURL() || localStorage.getItem('lang') || 'en';
+            let languageIndex = getLanguageIndexFromCode(languageCode);
+    
+            if (languageIndex === -1) {
+                languageCode = 'en';
+                languageIndex = 0;
+            }
+    
+            localStorage.setItem('lang', languageCode);
+            return { languageCode, languageIndex };
+        }
+    
+        let { languageCode, languageIndex } = initializeLanguage();
+    
+        // =======================================
+        // UI Update Functions
+        // =======================================
+    
+        // Elements to update text content
+        const uiTextElements = [
+            { selector: '#navbarBrand', key: 'navbarBrand' },
+            { selector: '#chooseAppMenu', key: 'chooseAppMenu' },
+            { selector: '#encryptMenu', key: 'encryptMenu' },
+            { selector: '#convertMenu', key: 'convertMenu' },
+            { selector: '#aboutMenu', key: 'aboutMenu' },
+            { selector: '#clearEncryptInputButton', key: 'clearEncryptInputButton' },
+            { selector: '#encryptDecryptButton', key: 'encryptDecryptButton' },
+            { selector: '#copyKeyButton', key: 'copyKeyButton' },
+            { selector: '#keyInstructions', key: 'keyInstructions' },
+            { selector: '#loadKeyButton', key: 'loadKeyButton' },
+            { selector: '#saveKeyButton', key: 'saveKeyButton' },
+            { selector: '#encryptOutputTextarea', key: 'encryptOutputTextarea' },
+            { selector: '#copyEncryptOutputButton', key: 'copyEncryptOutputButton' },
+            { selector: '#clearConvertInputButton', key: 'clearConvertInputButton' },
+            { selector: '#convertButton', key: 'convertButton' },
+            { selector: '#convertOutputTextarea', key: 'convertOutputTextarea' },
+            { selector: '#copyConvertOutputButton', key: 'copyConvertOutputButton' },
+            { selector: '#explanation', key: 'explanation' },
+            { selector: '#footerHighlight', key: 'footerHighlight' },
+            { selector: '#footerSource', key: 'footerSource' },
+        ];
+    
+        // Elements to update placeholder attributes
+        const uiPlaceholderElements = [
+            { selector: '#encryptMessageInput', key: 'encryptMessageInput' },
+            { selector: '#keyInput', key: 'keyInput' },
+            { selector: '#convertMessageInput', key: 'convertMessageInput' },
+        ];
+    
+        /**
+         * Update FAQ items with translations.
+         * @param {number} languageIndex - Index of the current language.
+         */
+        function updateFAQItems(languageIndex) {
+            const faqItemCount = 20;
+            for (let i = 1; i <= faqItemCount; i++) {
+                $(`#faqQuestion${i}`).html(getTranslation(`faqQuestion${i}`, languageIndex));
+                $(`#faqAnswer${i}`).html(getTranslation(`faqAnswer${i}`, languageIndex));
+            }
+        }
+    
         /**
          * Update the UI elements with the translations based on the selected language.
          */
         function updateUILanguage() {
-            $("#navbarBrand").html(getTranslation("navbarBrand", languageIndex));
-            $("#chooseAppMenu").html(getTranslation("chooseAppMenu", languageIndex));
-            $("#encryptMenu").html(getTranslation("encryptMenu", languageIndex));
-            $("#convertMenu").html(getTranslation("convertMenu", languageIndex));
-            $("#aboutMenu").html(getTranslation("aboutMenu", languageIndex));
-
-            $("#clearEncryptInputButton").html(getTranslation("clearEncryptInputButton", languageIndex));
-            $("#encryptMessageInput").attr("placeholder", getTranslation("encryptMessageInput", languageIndex));
-            $("#keyInput").attr("placeholder", getTranslation("keyInput", languageIndex));
-            $("#encryptDecryptButton").html(getTranslation("encryptDecryptButton", languageIndex));
-
-            $("#copyKeyButton").html(getTranslation("copyKeyButton", languageIndex));
-            $("#keyInstructions").html(getTranslation("keyInstructions", languageIndex));
-            $("#loadKeyButton").html(getTranslation("loadKeyButton", languageIndex));
-            $("#saveKeyButton").html(getTranslation("saveKeyButton", languageIndex));
-            $("#encryptOutputTextarea").html(getTranslation("encryptOutputTextarea", languageIndex));
-            $("#copyEncryptOutputButton").html(getTranslation("copyEncryptOutputButton", languageIndex));
-
-            $("#clearConvertInputButton").html(getTranslation("clearConvertInputButton", languageIndex));
-            $("#convertMessageInput").attr("placeholder", getTranslation("convertMessageInput", languageIndex));
-            $("#convertButton").html(getTranslation("convertButton", languageIndex));
-            $("#convertOutputTextarea").html(getTranslation("convertOutputTextarea", languageIndex));
-            $("#copyConvertOutputButton").html(getTranslation("copyConvertOutputButton", languageIndex));
-
-            $("#explanation").html(getTranslation("explanation", languageIndex));
-            $("#footerHighlight").html(getTranslation("footerHighlight", languageIndex));
-            $("#footerSource").html(getTranslation("footerSource", languageIndex));
-
+            // Update text content
+            uiTextElements.forEach((element) => {
+                $(element.selector).html(getTranslation(element.key, languageIndex));
+            });
+    
+            // Update placeholders
+            uiPlaceholderElements.forEach((element) => {
+                $(element.selector).attr('placeholder', getTranslation(element.key, languageIndex));
+            });
+    
             // Update Dark Mode Menu Text
-            if (isDarkModeEnabled()) {
-                $("#darkModeMenu").html(getTranslation("disableDarkMode", languageIndex));
-            } else {
-                $("#darkModeMenu").html(getTranslation("enableDarkMode", languageIndex));
-            }
-
-			// Update FAQ items
-			for (let i = 1; i <= 20; i++) {
-                $("#faqQuestion" + i).html(getTranslation("faqQuestion" + i, languageIndex));
-                $("#faqAnswer" + i).html(getTranslation("faqAnswer" + i, languageIndex));
-            }
+            const darkModeKey = isDarkModeEnabled() ? 'disableDarkMode' : 'enableDarkMode';
+            $('#darkModeMenu').html(getTranslation(darkModeKey, languageIndex));
+    
+            // Update FAQ items
+            updateFAQItems(languageIndex);
+    
+            // Update navigation links and language menu links
+            updateNavigationLinks();
+            updateLanguageMenuLinks();
         }
-
+    
+        // =======================================
+        // Navigation Handling
+        // =======================================
+    
+        const sections = ['encrypt', 'convert', 'about'];
+    
+        /**
+         * Get the current section from URL parameters.
+         * @returns {string} Current section ('encrypt', 'convert', 'about').
+         */
+        function getCurrentSection() {
+            const params = new URLSearchParams(window.location.search);
+            for (const section of sections) {
+                if (params.has(section)) return section;
+            }
+            return 'convert'; // Default section
+        }
+    
+        /**
+         * Update the navigation links to include the 'lang' parameter.
+         */
+        function updateNavigationLinks() {
+            const currentParams = new URLSearchParams(window.location.search);
+            sections.forEach((section) => currentParams.delete(section));
+    
+            // Set or remove the 'lang' parameter
+            if (languageCode !== 'en') {
+                currentParams.set('lang', languageCode);
+            } else {
+                currentParams.delete('lang');
+            }
+    
+            const baseParams = currentParams.toString();
+            sections.forEach((section) => {
+                $(`#${section}Menu`).attr('href', `?${section}${baseParams ? '&' + baseParams : ''}`);
+            });
+        }
+    
+        /**
+         * Update the language menu links to point to the current active site.
+         */
+        function updateLanguageMenuLinks() {
+            const currentSection = getCurrentSection();
+            $('#languageMenuItems a.dropdown-item').each(function () {
+                const langCode = $(this).attr('data-lang-code');
+                let href = `?${currentSection}`;
+                if (langCode !== 'en') {
+                    href += `&lang=${langCode}`;
+                }
+                $(this).attr('href', href);
+            });
+        }
+    
+        // =======================================
+        // Dark Mode Handling
+        // =======================================
+    
         /**
          * Check if dark mode is enabled.
-         * @returns {boolean} - True if dark mode is enabled.
+         * @returns {boolean} True if dark mode is enabled.
          */
-         function isDarkModeEnabled() {
+        function isDarkModeEnabled() {
             return localStorage.getItem('darkMode') === 'true';
         }
-
+    
+        const darkModeClassToggles = [
+            { selector: 'body', classes: 'bg-dark text-light dark-mode' },
+            { selector: '.navbar', removeClasses: 'navbar-light bg-light', addClasses: 'navbar-dark bg-dark' },
+            { selector: '.main-content', classes: 'bg-dark text-light' },
+            { selector: '.dropdown-menu', classes: 'bg-dark' },
+            { selector: '.dropdown-item', classes: 'text-light' },
+            { selector: '.card', classes: 'bg-dark text-light' },
+            { selector: '.card-header', classes: 'bg-dark' },
+            { selector: '.card-body', classes: 'bg-dark text-light' },
+            { selector: '.faq-button', classes: 'text-light' },
+            { selector: '.collapse', classes: 'bg-dark text-light' },
+            { selector: '.input-group-text', classes: 'bg-dark text-light' },
+            { selector: '.form-control', classes: 'bg-secondary text-light' },
+        ];
+    
         /**
          * Enable dark mode by adding appropriate classes.
          */
-         function enableDarkMode() {
-            $('body').addClass('bg-dark text-light dark-mode');
-            $('.navbar').removeClass('navbar-light bg-light').addClass('navbar-dark bg-dark');
-
-            $('.main-content').addClass('bg-dark text-light');
-
-            // Dropdown menu
-            $('.dropdown-menu').addClass('bg-dark');
-            $('.dropdown-item').addClass('text-light');
-
-            // FAQ section
-            $('.card').addClass('bg-dark text-light');
-            $('.card-header').addClass('bg-dark');
-            $('.card-body').addClass('bg-dark text-light');
-            $('.faq-button').addClass('text-light');
-            $('.collapse').addClass('bg-dark text-light');
-
-            $('.input-group-text').addClass('bg-dark text-light');
-            $('.form-control').addClass('bg-secondary text-light');
-
-            // Make hr divider lighter
-            $('hr').css('border-top', '1px solid #666'); // Adjust the color as needed
-
-            // Save dark mode state
+        function enableDarkMode() {
+            darkModeClassToggles.forEach((item) => {
+                if (item.removeClasses) {
+                    $(item.selector).removeClass(item.removeClasses);
+                }
+                if (item.addClasses) {
+                    $(item.selector).addClass(item.addClasses);
+                }
+                if (item.classes) {
+                    $(item.selector).addClass(item.classes);
+                }
+            });
+            // Adjust hr border color
+            $('hr').css('border-top', '1px solid #666');
+    
             localStorage.setItem('darkMode', 'true');
-
-            // Update dark mode menu text
-            $("#darkModeMenu").html(getTranslation("disableDarkMode", languageIndex));
+            $('#darkModeMenu').html(getTranslation('disableDarkMode', languageIndex));
         }
-
+    
         /**
          * Disable dark mode by removing appropriate classes.
          */
-         function disableDarkMode() {
-            $('body').removeClass('bg-dark text-light dark-mode');
-            $('.navbar').removeClass('navbar-dark bg-dark').addClass('navbar-light bg-light');
-
-            $('.main-content').removeClass('bg-dark text-light');
-
-            // Dropdown menu
-            $('.dropdown-menu').removeClass('bg-dark');
-            $('.dropdown-item').removeClass('text-light');
-
-            // FAQ section
-            $('.card').removeClass('bg-dark text-light');
-            $('.card-header').removeClass('bg-dark');
-            $('.card-body').removeClass('bg-dark text-light');
-            $('.faq-button').removeClass('text-light');
-            $('.collapse').removeClass('bg-dark text-light');
-
-            $('.input-group-text').removeClass('bg-dark text-light');
-            $('.form-control').removeClass('bg-secondary text-light');
-
-            // Reset hr divider color
+        function disableDarkMode() {
+            darkModeClassToggles.forEach((item) => {
+                if (item.classes) {
+                    $(item.selector).removeClass(item.classes);
+                }
+                if (item.removeClasses) {
+                    $(item.selector).addClass(item.removeClasses);
+                }
+                if (item.addClasses) {
+                    $(item.selector).removeClass(item.addClasses);
+                }
+            });
+            // Reset hr border color
             $('hr').css('border-top', '');
-
-
-            // Save dark mode state
+    
             localStorage.setItem('darkMode', 'false');
-
-            // Update dark mode menu text
-            $("#darkModeMenu").html(getTranslation("enableDarkMode", languageIndex));
+            $('#darkModeMenu').html(getTranslation('enableDarkMode', languageIndex));
         }
-
-        // Mapping of menu IDs to their corresponding div IDs and their order
+    
+        // =======================================
+        // Section Transition Handling
+        // =======================================
+    
         const menuOrder = ['encryptSection', 'convertSection', 'aboutSection'];
-        const menuMap = {
-            'encryptMenu': 'encryptSection',
-            'convertMenu': 'convertSection',
-            'aboutMenu': 'aboutSection'
-        };
-
-        // Flag to prevent multiple simultaneous transitions
         let isTransitioning = false;
-
-        // Initialize currentMenu based on URL parameter
         let currentMenu = getSectionFromURL();
-
+    
         /**
          * Parses the URL parameters to determine which section to display.
-         * @returns {string} - The ID of the section to display.
+         * @returns {string} The ID of the section to display.
          */
         function getSectionFromURL() {
             const params = new URLSearchParams(window.location.search);
-            if (params.has('about')) {
-                return 'aboutSection';
-            } else if (params.has('encrypt')) {
-                return 'encryptSection';
-            } else if (params.has('convert')) {
-                return 'convertSection';
-            } else {
-                return 'convertSection'; // Default section
-            }
+            if (params.has('about')) return 'aboutSection';
+            if (params.has('encrypt')) return 'encryptSection';
+            if (params.has('convert')) return 'convertSection';
+            return 'convertSection'; // Default section
         }
-
+    
         /**
-         * Sets the initial positions of the sections based on the current menu.
+         * Set initial positions of sections based on the current menu.
          * Positions other sections off-screen to the left or right.
          */
         function setInitialSectionPositions() {
             const currentIndex = menuOrder.indexOf(currentMenu);
-            menuOrder.forEach(function(section, index) {
-                const offset = index - currentIndex;
-                const leftPosition = offset * 100; // Offset in percent
-                $('#' + section).css('left', leftPosition + '%');
+            menuOrder.forEach((section, index) => {
+                const offset = (index - currentIndex) * 100; // Offset in percent
+                $(`#${section}`).css('left', `${offset}%`);
             });
         }
-
+    
         /**
-         * Updates the URL parameter to reflect the current section.
+         * Update the URL parameter to reflect the current section.
          */
         function updateURLParameter() {
-            const paramName = getURLParamNameForSection(currentMenu);
-            const newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + paramName;
+            const paramName = currentMenu.replace('Section', '');
+            let newURL = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${paramName}`;
+    
+            if (languageCode !== 'en') {
+                newURL += `&lang=${languageCode}`;
+            }
+    
             window.history.pushState({ path: newURL }, '', newURL);
         }
-        
+    
         /**
-         * Gets the URL parameter name corresponding to a section.
-         * @param {string} section - The ID of the section.
-         * @returns {string} - The URL parameter name.
-         */
-        function getURLParamNameForSection(section) {
-            if (section === 'encryptSection') {
-                return 'encrypt';
-            } else if (section === 'convertSection') {
-                return 'convert';
-            } else if (section === 'aboutSection') {
-                return 'about';
-            }
-        }
-
-        /**
-         * Checks if two sections are adjacent in the menu order.
+         * Check if two sections are adjacent in the menu order.
          * @param {string} from - The ID of the current section.
          * @param {string} to - The ID of the target section.
-         * @returns {boolean} - True if the sections are adjacent.
+         * @returns {boolean} True if the sections are adjacent.
          */
         function areAdjacent(from, to) {
             const fromIndex = menuOrder.indexOf(from);
             const toIndex = menuOrder.indexOf(to);
             return Math.abs(fromIndex - toIndex) === 1;
         }
-
+    
         /**
          * Animates the transition between two sections by adjusting their positions.
          * @param {string} fromDiv - The ID of the current section.
@@ -750,353 +851,317 @@
             const fromIndex = menuOrder.indexOf(fromDiv);
             const toIndex = menuOrder.indexOf(toDiv);
             const direction = toIndex > fromIndex ? 'left' : 'right';
-
+    
             const fromAnimation = {};
             const toAnimation = {};
-
+    
             if (direction === 'left') {
                 fromAnimation.left = '-100%';
                 toAnimation.left = '0%';
-                $('#' + toDiv).css('left', '100%');
+                $(`#${toDiv}`).css('left', '100%');
             } else {
                 fromAnimation.left = '100%';
                 toAnimation.left = '0%';
-                $('#' + toDiv).css('left', '-100%');
+                $(`#${toDiv}`).css('left', '-100%');
             }
-
-            $('#' + fromDiv).animate(fromAnimation, 500);
-            $('#' + toDiv).animate(toAnimation, 500, function () {
-                if (typeof callback === 'function') {
-                    callback();
-                }
+    
+            $(`#${fromDiv}`).animate(fromAnimation, 500);
+            $(`#${toDiv}`).animate(toAnimation, 500, () => {
+                if (typeof callback === 'function') callback();
             });
         }
-
+    
         /**
-         * Transitions to the target section with an animation.
+         * Transition to the target section with an animation.
          * @param {string} targetDiv - The ID of the target section.
          * @param {boolean} [pushState=true] - Whether to update the browser history.
          */
         function transitionToSection(targetDiv, pushState = true) {
             if (isTransitioning || targetDiv === currentMenu) return;
-
+    
             isTransitioning = true;
-
             const needsIntermediate = !areAdjacent(currentMenu, targetDiv);
-
+    
             if (needsIntermediate) {
                 const intermediate = 'convertSection';
-                animateTransition(currentMenu, intermediate, function () {
+                animateTransition(currentMenu, intermediate, () => {
                     currentMenu = intermediate;
-                    animateTransition(intermediate, targetDiv, function () {
+                    animateTransition(intermediate, targetDiv, () => {
                         currentMenu = targetDiv;
                         isTransitioning = false;
-
-                        if (pushState) {
-                            updateURLParameter();
-                        }
+    
+                        if (pushState) updateURLParameter();
+                        updateLanguageMenuLinks();
+                        updateNavigationLinks();
                     });
                 });
             } else {
-                animateTransition(currentMenu, targetDiv, function () {
+                animateTransition(currentMenu, targetDiv, () => {
                     currentMenu = targetDiv;
                     isTransitioning = false;
-
-                    if (pushState) {
-                        updateURLParameter();
-                    }
+    
+                    if (pushState) updateURLParameter();
+                    updateLanguageMenuLinks();
+                    updateNavigationLinks();
                 });
             }
-
+    
             // Collapse the navbar if in mobile mode
             if ($('.navbar-toggler').is(':visible')) {
                 $('.navbar-collapse').collapse('hide');
             }
-
+    
             // Update metadata
             updateMetadata();
         }
-
+    
         /**
          * Parses a URL string to determine which section to display.
          * @param {string} url - The URL string to parse.
-         * @returns {string} - The ID of the section to display.
+         * @returns {string} The ID of the section to display.
          */
         function getSectionFromURLString(url) {
             const params = new URLSearchParams(url.substring(1)); // Remove '?' from the start
-            if (params.has('about')) {
-                return 'aboutSection';
-            } else if (params.has('encrypt')) {
-                return 'encryptSection';
-            } else if (params.has('convert')) {
-                return 'convertSection';
-            } else {
-                return 'convertSection'; // Default section
-            }
+            if (params.has('about')) return 'aboutSection';
+            if (params.has('encrypt')) return 'encryptSection';
+            if (params.has('convert')) return 'convertSection';
+            return 'convertSection'; // Default section
         }
-
+    
         /**
          * Updates the page's metadata based on the current section.
          */
         function updateMetadata() {
             let title, description;
-
-            if (currentMenu === 'encryptSection') {
-                title = 'Encrypt Text with Emojis - Emoji Encryption Tool';
-                description = 'Securely encrypt and decrypt messages using emojis.';
-            } else if (currentMenu === 'convertSection') {
-                title = 'Convert Text to Emojis - Emoji Conversion Tool';
-                description = 'Easily convert your text into emojis and back.';
-            } else if (currentMenu === 'aboutSection') {
-                title = 'About Emoji Encryption Tool';
-                description = 'Learn more about our emoji encryption and conversion tool.';
+    
+            switch (currentMenu) {
+                case 'encryptSection':
+                    title = 'Encrypt Text with Emojis - Emoji Encryption Tool';
+                    description = 'Securely encrypt and decrypt messages using emojis.';
+                    break;
+                case 'convertSection':
+                    title = 'Convert Text to Emojis - Emoji Conversion Tool';
+                    description = 'Easily convert your text into emojis and back.';
+                    break;
+                case 'aboutSection':
+                    title = 'About Emoji Encryption Tool';
+                    description = 'Learn more about our emoji encryption and conversion tool.';
+                    break;
             }
-
+    
             document.title = title;
             $('meta[name="description"]').attr('content', description);
         }
-
+    
+        // =======================================
+        // Event Handlers and Initialization
+        // =======================================
+    
         $(document).ready(function () {
-
+            // Initialize language and UI
             updateUILanguage();
-
-            // Initialize currentMenu based on URL parameter
             currentMenu = getSectionFromURL();
-
-            // Set initial positions of sections
             setInitialSectionPositions();
-
-            // Update metadata
             updateMetadata();
-
-            // Handle popstate events (back/forward buttons)
-            window.onpopstate = function(event) {
+    
+            // Handle back/forward button navigation
+            window.onpopstate = function () {
                 const targetSection = getSectionFromURL();
                 transitionToSection(targetSection, false);
+    
+                // Update language if changed in URL
+                const langCode = getLanguageCodeFromURL();
+                if (langCode !== languageCode) {
+                    languageCode = langCode || 'en';
+                    languageIndex = getLanguageIndexFromCode(languageCode);
+                    localStorage.setItem('lang', languageCode);
+                    updateUILanguage();
+                }
             };
-
+    
+            // Dark Mode Toggle
             if (isDarkModeEnabled()) {
                 enableDarkMode();
             } else {
                 disableDarkMode();
             }
-
-            // Dark Mode Toggle
-            $("#darkModeMenu").click(function () {
+    
+            $('#darkModeMenu').click(function () {
                 if (isDarkModeEnabled()) {
                     disableDarkMode();
                 } else {
                     enableDarkMode();
                 }
             });
-
+    
             // Encrypt/Decrypt Button Click Handler
-            $("#encryptDecryptButton").click(async function () {
+            $('#encryptDecryptButton').click(async function () {
                 const $thisButton = $(this);
-                const inputText = $("#encryptMessageInput").val();
-
+                const inputText = $('#encryptMessageInput').val();
+    
                 // Show error if input text is empty
                 if (!inputText) {
-                    $thisButton.html(getTranslation("error", languageIndex));
-                    await new Promise(r => setTimeout(r, 1000));
-                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex));
+                    await new Promise((r) => setTimeout(r, 1000));
+                    $thisButton.html(getTranslation('encryptDecryptButton', languageIndex));
                     return;
                 }
-
+    
                 const inputType = checkInputString(inputText);
-
+    
                 if (!inputType) {
                     // Encryption
-                    $thisButton.html(getTranslation("btnEncodeWorking", languageIndex));
-                    await new Promise(r => setTimeout(r, 15));
-
+                    $thisButton.html(getTranslation('btnEncodeWorking', languageIndex));
+                    await new Promise((r) => setTimeout(r, 15));
+    
                     const message = inputText;
-                    const key = getPassword($("#keyInput").val());
-
+                    const key = getPassword($('#keyInput').val());
+    
                     const emojiString = encrypt(message, key);
-
+    
                     if (!emojiString) {
-                        // Encryption failed
-                        $thisButton.html(getTranslation("btnEncodeFailed", languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeFailed', languageIndex));
                     } else {
-                        // Encryption succeeded
-                        $("#encryptOutputTextarea").val(emojiString);
-                        $thisButton.html(getTranslation("btnEncodeSuccess", languageIndex));
+                        $('#encryptOutputTextarea').val(emojiString);
+                        $thisButton.html(getTranslation('btnEncodeSuccess', languageIndex));
                     }
-                    await new Promise(r => setTimeout(r, 5000));
-                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
                 } else {
                     // Decryption
-                    $thisButton.html(getTranslation("btnDecodeWorking", languageIndex));
-                    await new Promise(r => setTimeout(r, 15));
-
+                    $thisButton.html(getTranslation('btnDecodeWorking', languageIndex));
+                    await new Promise((r) => setTimeout(r, 15));
+    
                     const message = inputText;
-                    const key = getPassword($("#keyInput").val());
-
+                    const key = getPassword($('#keyInput').val());
+    
                     const decryptedText = decrypt(message, key);
-
+    
                     if (!decryptedText) {
-                        // Decryption failed
-                        $thisButton.html(getTranslation("btnDecodeFailed", languageIndex));
-                        $("#encryptOutputTextarea").val("");
+                        $thisButton.html(getTranslation('btnDecodeFailed', languageIndex));
+                        $('#encryptOutputTextarea').val('');
                     } else {
-                        // Decryption succeeded
-                        $("#encryptOutputTextarea").val(decryptedText);
-                        $thisButton.html(getTranslation("btnDecodeSuccess", languageIndex));
+                        $('#encryptOutputTextarea').val(decryptedText);
+                        $thisButton.html(getTranslation('btnDecodeSuccess', languageIndex));
                     }
-                    await new Promise(r => setTimeout(r, 5000));
-                    $thisButton.html(getTranslation("encryptDecryptButton", languageIndex));
                 }
+    
+                await new Promise((r) => setTimeout(r, 5000));
+                $thisButton.html(getTranslation('encryptDecryptButton', languageIndex));
             });
-
+    
             // Convert Button Click Handler
-            $("#convertButton").click(async function () {
+            $('#convertButton').click(async function () {
                 const $thisButton = $(this);
-                const inputText = $("#convertMessageInput").val();
-
+                const inputText = $('#convertMessageInput').val();
+    
                 // Show error if input text is empty
                 if (!inputText) {
-                    $thisButton.html(getTranslation("error", languageIndex));
-                    await new Promise(r => setTimeout(r, 1000));
-                    $thisButton.html(getTranslation("convertButton", languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex));
+                    await new Promise((r) => setTimeout(r, 1000));
+                    $thisButton.html(getTranslation('convertButton', languageIndex));
                     return;
                 }
-
-                // Check if the input is base64, hex, or emoji
+    
                 const inputType = checkInputString(inputText);
-
+    
                 if (!inputType) {
                     // Encoding
-                    $thisButton.html(getTranslation("btnEncodeWorkingConvert", languageIndex));
-                    await new Promise(r => setTimeout(r, 15));
-
-                    const message = inputText;
-
-                    const encodedText = encode(message);
-
+                    $thisButton.html(getTranslation('btnEncodeWorkingConvert', languageIndex));
+                    await new Promise((r) => setTimeout(r, 15));
+    
+                    const encodedText = encode(inputText);
+    
                     if (!encodedText) {
-                        // Encoding failed
-                        $thisButton.html(getTranslation("btnEncodeFailedConvert", languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeFailedConvert', languageIndex));
                     } else {
-                        // Encoding succeeded
-                        $("#convertOutputTextarea").val(encodedText);
-                        $thisButton.html(getTranslation("btnEncodeSuccessConvert", languageIndex));
+                        $('#convertOutputTextarea').val(encodedText);
+                        $thisButton.html(getTranslation('btnEncodeSuccessConvert', languageIndex));
                     }
-                    await new Promise(r => setTimeout(r, 5000));
-                    $thisButton.html(getTranslation("convertButton", languageIndex));
                 } else {
                     // Decoding
-                    $thisButton.html(getTranslation("btnDecodeWorkingConvert", languageIndex));
-                    await new Promise(r => setTimeout(r, 15));
-
-                    const message = inputText;
-
-                    const decodedText = decode(message);
-
+                    $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
+                    await new Promise((r) => setTimeout(r, 15));
+    
+                    const decodedText = decode(inputText);
+    
                     if (!decodedText) {
-                        // Decoding failed
-                        $thisButton.html(getTranslation("btnDecodeFailedConvert", languageIndex));
-                        $("#convertOutputTextarea").val("");
+                        $thisButton.html(getTranslation('btnDecodeFailedConvert', languageIndex));
+                        $('#convertOutputTextarea').val('');
                     } else {
-                        // Decoding succeeded
-                        $("#convertOutputTextarea").val(decodedText);
-                        $thisButton.html(getTranslation("btnDecodeSuccessConvert", languageIndex));
+                        $('#convertOutputTextarea').val(decodedText);
+                        $thisButton.html(getTranslation('btnDecodeSuccessConvert', languageIndex));
                     }
-                    await new Promise(r => setTimeout(r, 5000));
-                    $thisButton.html(getTranslation("convertButton", languageIndex));
                 }
+    
+                await new Promise((r) => setTimeout(r, 5000));
+                $thisButton.html(getTranslation('convertButton', languageIndex));
             });
-
+    
             // Clear input text
-            $("#clearEncryptInputButton").click(function () {
-                $("#encryptMessageInput").val("");
-            });
-
-            $("#clearConvertInputButton").click(function () {
-                $("#convertMessageInput").val("");
-            });
-
+            $('#clearEncryptInputButton').click(() => $('#encryptMessageInput').val(''));
+            $('#clearConvertInputButton').click(() => $('#convertMessageInput').val(''));
+    
             // Generate random key
-            $("#generateKeyButton").click(function () {
-                $("#keyInput").val(generateRandomKey());
-            });
-
+            $('#generateKeyButton').click(() => $('#keyInput').val(generateRandomKey()));
+    
             // Copy key to clipboard
-            $("#copyKeyButton").click(function () {
-                const copyText = document.getElementById("keyInput");
+            $('#copyKeyButton').click(() => {
+                const copyText = document.getElementById('keyInput');
                 copyText.select();
-                copyText.setSelectionRange(0, 99999);
-                document.execCommand("copy");
+                document.execCommand('copy');
             });
-
+    
             // Copy output message to clipboard
-            $("#copyEncryptOutputButton").click(function () {
-                const copyText = document.getElementById("encryptOutputTextarea");
+            $('#copyEncryptOutputButton').click(() => {
+                const copyText = document.getElementById('encryptOutputTextarea');
                 copyText.select();
-                copyText.setSelectionRange(0, 99999);
-                document.execCommand("copy");
+                document.execCommand('copy');
             });
-
-            $("#copyConvertOutputButton").click(function () {
-                const copyText = document.getElementById("convertOutputTextarea");
+    
+            $('#copyConvertOutputButton').click(() => {
+                const copyText = document.getElementById('convertOutputTextarea');
                 copyText.select();
-                copyText.setSelectionRange(0, 99999);
-                document.execCommand("copy");
+                document.execCommand('copy');
             });
-
+    
             // Load key from local storage
-            $("#loadKeyButton").click(async function () {
+            $('#loadKeyButton').click(async function () {
                 const $thisButton = $(this);
-                const slot = $("#keySlotSelect").val();
-
-                $thisButton.html(getTranslation("loadKey", languageIndex));
-                $thisButton.removeClass("bg-dark").addClass("bg-success");
-
-                const storedKey = localStorage.getItem("key" + slot);
+                const slot = $('#keySlotSelect').val();
+                const storedKey = localStorage.getItem('key' + slot);
+    
+                $thisButton.html(getTranslation('loadKey', languageIndex)).removeClass('bg-dark').addClass('bg-success');
+    
                 if (storedKey) {
-                    $("#keyInput").val(storedKey);
+                    $('#keyInput').val(storedKey);
                 } else {
-                    $thisButton.removeClass("bg-success").addClass("bg-danger");
-                    $thisButton.html(getTranslation("error", languageIndex));
+                    $thisButton.removeClass('bg-success').addClass('bg-danger').html(getTranslation('error', languageIndex));
                 }
-
-                await new Promise(r => setTimeout(r, 1000));
-                $thisButton.removeClass("bg-success bg-danger").addClass("bg-dark");
-                $thisButton.html(getTranslation("loadKeyButton", languageIndex));
+    
+                await new Promise((r) => setTimeout(r, 1000));
+                $thisButton.removeClass('bg-success bg-danger').addClass('bg-dark').html(getTranslation('loadKeyButton', languageIndex));
             });
-
+    
             // Save key to local storage
-            $("#saveKeyButton").click(async function () {
+            $('#saveKeyButton').click(async function () {
                 const $thisButton = $(this);
-                const slot = $("#keySlotSelect").val();
-                const key = $("#keyInput").val();
-
+                const slot = $('#keySlotSelect').val();
+                const key = $('#keyInput').val();
+    
                 if (key) {
-                    localStorage.setItem("key" + slot, key);
-                    $thisButton.html(getTranslation("saved", languageIndex));
-                    $thisButton.removeClass("bg-dark").addClass("bg-success");
+                    localStorage.setItem('key' + slot, key);
+                    $thisButton.html(getTranslation('saved', languageIndex)).removeClass('bg-dark').addClass('bg-success');
                 } else {
-                    $thisButton.removeClass("bg-dark").addClass("bg-danger");
-                    $thisButton.html(getTranslation("error", languageIndex));
+                    $thisButton.removeClass('bg-dark').addClass('bg-danger').html(getTranslation('error', languageIndex));
                 }
-
-                await new Promise(r => setTimeout(r, 1000));
-                $thisButton.removeClass("bg-success bg-danger").addClass("bg-dark");
-                $thisButton.html(getTranslation("saveKeyButton", languageIndex));
+    
+                await new Promise((r) => setTimeout(r, 1000));
+                $thisButton.removeClass('bg-success bg-danger').addClass('bg-dark').html(getTranslation('saveKeyButton', languageIndex));
             });
-
-            // Change language
-            $("#languageSelect").change(function () {
-                const selectedLang = parseInt($("#languageSelect").val());
-                localStorage.setItem("lang", selectedLang);
-                languageIndex = selectedLang;
-                updateUILanguage();
-            });
-
-                // Attach click handlers to menu links
+    
+            // Attach click handlers to menu links
             $('a.nav-link, a.dropdown-item').click(function (e) {
                 const href = $(this).attr('href');
-
+    
                 // Only handle internal links with query parameters
                 if (href && href.startsWith('?')) {
                     e.preventDefault();
@@ -1104,8 +1169,28 @@
                     transitionToSection(targetSection);
                 }
             });
+    
+            // Handle clicks on language menu links
+            $('#languageMenuItems a.dropdown-item').click(function (e) {
+                e.preventDefault();
+                const href = $(this).attr('href');
+                const newLangCode = $(this).attr('data-lang-code');
+    
+                // Update the language code in local storage
+                localStorage.setItem('lang', newLangCode);
+    
+                // Update the languageIndex
+                languageCode = newLangCode;
+                languageIndex = getLanguageIndexFromCode(languageCode);
+    
+                // Update the UI language
+                updateUILanguage();
+    
+                // Update the URL
+                history.pushState(null, '', href);
+            });
         });
-    </script>
+    </script>    
 </body>
 
 </html>
