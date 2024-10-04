@@ -893,6 +893,7 @@
                         if (pushState) updateURLParameter();
                         updateLanguageMenuLinks();
                         updateNavigationLinks();
+                        updateMetadata();
                     });
                 });
             } else {
@@ -903,6 +904,7 @@
                     if (pushState) updateURLParameter();
                     updateLanguageMenuLinks();
                     updateNavigationLinks();
+                    updateMetadata();
                 });
             }
     
@@ -910,9 +912,6 @@
             if ($('.navbar-toggler').is(':visible')) {
                 $('.navbar-collapse').collapse('hide');
             }
-    
-            // Update metadata
-            updateMetadata();
         }
     
         /**
