@@ -1,4 +1,4 @@
-# EmojiCrypt Version 2.2.3 🌈
+# EmojiCrypt Version 2.2.4 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
