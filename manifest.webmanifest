@@ -1,6 +1,6 @@
 {
     "background_color": "white" ,
-    "description": "Encrypts text online",
+    "description": "Emoji encryption and conversion tool.",
     "display": "standalone",
     "icons": [
         {

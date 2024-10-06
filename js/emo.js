@@ -1,9 +1,9 @@
 /**
- * Returns the current version of the library.
+ * Returns the current version of the project.
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "2.2.2";
+    return "2.2.4";
 }
 
 /**
