@@ -1,0 +1,27 @@
+
+Security: 
+- Switch from CryptoJS to browser Crypto API:
+- Faster hashing and encryption: full binary and async program-chain from hashing to encryption to emoji generation
+- Improved encryption security: now uses AES-GCM, AES-CTR (256-bit key; random 12 and 16 byte IV) instead of [ CryptoJS AES (AES-CBC?) and Blowfish ]
+- Removed hashing with MD5 and other hashing algorithms not supported by Crypto API
+- XOR-Encryption is now using binary as input and output and the key length is now fixed 4096-byte, derived from seeded hash algorithm and provided key
+- Minimum encrypted output length decreased by ~14% compared to latest v2 (from 35 to 30 characters)
+- Encryption length ratio (message length to encrypted output length) decreased noticeably
+
+Feature:
+- New feature: Private conversion algorithm
+- A way to obfuscate text in a unique pattern using a secure permutation algorithm with SHA-256
+- Generate a unique URL corresponding with the pattern (for sharing)
+- Algorithm key is stored in localStorage, algorithm can be removed.
+
+QOL:
+- Removed FAQ questions mentioning CryptoJS
+- Sorted FAQ into 3 categories (for now)
+- Last used site is now stored in localStorage and loaded when visiting again
+- Added a check for crypto API support
+- Visual feedback when copying data
+- Removed shipping with CryptoJS and base-64.js
+
+TODO: 
+- Language support for the new features 
+- FAQ for private algorithm

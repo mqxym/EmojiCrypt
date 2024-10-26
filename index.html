@@ -23,16 +23,21 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
-    <script src="js/crypto.js"></script>
     <style>
         body,
         html {
             height: 100%;
             overflow-x: hidden;
         }
+        /*
+        body {
+            display: flex;
+            flex-direction: column;     
+        }*/
 
         .info-section {
             left: 100%;
+            /*height: auto;*/
         }
 
         .encrypt-section {
@@ -41,6 +46,7 @@
 
         .main-container {
             position: relative;
+            /*flex: 1;*/
         }
 
         .main-content {
@@ -129,6 +135,12 @@
     <!-- Main Content -->
     <div class="main-container">
         <!-- Encryption/Decryption Section -->
+        <div class="p-2 m-3 bg-danger border rounded rounded-sm d-none" id="errorHeader">
+            <span class="text-light">
+                Your browser does not support this application. Please update your system.
+            </span>
+        </div>
+        <!-- Encryption/Decryption Section -->
         <div class="main-content p-3 encrypt-section" id="encryptSection">
             <form class="form">
                 <!-- Message Input -->
@@ -146,7 +158,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="keyIcon">🔑</span>
                     </div>
-                    <input type="text" placeholder="(optional)" class="form-control" id="keyInput" aria-describedby="keyIcon">
+                    <input type="text" placeholder="Secure password" class="form-control" id="keyInput" aria-describedby="keyIcon">
                     <div class="input-group-append">
                         <button id="generateKeyButton" type="button" class="btn btn-secondary btn-block bg-dark">🔄</button>
                     </div>
@@ -191,6 +203,7 @@
         </div>
         <!-- Conversion Section -->
         <div class="main-content p-3 convert-section" id="convertSection">
+            <div class="mb-3" id="convertTopMessage"></div>
             <form class="form">
                 <!-- Message Input -->
                 <div class="input-group mb-3">
@@ -214,6 +227,37 @@
                     <button id="copyConvertOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
                 </div>
             </div>
+            <hr><hr>
+
+            <!-- Private Conversion Algorithm -->
+            <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection">💎 Private Algorithm</a>
+            <div id="privateAlgorithmSection" class="collapse">
+                <div class="card">
+                    <div class="card-body">
+                        <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
+                        Your link to the private conversion algorithm: <br>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">🧬</span>
+                            </div>
+                            <textarea rows="5" class="form-control" readonly id="privateConversionLink" placeholder="(Link here)"></textarea>
+                            <div class="input-group-append">
+                                <button id="copyPrivateConversionLink" type="button" class="btn btn-secondary btn-block bg-dark">Copy</button>
+                            </div>
+                        </div>
+                        <button id="disablePrivateConversionButton" type="button" class="d-none btn btn-secondary bg-danger btn-block mb-2">🗑️ Remove private algorithm</button>
+                    </div>
+                   
+                    <div class="card-footer">
+                        <i>
+                            Using a private algorithm is just another layer of obfuscation, but can be cracked pretty easily. 
+                            <br>
+                            Especially, when reusing the same algorithm more than once.
+                        </i>
+                    </div>
+                </div>
+            </div>
+            <i class="text-muted"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
         </div>
         <!-- About Section -->
 		<div class="p-3 main-content info-section" id="aboutSection">
@@ -222,6 +266,7 @@
             </div>
             <hr>
             <!-- FAQ Section -->
+            <h4 class="m-2">How to</h4>
             <div class="accordion" id="faqAccordion">
                 <!-- FAQ Item 1 -->
                 <div class="card">
@@ -411,6 +456,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <h4 class="m-2">Security</h4>
+            <div class="accordion" id="faqAccordionSecurity">
                 <!-- FAQ Item 10 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading10">
@@ -420,7 +468,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse10" class="collapse" aria-labelledby="faqHeading10" data-parent="#faqAccordion">
+                    <div id="faqCollapse10" class="collapse" aria-labelledby="faqHeading10" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer10">Yes, all encryption and decryption happen locally on your device. No data is sent anywhere, ensuring your messages remain private.</span>
                         </div>
@@ -435,7 +483,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse11" class="collapse" aria-labelledby="faqHeading11" data-parent="#faqAccordion">
+                    <div id="faqCollapse11" class="collapse" aria-labelledby="faqHeading11" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer11">Yes, NasaEmoji allows you to convert any text to emojis and back without encryption using the "Convert" feature.</span>
                         </div>
@@ -450,7 +498,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse12" class="collapse" aria-labelledby="faqHeading12" data-parent="#faqAccordion">
+                    <div id="faqCollapse12" class="collapse" aria-labelledby="faqHeading12" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer12">NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.</span>
                         </div>
@@ -465,7 +513,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse13" class="collapse" aria-labelledby="faqHeading13" data-parent="#faqAccordion">
+                    <div id="faqCollapse13" class="collapse" aria-labelledby="faqHeading13" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer13">Using multiple algorithms enhances security by adding layers of encryption, making it more difficult for unauthorized parties to decrypt the message.</span>
                         </div>
@@ -480,7 +528,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse14" class="collapse" aria-labelledby="faqHeading14" data-parent="#faqAccordion">
+                    <div id="faqCollapse14" class="collapse" aria-labelledby="faqHeading14" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer14">Key hashing transforms your key into a fixed-size hash using multiple algorithms, enhancing security by preventing direct access to the original key and making brute-force attacks more difficult.</span>
                         </div>
@@ -495,39 +543,9 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse15" class="collapse" aria-labelledby="faqHeading15" data-parent="#faqAccordion">
+                    <div id="faqCollapse15" class="collapse" aria-labelledby="faqHeading15" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer15">By hashing the key multiple times with different algorithms and salts, it increases the computational effort required to guess the key, thus deterring brute-force attempts.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 16 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading16">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse16" aria-expanded="false" aria-controls="faqCollapse16">
-                                <strong id="faqQuestion16">What is the CryptoJS library?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse16" class="collapse" aria-labelledby="faqHeading16" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer16">CryptoJS is a widely used JavaScript library that provides standard and secure cryptographic algorithms for encryption and hashing.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 17 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading17">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse17" aria-expanded="false" aria-controls="faqCollapse17">
-                                <strong id="faqQuestion17">How secure is the CryptoJS library?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse17" class="collapse" aria-labelledby="faqHeading17" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer17">CryptoJS is considered secure as it implements well-known cryptographic algorithms correctly. It is used in many applications for secure data handling.</span>
                         </div>
                     </div>
                 </div>
@@ -540,7 +558,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse18" class="collapse" aria-labelledby="faqHeading18" data-parent="#faqAccordion">
+                    <div id="faqCollapse18" class="collapse" aria-labelledby="faqHeading18" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer18">You can save keys locally in one of the 5 available slots using your browser's local storage for quick access.</span>
                         </div>
@@ -555,7 +573,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse19" class="collapse" aria-labelledby="faqHeading19" data-parent="#faqAccordion">
+                    <div id="faqCollapse19" class="collapse" aria-labelledby="faqHeading19" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer19">No, all operations are performed locally on your device. NasaEmoji does not send any data over the internet.</span>
                         </div>
@@ -570,7 +588,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse20" class="collapse" aria-labelledby="faqHeading20" data-parent="#faqAccordion">
+                    <div id="faqCollapse20" class="collapse" aria-labelledby="faqHeading20" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer20">Yes, you can download NasaEmoji for local execution and use it offline without an internet connection.</span>
                         </div>
@@ -585,7 +603,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse21" class="collapse" aria-labelledby="faqHeading21" data-parent="#faqAccordion">
+                    <div id="faqCollapse21" class="collapse" aria-labelledby="faqHeading21" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer21">NasaEmoji uses standard encryption algorithms but combines them in a unique way. While secure, it is recommended for casual use rather than critical security applications.</span>
                         </div>
@@ -600,12 +618,15 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse22" class="collapse" aria-labelledby="faqHeading22" data-parent="#faqAccordion">
+                    <div id="faqCollapse22" class="collapse" aria-labelledby="faqHeading22" data-parent="#faqAccordionSecurity">
                         <div class="card-body">
                             <span id="faqAnswer22">While NasaEmoji employs strong encryption, it is primarily designed for personal and casual use. For highly sensitive information, consult security professionals.</span>
                         </div>
                     </div>
                 </div>
+            </div>
+            <h4 class="m-2">Code</h4>
+            <div class="accordion" id="faqAccordionCode">
                 <!-- FAQ Item 23 -->
                 <div class="card">
                     <div class="card-header" id="faqHeading23">
@@ -615,7 +636,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse23" class="collapse" aria-labelledby="faqHeading23" data-parent="#faqAccordion">
+                    <div id="faqCollapse23" class="collapse" aria-labelledby="faqHeading23" data-parent="#faqAccordionCode">
                         <div class="card-body">
                             <span id="faqAnswer23">Yes, NasaEmoji's source code is available on GitHub, allowing you to review and contribute to its development.</span>
                         </div>
@@ -630,7 +651,7 @@
                             </button>
                         </h5>
                     </div>
-                    <div id="faqCollapse24" class="collapse" aria-labelledby="faqHeading24" data-parent="#faqAccordion">
+                    <div id="faqCollapse24" class="collapse" aria-labelledby="faqHeading24" data-parent="#faqAccordionCode">
                         <div class="card-body">
                             <span id="faqAnswer24">You can contribute by visiting the GitHub repository, reporting issues, suggesting improvements, or submitting pull requests.</span>
                         </div>
@@ -652,13 +673,51 @@
             </div>
         </div>
     </div>
+    <!--
+    <footer class="bg-light text-center">
+        <div class="container">
+          <span class="text-muted">Powered by EmojiCrypt Version 3.0.0</span>
+        </div>
+      </footer>
+    -->
     <!-- External Scripts -->
-    <script src="js/base-64.js" defer></script>
     <script src="js/lib.js" defer></script>
     <script src="js/emo.js" defer></script>
     <script src="js/lang.js" defer></script>
 
     <script>
+
+        /**
+         * Custom Emoji Array when using the private conversion link
+         */
+        let customEmojiArray = null;
+
+        /**
+         * Get the private conversion id from the URL parameter 'id'.
+         * @returns {string|null} The private from URL or null if not present.
+         */
+        function getPrivateIdfromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.has('id') ? params.get('id') : null;
+        }
+
+        let privateConversionId = null;
+
+        /**
+         * Sets the custom emoji array for conversion when the id is the URL
+         */
+        async function updatePrivateAlgorithmFromUrl() {
+            privateConversionId = getPrivateIdfromUrl() || localStorage.getItem("pa");
+            if (privateConversionId) {
+                customEmojiArray = await generateSecurePermutation(privateConversionId, getEmojiArray());
+                $('#privateConversionLink').val(window.location.href);
+                $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
+                $('#disablePrivateConversionButton').removeClass('d-none');
+            } else {
+                customEmojiArray = null;
+            }
+        }
+
         // =======================================
         // Language Handling
         // =======================================
@@ -920,14 +979,24 @@
     
         /**
          * Parses the URL parameters to determine which section to display.
+         * If no section is specified in the URL, it attempts to retrieve
+         * the last visited section from localStorage. If that also fails,
+         * it defaults to 'convertSection'.
+         * 
          * @returns {string} The ID of the section to display.
          */
         function getSectionFromURL() {
             const params = new URLSearchParams(window.location.search);
+
+            // Check URL parameters for specific sections
             if (params.has('about')) return 'aboutSection';
             if (params.has('encrypt')) return 'encryptSection';
             if (params.has('convert')) return 'convertSection';
-            return 'convertSection'; // Default section
+
+            // No section specified in URL, attempt to retrieve from localStorage
+            const lastSite = localStorage.getItem("lastSite");
+
+            return lastSite || 'convertSection';
         }
     
         /**
@@ -943,7 +1012,7 @@
         }
     
         /**
-         * Update the URL parameter to reflect the current section.
+         * Update the URL parameter to reflect the current section, language and private algorithm ID.
          */
         function updateURLParameter() {
             const paramName = currentMenu.replace('Section', '');
@@ -951,6 +1020,10 @@
     
             if (languageCode !== 'en') {
                 newURL += `&lang=${languageCode}`;
+            }
+
+            if (privateConversionId) {
+                newURL += `&id=${privateConversionId}`;
             }
     
             window.history.pushState({ path: newURL }, '', newURL);
@@ -1021,6 +1094,7 @@
                         updateLanguageMenuLinks();
                         updateNavigationLinks();
                         updateMetadata();
+                        localStorage.setItem('lastSite', currentMenu)
                     });
                 });
             } else {
@@ -1032,6 +1106,7 @@
                     updateLanguageMenuLinks();
                     updateNavigationLinks();
                     updateMetadata();
+                    localStorage.setItem('lastSite', currentMenu)
                 });
             }
     
@@ -1079,6 +1154,15 @@
             $('meta[name="description"]').attr('content', description);
         }
     
+        /**
+         * Display an error that the browser does not support the app because of missing crypto API
+         */
+        function handleCryptoSupport () {
+            if (!window.crypto || !window.crypto.subtle) {
+                $("#errorHeader").removeClass("d-none");
+            }
+        }
+
         // =======================================
         // Event Handlers and Initialization
         // =======================================
@@ -1086,9 +1170,14 @@
         $(document).ready(function () {
             // Initialize language and UI
             updateUILanguage();
+
+            handleCryptoSupport();
+
             currentMenu = getSectionFromURL();
             setInitialSectionPositions();
             updateMetadata();
+            updatePrivateAlgorithmFromUrl();
+            updateURLParameter();
     
             // Handle back/forward button navigation
             window.onpopstate = function () {
@@ -1103,6 +1192,8 @@
                     localStorage.setItem('lang', languageCode);
                     updateUILanguage();
                 }
+
+                updatePrivateAlgorithmFromUrl();
             };
     
             // Dark Mode Toggle
@@ -1141,9 +1232,9 @@
                     await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
-                    const key = getPassword($('#keyInput').val());
+                    const key = await getPassword($('#keyInput').val());
     
-                    const emojiString = encrypt(message, key);
+                    const emojiString = await encrypt(message, key);
     
                     if (!emojiString) {
                         $thisButton.html(getTranslation('btnEncodeFailed', languageIndex));
@@ -1157,9 +1248,9 @@
                     await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
-                    const key = getPassword($('#keyInput').val());
+                    const key = await getPassword($('#keyInput').val());
     
-                    const decryptedText = decrypt(message, key);
+                    const decryptedText = await decrypt(message, key);
     
                     if (!decryptedText) {
                         $thisButton.html(getTranslation('btnDecodeFailed', languageIndex));
@@ -1194,7 +1285,7 @@
                     $thisButton.html(getTranslation('btnEncodeWorkingConvert', languageIndex));
                     await new Promise((r) => setTimeout(r, 15));
     
-                    const encodedText = encode(inputText);
+                    const encodedText = encode(inputText, customEmojiArray);
     
                     if (!encodedText) {
                         $thisButton.html(getTranslation('btnEncodeFailedConvert', languageIndex));
@@ -1207,7 +1298,7 @@
                     $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
                     await new Promise((r) => setTimeout(r, 15));
     
-                    const decodedText = decode(inputText);
+                    const decodedText = decode(inputText, customEmojiArray);
     
                     if (!decodedText) {
                         $thisButton.html(getTranslation('btnDecodeFailedConvert', languageIndex));
@@ -1227,26 +1318,51 @@
             $('#clearConvertInputButton').click(() => $('#convertMessageInput').val(''));
     
             // Generate random key
-            $('#generateKeyButton').click(() => $('#keyInput').val(generateRandomKey()));
+            $('#generateKeyButton').click(async () => $('#keyInput').val(await generateRandomKey()));
     
             // Copy key to clipboard
-            $('#copyKeyButton').click(() => {
+            $('#copyKeyButton').click(async () => {
                 const copyText = document.getElementById('keyInput');
                 copyText.select();
                 document.execCommand('copy');
+                $('#copyKeyButton').removeClass('bg-dark').addClass('bg-success');
+                await new Promise((r) => setTimeout(r, 4000));
+                $('#copyKeyButton').removeClass('bg-success').addClass('bg-dark');
             });
     
             // Copy output message to clipboard
-            $('#copyEncryptOutputButton').click(() => {
+            $('#copyEncryptOutputButton').click(async () => {
                 const copyText = document.getElementById('encryptOutputTextarea');
+                $('#copyEncryptOutputButton').removeClass('bg-dark').addClass('bg-success');
                 copyText.select();
                 document.execCommand('copy');
+                await new Promise((r) => setTimeout(r, 4000));
+                $('#copyEncryptOutputButton').removeClass('bg-success').addClass('bg-dark');
             });
     
-            $('#copyConvertOutputButton').click(() => {
+            $('#copyConvertOutputButton').click(async () => {
                 const copyText = document.getElementById('convertOutputTextarea');
                 copyText.select();
                 document.execCommand('copy');
+                $('#copyConvertOutputButton').removeClass('bg-dark').addClass('bg-success');
+                await new Promise((r) => setTimeout(r, 4000));
+                $('#copyConvertOutputButton').removeClass('bg-success').addClass('bg-dark');
+            });
+
+            $('#copyPrivateConversionLink').click(async () => {
+                if (privateConversionId) {
+                    const copyText = document.getElementById('privateConversionLink');
+                    copyText.select();
+                    document.execCommand('copy');
+                    $('#copyPrivateConversionLink').removeClass('bg-dark').addClass('bg-success');
+                    await new Promise((r) => setTimeout(r, 4000));
+                    $('#copyPrivateConversionLink').removeClass('bg-success').addClass('bg-dark');
+                } else {
+                    $('#copyPrivateConversionLink').removeClass('bg-dark').addClass('bg-danger');
+                    await new Promise((r) => setTimeout(r, 4000));
+                    $('#copyPrivateConversionLink').removeClass('bg-danger').addClass('bg-dark');
+                }
+               
             });
     
             // Load key from local storage
@@ -1282,6 +1398,44 @@
     
                 await new Promise((r) => setTimeout(r, 1000));
                 $thisButton.removeClass('bg-success bg-danger').addClass('bg-dark').html(getTranslation('saveKeyButton', languageIndex));
+            });
+
+            // Handle generate private algorithm button
+            $('#generatePrivateConversionButton').click(async function () {
+                const $thisButton = $(this);
+                privateConversionId = generateSecureRandomString();
+                customEmojiArray = await generateSecurePermutation(privateConversionId, getEmojiArray());
+                updateURLParameter();
+                localStorage.setItem("pa", privateConversionId);
+
+                $('#privateConversionLink').val(window.location.href);
+                $('#disablePrivateConversionButton').removeClass('d-none');
+                $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
+                $thisButton.removeClass('bg-dark').addClass('bg-success').text("➗ Private algorithm generated!");
+                await new Promise((r) => setTimeout(r, 5000));
+                $thisButton.addClass('bg-dark').removeClass('bg-success').text("🔮 Generate (new) private algorithm");
+
+            });
+
+            // Handle remove private algorithm button
+            $('#disablePrivateConversionButton').click(async function () {
+                if (customEmojiArray) {
+                    if (confirm("Do you want to remove the private algorithm?")) {
+                        if (localStorage.getItem("pa")) {
+                            localStorage.removeItem("pa");
+                        }
+                        const $thisButton = $(this);
+                        privateConversionId = null;
+                        customEmojiArray = null;
+                        updateURLParameter();
+                        $('#privateConversionLink').val(null);
+                        $('#convertTopMessage').addClass('d-none');
+                        $thisButton.text("Algorithm removed.");
+                        await new Promise((r) => setTimeout(r, 4000));
+                        $thisButton.addClass('d-none');
+                        $thisButton.text("🗑️ Remove private algorithm");
+                    }
+                }
             });
     
             // Attach click handlers to menu links

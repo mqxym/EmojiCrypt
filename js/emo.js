@@ -3,185 +3,139 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "2.2.5";
+    return "3.0.0";
 }
 
 /**
- * Calculates a security level based on the MD5 hash of the password.
+ * Calculates a security level based on the SHA-256 hash of the password.
  * @param {string} pass - The password input.
- * @returns {number} The calculated security level.
+ * @returns {Promise<number>} The calculated security level.
  */
-function getSecLevel(pass) {
-    let md5Hash = CryptoJS.MD5(pass).toString();
+async function getSecLevel(pass) {
+    const passBytes = encodeUTF8(pass);
+    const hash = await hashData(passBytes, 'SHA-256');
     let securitySum = 0;
 
-    for (let i = 0; i < md5Hash.length; i++) {
-        let currentChar = md5Hash.charAt(i).toLowerCase();
-        switch (currentChar) {
-            case "0":
-            case "1":
-            case "2":
-            case "3":
+    for (const byte of hash) {
+        const highNibble = (byte >> 4) & 0xF;
+        const lowNibble = byte & 0xF;
+
+        [highNibble, lowNibble].forEach(nibble => {
+            if (nibble >= 0 && nibble <= 3) {
                 securitySum += 4;
-                break;
-            case "4":
-            case "5":
-            case "6":
-            case "7":
+            } else if (nibble >= 4 && nibble <= 7) {
                 securitySum += 3;
-                break;
-            case "9":
-            case "a":
-            case "b":
-            case "c":
+            } else if (nibble >= 9 && nibble <= 12) {
                 securitySum += 2;
-                break;
-            case "d":
-            case "e":
-            case "f":
+            } else if (nibble >= 13 && nibble <= 15) {
                 securitySum += 1;
-                break;
-            // Note: character '8' is not included in any case
-        }
+            }
+        });
     }
+
     return 420 + securitySum;
 }
 
 /**
- * Generates a long key by concatenating various hash algorithms of the input.
- * @param {string} hashPass - The input hash password.
- * @returns {string} The concatenated hash string.
+ * Repeatedly hashes the seed using a combination of hash algorithms and custom salts.
+ * @param {Uint8Array} seed - The seed binary data to hash.
+ * @returns {Promise<Uint8Array>} The final hashed key as binary.
  */
-function getLongKey(hashPass) {
-    return CryptoJS.SHA512(hashPass).toString() +
-           CryptoJS.SHA224(hashPass).toString() +
-           CryptoJS.SHA256(hashPass).toString() +
-           CryptoJS.SHA3(hashPass).toString() +
-           CryptoJS.SHA384(hashPass).toString();
-}
-
-/**
- * Generates a set of keys based on the input password using various hash algorithms.
- * @param {string} pass - The password input.
- * @returns {string[]} An array containing XOR, Blowfish, and AES keys.
- */
-function getPassword(pass) {
-    let keys = [];
-
-    // Default keys when password is empty
-    if (pass === "") {
-        return [
-            CryptoJS.SHA512("I'm looking for").toString() + CryptoJS.SHA224("friends :)").toString(),
-            CryptoJS.SHA512("Do you").toString() + CryptoJS.SHA224("wanna be my friend?").toString(),
-            CryptoJS.SHA512("You are").toString() + CryptoJS.SHA224("a kind stranger.").toString()
-        ];
-    }
-
-    console.log("Started Calculating Password Hash.");
-
-    let seedHash = CryptoJS.SHA512(pass).toString() +
-                   CryptoJS.SHA224(pass).toString() +
-                   CryptoJS.SHA256(pass).toString() +
-                   CryptoJS.SHA1(pass).toString() +
-                   CryptoJS.SHA3(pass).toString() +
-                   CryptoJS.SHA384(pass).toString() +
-                   CryptoJS.MD5(pass).toString();
-
-    let hashPass = returnHash(seedHash);
-    let securityLevel = getSecLevel(pass);
-
-    // Generate hashPass with securityLevel iterations
-    for (let i = 0; i < securityLevel; i++) {
-        hashPass = returnHash(hashPass + (i * 69));
-    }
-
-    // Push XOR key
-    keys.push(hexToBase64(getLongKey(hashPass)));
-
-    // Generate Blowfish key
-    for (let i = 0; i < 15; i++) {
-        hashPass = returnHash(hashPass + (i * 420));
-    }
-    // Push Blowfish key
-    keys.push(hexToBase64(getLongKey(hashPass)));
-
-    // Generate AES key
-    for (let i = 0; i < 15; i++) {
-        hashPass = returnHash(hashPass + (i * 99));
-    }
-    // Push AES key
-    keys.push(hexToBase64(getLongKey(hashPass)));
-
-    return keys;
-}
-
-/**
- * Repeatedly hashes the seed using a combination of hash algorithms.
- * @param {string} seed - The seed string to hash.
- * @returns {string} The final hashed key.
- */
-function returnHash(seed) {
+async function returnHash(seed) {
     let key = seed;
-    let pastHashes = [];
+    const pastHashes = [];
 
-    // Initialize past hashes with initial values
-    pastHashes.push(CryptoJS.SHA3(seed + "RXmYwGwm4Td9nVIpmA9NFI5wcoz9HO6X").toString());
-    pastHashes.push(CryptoJS.SHA3(seed + "jYcXFLIgZSKOW5RD1N8GStcrQilZ7ezE").toString());
-    pastHashes.push(CryptoJS.SHA3(seed + "QXpJWihh5j4wb8pJiD2JLN6ziBu6oLXq").toString());
+    // Initialize past hashes with initial values using custom salts
+    const salts = [
+        "RXmYwGwm4Td9nVIpmA9NFI5wcoz9HO6X",
+        "jYcXFLIgZSKOW5RD1N8GStcrQilZ7ezE",
+        "QXpJWihh5j4wb8pJiD2JLN6ziBu6oLXq"
+    ];
 
-    for (let i = 0; i < seed.length; i++) {
-        let currentChar = seed.charAt(i).toLowerCase();
+    for (const salt of salts) {
+        const combined = concatUint8Arrays(key, encodeUTF8(salt));
+        const hashed = await hashData(combined, 'SHA-512');
+        pastHashes.push(hashed);
+    }
 
-        switch (currentChar) {
-            case "0":
-                key = CryptoJS.SHA384(key + "SF39" + pastHashes[0] + pastHashes[1]).toString();
+    // Extract nibbles from the seed for processing
+    const nibbles = [];
+    for (const byte of seed) {
+        nibbles.push((byte >> 4) & 0xF);
+        nibbles.push(byte & 0xF);
+    }
+
+    for (const nibble of nibbles) {
+        let hashInput;
+
+        switch (nibble) {
+            case 0:
+                hashInput = concatUint8Arrays(key, encodeUTF8("SF39"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-384');
                 break;
-            case "1":
-                key = CryptoJS.SHA384(key + "DS44" + pastHashes[0] + pastHashes[1]).toString();
+            case 1:
+                hashInput = concatUint8Arrays(key, encodeUTF8("DS44"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-384');
                 break;
-            case "2":
-                key = CryptoJS.SHA384(key + "XL55" + pastHashes[0] + pastHashes[1]).toString();
+            case 2:
+                hashInput = concatUint8Arrays(key, encodeUTF8("XL55"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-384');
                 break;
-            case "3":
-                key = CryptoJS.SHA512(key + "NC01" + pastHashes[0] + pastHashes[1]).toString();
+            case 3:
+                hashInput = concatUint8Arrays(key, encodeUTF8("NC01"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-384');
                 break;
-            case "4":
-                key = CryptoJS.SHA512(key + "LU50" + pastHashes[0] + pastHashes[1]).toString();
+            case 4:
+                hashInput = concatUint8Arrays(key, encodeUTF8("LU50"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-512');
                 break;
-            case "5":
-                key = CryptoJS.SHA512(key + "GL12" + pastHashes[0] + pastHashes[1]).toString();
+            case 5:
+                hashInput = concatUint8Arrays(key, encodeUTF8("GL12"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-512');
                 break;
-            case "6":
-                key = CryptoJS.SHA256(key + "GG31" + pastHashes[0] + pastHashes[1]).toString();
+            case 6:
+                hashInput = concatUint8Arrays(key, encodeUTF8("GG31"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-512');
                 break;
-            case "7":
-                key = CryptoJS.SHA256(key + "HL11" + pastHashes[0] + pastHashes[1]).toString();
+            case 7:
+                hashInput = concatUint8Arrays(key, encodeUTF8("HL11"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-512');
                 break;
-            case "8":
-                key = CryptoJS.SHA256(key + "XF91" + pastHashes[0] + pastHashes[1]).toString();
+            case 8:
+                hashInput = concatUint8Arrays(key, encodeUTF8("XF91"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-256');
                 break;
-            case "9":
-                key = CryptoJS.SHA3(key + "BM15" + pastHashes[0] + pastHashes[1]).toString();
+            case 9:
+                hashInput = concatUint8Arrays(key, encodeUTF8("BM15"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-256');
                 break;
-            case "f":
-                key = CryptoJS.MD5(key + "TT85" + pastHashes[0] + pastHashes[1]).toString();
+            case 10:
+                hashInput = concatUint8Arrays(key, encodeUTF8("TT85"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-256');
                 break;
-            case "e":
-                key = CryptoJS.MD5(key + "RF19" + pastHashes[0] + pastHashes[1]).toString();
+            case 11:
+                hashInput = concatUint8Arrays(key, encodeUTF8("RF19"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-1');
                 break;
-            case "d":
-                key = CryptoJS.MD5(key + "MS25" + pastHashes[0] + pastHashes[1]).toString();
+            case 12:
+                hashInput = concatUint8Arrays(key, encodeUTF8("MS25"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-1');
                 break;
-            case "c":
-                key = CryptoJS.SHA1(key + "0X80" + pastHashes[0] + pastHashes[1]).toString();
+            case 13:
+                hashInput = concatUint8Arrays(key, encodeUTF8("0X80"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-1');
                 break;
-            case "b":
-                key = CryptoJS.SHA1(key + "MX55" + pastHashes[0] + pastHashes[1]).toString();
+            case 14:
+                hashInput = concatUint8Arrays(key, encodeUTF8("MX55"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-1');
                 break;
-            case "a":
-                key = CryptoJS.SHA3(key + "WT66" + pastHashes[0] + pastHashes[1]).toString();
+            case 15:
+                hashInput = concatUint8Arrays(key, encodeUTF8("WT66"), pastHashes[0], pastHashes[1]);
+                key = await hashData(hashInput, 'SHA-256');
                 break;
         }
+
+        // Update pastHashes with the new key
         pastHashes.push(key);
         pastHashes.shift();
     }
@@ -190,79 +144,148 @@ function returnHash(seed) {
 }
 
 /**
- * Encrypts a message using XOR, Blowfish, and AES encryption, and converts it to emojis.
- * @param {string} message - The message to encrypt.
- * @param {string[]} keys - An array containing XOR, Blowfish, and AES keys.
- * @returns {string} The encrypted message represented as emojis.
+ * Generates a set of keys based on the input password using various hash algorithms.
+ * @param {string} pass - The password input.
+ * @returns {Promise<{ aesKey1: Uint8Array, aesKey2: Uint8Array, xorKey: Uint8Array }>} An object containing AES-GCM key, AES-CTR key, and XOR key as 256-bit Uint8Arrays.
  */
-function encrypt(message, keys) {
-    if (keys.length !== 3) {
-        return;
+async function getPassword(pass) {
+    // Default keys when password is empty
+    if (pass === "") {
+        const defaultKeys = {
+            aesKey1: await generate256BitKey(encodeUTF8("I'm looking for friends :)")),
+            aesKey2: await generate256BitKey(encodeUTF8("Do you wanna be my friend?")),
+            xorKey: await generate256BitKey(encodeUTF8("You are a kind stranger."))
+        };
+        return defaultKeys;
     }
 
-    let xorEncrypted;
-    let blowfishEncrypted;
-    let aesEncrypted;
-    let encryptedEmoji;
+    console.log("Started Calculating Password Hash.");
 
-    // Perform XOR encryption
-    xorEncrypted = XORencrypt(keys[0], message);
+    // Step 1: Generate seedHash by concatenating multiple hashes of the password
+    const passBytes = encodeUTF8(pass);
+    const hashes = await Promise.all([
+        hashData(passBytes, 'SHA-512'),
+        hashData(passBytes, 'SHA-256'),
+        hashData(passBytes, 'SHA-1'),
+        hashData(passBytes, 'SHA-384'),
+    ]);
+    const seedHash = concatUint8Arrays(...hashes);
 
-    // Encrypt with Blowfish
-    blowfishEncrypted = CryptoJS.Blowfish.encrypt(xorEncrypted, keys[1]).toString();
+    // Step 2: Generate initial hashPass using returnHash
+    let hashPass = await returnHash(new Uint8Array(seedHash));
 
-    // Encrypt with AES
-    aesEncrypted = CryptoJS.AES.encrypt(blowfishEncrypted, keys[2]).toString();
+    // Step 3: Determine security level
+    const securityLevel = await getSecLevel(pass);
 
-    // Remove the first 8 characters (the 'Salted__' header in OpenSSL)
-    aesEncrypted = aesEncrypted.substring(8);
+    // Step 4: Iterate hashPass based on security level
+    for (let i = 0; i < securityLevel; i++) {
+        const iterationInput = concatUint8Arrays(
+            hashPass,
+            new Uint8Array([
+                (i * 69) & 0xFF,
+                (i * 69 >> 8) & 0xFF,
+                (i * 69 >> 16) & 0xFF,
+                (i * 69 >> 24) & 0xFF
+            ])
+        );
+        hashPass = await returnHash(iterationInput);
+    }
 
-    let encryptedBytes = base64ToBytes(aesEncrypted);
+    // Step 5: Generate AES-GCM key
+    const aesKey1 = await generate256BitKey(hashPass);
+
+    // Step 6: Generate AES-CTR key by iterating 15 times
+    for (let i = 0; i < 15; i++) {
+        const iterationInput = concatUint8Arrays(
+            hashPass,
+            new Uint8Array([
+                (i * 420) & 0xFF,
+                (i * 420 >> 8) & 0xFF,
+                (i * 420 >> 16) & 0xFF,
+                (i * 420 >> 24) & 0xFF
+            ])
+        );
+        hashPass = await returnHash(iterationInput);
+    }
+    const aesKey2 = await generate256BitKey(hashPass);
+
+    // Step 7: Generate XOR key by iterating 15 times
+    for (let i = 0; i < 15; i++) {
+        const iterationInput = concatUint8Arrays(
+            hashPass,
+            new Uint8Array([
+                (i * 99) & 0xFF,
+                (i * 99 >> 8) & 0xFF,
+                (i * 99 >> 16) & 0xFF,
+                (i * 99 >> 24) & 0xFF
+            ])
+        );
+        hashPass = await returnHash(iterationInput);
+    }
+    const xorKeySalts = await generate64Salts("Today is not the day I learned to code.");
+
+    const xorKey = await generate4kByteKey(hashPass, xorKeySalts);
+
+    return { aesKey1, aesKey2, xorKey };
+}
+
+/**
+ * Encrypts a message using AES-256-GCM, AES-256-CTR, and XOR encryption, then converts it to emojis.
+ * @param {string} message - The message to encrypt.
+ * @param {object} keys - An object containing aesKey1, aesKey2, and xorKey as Uint8Arrays.
+ * @returns {Promise<string>} The encrypted message represented as emojis.
+ */
+async function encrypt(message, keys) {
+
+    if (!keys || !(keys.aesKey1 instanceof Uint8Array) || !(keys.aesKey2 instanceof Uint8Array) || !(keys.xorKey instanceof Uint8Array)) {
+        throw new Error("Invalid keys provided.");
+    }
+
+    // Step 1: AES-256-GCM Encryption
+    const messageBytes = encodeUTF8(message);
+    const aesGcmEncrypted = await aesGcmEncrypt(keys.aesKey1, messageBytes);
+
+    // Step 2: AES-256-CTR Encryption
+    const aesCtrEncrypted = await aesCtrEncrypt(keys.aesKey2, aesGcmEncrypted);
+
+    // Step 3: XOR Encryption
+    const xorEncrypted = XORencrypt(keys.xorKey, aesCtrEncrypted);
+
+    // Step 4: Convert Encrypted Data to Emojis
     const emojis = getEmojiArray();
-
-    // Map bytes to emojis
-    encryptedEmoji = mapBytesToSymbols(encryptedBytes, emojis);
+    const encryptedEmoji = mapBytesToSymbols(xorEncrypted, emojis);
 
     return encryptedEmoji.join("​");
 }
 
 /**
- * Decrypts a message represented as emojis using AES, Blowfish, and XOR decryption.
+ * Decrypts a message represented as emojis using XOR, AES-256-CTR, and AES-256-GCM decryption.
  * @param {string} message - The encrypted message represented as emojis.
- * @param {string[]} keys - An array containing XOR, Blowfish, and AES keys.
- * @returns {string} The decrypted message.
+ * @param {object} keys - An object containing aesKey1, aesKey2, and xorKey as Uint8Arrays.
+ * @returns {Promise<string>} The decrypted message.
  */
-function decrypt(message, keys) {
-    if (keys.length !== 3) {
-        return;
+async function decrypt(message, keys) {
+    if (!keys || !(keys.aesKey1 instanceof Uint8Array) || !(keys.aesKey2 instanceof Uint8Array) || !(keys.xorKey instanceof Uint8Array)) {
+        throw new Error("Invalid keys provided.");
     }
 
-    let encryptedBase64 = "";
-    const emojis = getEmojiArray();
-    let encryptedBytes;
-
     try {
-        // Split the message into an array and map emojis to bytes
-        encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis);
+        const emojis = getEmojiArray();
+        const encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis);
+
+        // Step 1: XOR Decryption
+        const aesCtrEncrypted = XORdecrypt(keys.xorKey, encryptedBytes);
+
+        // Step 2: AES-256-CTR Decryption
+        const aesGcmEncrypted = await aesCtrDecrypt(keys.aesKey2, aesCtrEncrypted);
+
+        // Step 3: AES-256-GCM Decryption
+        const decryptedBytes = await aesGcmDecrypt(keys.aesKey1, aesGcmEncrypted);
+        const decryptedMessage = decodeUTF8(decryptedBytes);
+
+        return decryptedMessage;
     } catch (err) {
-        return "";
-    }
-
-    encryptedBase64 = bytesToBase64(encryptedBytes);
-    // Add header (the 'Salted__' prefix in OpenSSL)
-    encryptedBase64 = "U2FsdGVk" + encryptedBase64;
-
-    try {
-        console.log("Start AES Decryption...");
-        let aesDecryptedString = CryptoJS.AES.decrypt(encryptedBase64, keys[2]).toString(CryptoJS.enc.Utf8);
-
-        console.log("Start Blowfish Decryption...");
-        let blowfishDecrypted = CryptoJS.Blowfish.decrypt(aesDecryptedString, keys[1]).toString(CryptoJS.enc.Utf8);
-
-        console.log("Start XOR Decryption...");
-        let decrypted = XORdecrypt(keys[0], blowfishDecrypted);
-        return decrypted;
-    } catch (err) {
+        console.error("Decryption failed:", err);
         return "";
     }
 }
@@ -272,9 +295,9 @@ function decrypt(message, keys) {
  * @param {string} message - The message to encode.
  * @returns {string} The encoded message represented as emojis.
  */
-function encode(message) {
+function encode(message, customEmojiArray = null) {
     const bytes = new TextEncoder().encode(message);
-    const emojis = getEmojiArray();
+    const emojis = customEmojiArray || getEmojiArray();
     const encodedEmoji = mapBytesToSymbols(bytes, emojis);
     return encodedEmoji.join("​");
 }
@@ -284,10 +307,10 @@ function encode(message) {
  * @param {string} message - The message represented as emojis.
  * @returns {string} The decoded message.
  */
-function decode(message) {
+function decode(message, customEmojiArray = null) {
     let bytes;
     let decoded;
-    const emojis = getEmojiArray();
+    const emojis = customEmojiArray || getEmojiArray();
     try {
         // Split into array and map emojis to bytes
         bytes = mapSymbolsToBytes(message.split("​"), emojis);
@@ -312,16 +335,16 @@ function getEmojiArray() {
  * Generates a random key by encrypting a random message with random keys.
  * @returns {string} The encrypted key string.
  */
-function generateRandomKey() {
-    let keys = [];
+async function generateRandomKey() {
+    let keys = {};
 
-    keys[1] = hexToBase64(getLongKey(generateRandomString()));
-    keys[2] = hexToBase64(getLongKey(generateRandomString()));
-    keys[0] = hexToBase64(getLongKey(generateRandomString()));
+    keys.aesKey1 = await generate256BitKey(new Uint8Array([0,1,2,3,4,5,6,7,8]));
+    keys.aesKey2 = await generate256BitKey(new Uint8Array([0,1,2,4,8,16,32,64,128]));
+    keys.xorKey = await generate256BitKey(new Uint8Array([10,20,40,20,10,20,40,20,10]));
 
     let message = generateRandomString();
 
-    let keyString = encrypt(message, keys);
+    let keyString = await encrypt(message, keys);
 
     return keyString;
 }

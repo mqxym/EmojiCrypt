@@ -219,25 +219,25 @@ function getTranslation(key, langIndex) {
             "الرسالة",
             ""
         ],
-        "keyInput": [
-            "(optional)",
-            "(optional)",
-            "(可选)",
-            "(необязательно)",
-            "(opcional)",
-            "(facultatif)",
-            "(اختياري)",
+       "keyInput": [
+            "Secure password",
+            "Sicheres Passwort",
+            "安全的密码",
+            "Надежный пароль",
+            "Contraseña segura",
+            "Mot de passe sécurisé",
+            "كلمة مرور آمنة",
             ""
         ],
         // Messages and other elements
         "footerHighlight": [
-            "Secure on-device encryption! Version " + getVersion() + "<br> Combined AES-256, Blowfish & XOR <br>No data sent. No cookies = no tracking. No logging.",
-            "Sichere Verschlüsselung auf dem Gerät! Version " + getVersion() + "<br> Kombiniert AES-256, Blowfish & XOR <br>Keine Daten werden gesendet. Keine Cookies = kein Tracking. Kein Logging.",
-            "设备上的安全加密！版本 " + getVersion() + "<br> 组合 AES-256、Blowfish 和 XOR <br> 不发送数据。没有 Cookie = 无跟踪。无日志。",
-            "Безопасное шифрование на устройстве! Версия " + getVersion() + "<br> Комбинация AES-256, Blowfish & XOR <br> Данные не отправляются. Нет куки = нет отслеживания. Нет логирования.",
-            "¡Encriptación segura en el dispositivo! Versión " + getVersion() + "<br> Combinación de AES-256, Blowfish y XOR <br> No se envían datos. Sin cookies = sin seguimiento. Sin registros.",
-            "Chiffrement sécurisé sur l'appareil ! Version " + getVersion() + "<br> Combinaison AES-256, Blowfish & XOR <br> Aucune donnée envoyée. Pas de cookies = pas de suivi. Pas de journalisation.",
-            "تشفير آمن على الجهاز! الإصدار " + getVersion() + "<br> يجمع بين AES-256 و Blowfish و XOR <br>لا يتم إرسال بيانات. لا كوكيز = لا تتبع. لا سجلات.",
+            "Secure on-device encryption! Version " + getVersion() + "<br> Combined AES-256 & XOR <br>No data sent. No cookies = no tracking. No logging.",
+            "Sichere Verschlüsselung auf dem Gerät! Version " + getVersion() + "<br> Kombiniert AES-256 & XOR <br>Keine Daten werden gesendet. Keine Cookies = kein Tracking. Kein Logging.",
+            "设备上的安全加密！版本 " + getVersion() + "<br> 组合 AES-256 和 XOR <br> 不发送数据。没有 Cookie = 无跟踪。无日志。",
+            "Безопасное шифрование на устройстве! Версия " + getVersion() + "<br> Комбинация AES-256 & XOR <br> Данные не отправляются. Нет куки = нет отслеживания. Нет логирования.",
+            "¡Encriptación segura en el dispositivo! Versión " + getVersion() + "<br> Combinación de AES-256 y XOR <br> No se envían datos. Sin cookies = sin seguimiento. Sin registros.",
+            "Chiffrement sécurisé sur l'appareil ! Version " + getVersion() + "<br> Combinaison AES-256 & XOR <br> Aucune donnée envoyée. Pas de cookies = pas de suivi. Pas de journalisation.",
+            "تشفير آمن على الجهاز! الإصدار " + getVersion() + "<br> يجمع بين AES-256 و XOR <br>لا يتم إرسال بيانات. لا كوكيز = لا تتبع. لا سجلات.",
             ""
         ],
         "footerSource": [
@@ -605,13 +605,13 @@ function getTranslation(key, langIndex) {
             ""
         ],
         "faqAnswer12": [
-            "NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.",
-            "NasaEmoji verwendet eine Kombination aus AES-256, Blowfish und XOR Verschlüsselungsalgorithmen, um deine Nachrichten zu sichern.",
-            "NasaEmoji 使用 AES-256、Blowfish 和 XOR 加密算法的组合来保护您的消息。",
-            "NasaEmoji использует комбинацию алгоритмов шифрования AES-256, Blowfish и XOR для защиты ваших сообщений.",
-            "NasaEmoji utiliza una combinación de algoritmos de cifrado AES-256, Blowfish y XOR para asegurar tus mensajes.",
-            "NasaEmoji utilise une combinaison des algorithmes de chiffrement AES-256, Blowfish et XOR pour sécuriser tes messages.",
-            "يستخدم NasaEmoji مزيجًا من خوارزميات التشفير AES-256 و Blowfish و XOR لتأمين رسائلك.",
+            "NasaEmoji uses a combination of AES-GCM, AES-CTR, and XOR encryption algorithms to secure your messages.",
+            "NasaEmoji verwendet eine Kombination aus AES-GCM, AES-CTR und XOR Verschlüsselungsalgorithmen, um deine Nachrichten zu sichern.",
+            "NasaEmoji 使用 AES-GCM、AES-CTR 和 XOR 加密算法的组合来保护您的消息。",
+            "NasaEmoji использует комбинацию алгоритмов шифрования AES-GCM, AES-CTR и XOR для защиты ваших сообщений.",
+            "NasaEmoji utiliza una combinación de algoritmos de cifrado AES-GCM, AES-CTR y XOR para asegurar tus mensajes.",
+            "NasaEmoji utilise une combinaison des algorithmes de chiffrement AES-GCM, AES-CTR et XOR pour sécuriser tes messages.",
+            "يستخدم NasaEmoji مزيجًا من خوارزميات التشفير AES-GCM و AES-CTR و XOR لتأمين رسائلك.",
             ""
         ],
         "faqQuestion13": [
@@ -682,26 +682,6 @@ function getTranslation(key, langIndex) {
             "¿Qué es la biblioteca CryptoJS?",
             "Qu'est-ce que la bibliothèque CryptoJS ?",
             "ما هي مكتبة CryptoJS؟",
-            ""
-        ],
-        "faqAnswer16": [
-            "CryptoJS is a widely used JavaScript library that provides standard and secure cryptographic algorithms for encryption and hashing.",
-            "CryptoJS ist eine weit verbreitete JavaScript-Bibliothek, die standardisierte und sichere kryptografische Algorithmen für Verschlüsselung und Hashing bereitstellt.",
-            "CryptoJS 是一个广泛使用的 JavaScript 库，提供用于加密和哈希的标准和安全的加密算法。",
-            "CryptoJS — широко используемая библиотека JavaScript, которая предоставляет стандартные и безопасные криптографические алгоритмы для шифрования и хеширования.",
-            "CryptoJS es una biblioteca de JavaScript ampliamente utilizada que proporciona algoritmos criptográficos estándar y seguros para cifrado y hash.",
-            "CryptoJS est une bibliothèque JavaScript largement utilisée qui fournit des algorithmes cryptographiques standard et sécurisés pour le chiffrement et le hachage.",
-            "CryptoJS هي مكتبة JavaScript مستخدمة على نطاق واسع توفر خوارزميات تشفير وتجزئة معيارية وآمنة.",
-            ""
-        ],
-        "faqQuestion17": [
-            "How secure is the CryptoJS library?",
-            "Wie sicher ist die CryptoJS-Bibliothek?",
-            "CryptoJS 库有多安全？",
-            "Насколько безопасна библиотека CryptoJS?",
-            "¿Qué tan segura es la biblioteca CryptoJS?",
-            "Quelle est la sécurité de la bibliothèque CryptoJS ?",
-            "ما مدى أمان مكتبة CryptoJS؟",
             ""
         ],
         "faqAnswer17": [
