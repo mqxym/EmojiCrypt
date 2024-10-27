@@ -709,7 +709,7 @@
         async function updatePrivateAlgorithmFromUrl() {
             privateConversionId = getPrivateIdfromUrl() || localStorage.getItem("pa");
             if (privateConversionId) {
-                customEmojiArray = await generateSecurePermutation(privateConversionId, getEmojiArray());
+                customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 $('#privateConversionLink').val(window.location.href);
                 $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
                 $('#disablePrivateConversionButton').removeClass('d-none');
@@ -1232,9 +1232,9 @@
                     await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
-                    const key = await getPassword($('#keyInput').val());
+                    const keyInput = $('#keyInput').val();
     
-                    const emojiString = await encrypt(message, key);
+                    const emojiString = await encrypt(message, keyInput);
     
                     if (!emojiString) {
                         $thisButton.html(getTranslation('btnEncodeFailed', languageIndex));
@@ -1248,9 +1248,9 @@
                     await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
-                    const key = await getPassword($('#keyInput').val());
+                    const keyInput = $('#keyInput').val();
     
-                    const decryptedText = await decrypt(message, key);
+                    const decryptedText = await decrypt(message, keyInput);
     
                     if (!decryptedText) {
                         $thisButton.html(getTranslation('btnDecodeFailed', languageIndex));
@@ -1404,14 +1404,14 @@
             $('#generatePrivateConversionButton').click(async function () {
                 const $thisButton = $(this);
                 privateConversionId = generateSecureRandomString();
-                customEmojiArray = await generateSecurePermutation(privateConversionId, getEmojiArray());
+                customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 updateURLParameter();
                 localStorage.setItem("pa", privateConversionId);
 
                 $('#privateConversionLink').val(window.location.href);
                 $('#disablePrivateConversionButton').removeClass('d-none');
                 $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
-                $thisButton.removeClass('bg-dark').addClass('bg-success').text("➗ Private algorithm generated!");
+                $thisButton.removeClass('bg-dark').addClass('bg-success').text("⚙️ Private algorithm generated!");
                 await new Promise((r) => setTimeout(r, 5000));
                 $thisButton.addClass('bg-dark').removeClass('bg-success').text("🔮 Generate (new) private algorithm");
 

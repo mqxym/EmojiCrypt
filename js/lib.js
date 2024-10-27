@@ -207,76 +207,6 @@ function generateSecureRandomString(length = 15) {
     return result;
 }
 
-/**
- * Generates a cryptographically secure permutation of symbols based on an input string.
- *
- * This function uses the SHA-256 hashing algorithm to create a deterministic yet secure
- * permutation of the provided symbols. The permutation is derived from the input string,
- * ensuring that the same input will always produce the same permutation, while different
- * inputs yield different permutations.
- *
- * @async
- * @function generateSecurePermutation
- * @param {string} inputString - The input string used to seed the permutation generation.
- * @param {Array<string>} symbolsArray - An array of symbols to be permuted.
- * @returns {Promise<Array<string>>} A promise that resolves to the securely permuted array of symbols.
- *
- * @example
- * const input = "secureSeed";
- * const symbols = ["apple", "banana", "cherry", "date"];
- * generateSecurePermutation(input, symbols).then(permutation => {
- *   console.log(permutation);
- *   // Output might be: ["cherry", "apple", "date", "banana"]
- * });
- */
-async function generateSecurePermutation(inputString, symbolsArray) {
-    // Initialize a TextEncoder to convert the input string to a Uint8Array.
-    const encoder = new TextEncoder();
-    const inputBytes = encoder.encode(inputString);
-
-    // Compute the SHA-256 hash of the input bytes to derive the seed.
-    const seedHashBuffer = await crypto.subtle.digest('SHA-256', inputBytes);
-    const seedHash = new Uint8Array(seedHashBuffer);
-
-    /**
-     * Generate a hash for each symbol by concatenating the seedHash with the symbol's index
-     * and computing the SHA-256 hash of the combined data.
-     */
-    const symbolHashes = await Promise.all(symbolsArray.map(async (symbol, index) => {
-        // Create a 4-byte buffer to represent the symbol's index in big-endian format.
-        const indexBuffer = new ArrayBuffer(4);
-        new DataView(indexBuffer).setUint32(0, index, false); // false for big-endian
-        const indexBytes = new Uint8Array(indexBuffer);
-
-        // Concatenate the seedHash with the indexBytes to form the data to be hashed.
-        const data = new Uint8Array(seedHash.length + indexBytes.length);
-        data.set(seedHash);
-        data.set(indexBytes, seedHash.length);
-
-        // Compute the SHA-256 hash of the concatenated data.
-        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-        return { symbol, hash: new Uint8Array(hashBuffer) };
-    }));
-
-    /**
-     * Sort the symbols based on their corresponding hash values in ascending order.
-     * This ensures a deterministic and secure permutation.
-     */
-    symbolHashes.sort((a, b) => {
-        const hashA = a.hash;
-        const hashB = b.hash;
-        for (let i = 0; i < hashA.length; i++) {
-            if (hashA[i] !== hashB[i]) {
-                return hashA[i] - hashB[i];
-            }
-        }
-        return 0; // If hashes are identical, maintain original order
-    });
-
-    // Extract and return the sorted symbols from the sorted hash objects.
-    const sortedSymbols = symbolHashes.map(item => item.symbol);
-    return sortedSymbols;
-}
 
 /**
  * Encrypts data using AES-256-CTR.
@@ -436,4 +366,100 @@ async function aesGcmDecrypt(key, data) {
     );
 
     return new Uint8Array(decryptedBuffer);
+}
+
+/**
+ * Generates a cryptographically secure permutation of symbols based on a binary input array.
+ *
+ * This function uses the SHA-256 hashing algorithm to create a deterministic yet secure
+ * permutation of the provided symbols. The permutation is derived from the input binary array,
+ * ensuring that the same input will always produce the same permutation, while different
+ * inputs yield different permutations.
+ *
+ * @async
+ * @function generateSecurePermutation
+ * @param {Uint8Array} inputBytes - The input binary array used to seed the permutation generation.
+ * @param {Array<string>} symbolsArray - An array of symbols to be permuted.
+ * @returns {Promise<Array<string>>} A promise that resolves to the securely permuted array of symbols.
+ *
+ * @example
+ * const inputBytes = new Uint8Array([0x73, 0x65, 0x63, 0x75, 0x72, 0x65, 0x53, 0x65, 0x65, 0x64]);
+ * const symbols = ["apple", "banana", "cherry", "date"];
+ * generateSecurePermutation(inputBytes, symbols).then(permutation => {
+ *   console.log(permutation);
+ *   // Output might be: ["cherry", "apple", "date", "banana"]
+ * });
+ */
+async function generateSecurePermutation(inputBytes, symbolsArray) {
+    // Compute the SHA-256 hash of the input bytes to derive the seed.
+    const seedHashBuffer = await crypto.subtle.digest('SHA-256', inputBytes);
+    const seedHash = new Uint8Array(seedHashBuffer);
+
+    /**
+     * Generate a hash for each symbol by concatenating the seedHash with the symbol's index
+     * and computing the SHA-256 hash of the combined data.
+     */
+    const symbolHashes = await Promise.all(symbolsArray.map(async (symbol, index) => {
+        // Create a 4-byte buffer to represent the symbol's index in big-endian format.
+        const indexBuffer = new ArrayBuffer(4);
+        new DataView(indexBuffer).setUint32(0, index, false); // false for big-endian
+        const indexBytes = new Uint8Array(indexBuffer);
+
+        // Concatenate the seedHash with the indexBytes to form the data to be hashed.
+        const data = new Uint8Array(seedHash.length + indexBytes.length);
+        data.set(seedHash);
+        data.set(indexBytes, seedHash.length);
+
+        // Compute the SHA-256 hash of the concatenated data.
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        return { symbol, hash: new Uint8Array(hashBuffer) };
+    }));
+
+    /**
+     * Sort the symbols based on their corresponding hash values in ascending order.
+     * This ensures a deterministic and secure permutation.
+     */
+    symbolHashes.sort((a, b) => {
+        const hashA = a.hash;
+        const hashB = b.hash;
+        for (let i = 0; i < hashA.length; i++) {
+            if (hashA[i] !== hashB[i]) {
+                return hashA[i] - hashB[i];
+            }
+        }
+        return 0; // If hashes are identical, maintain original order
+    });
+
+    // Extract and return the sorted symbols from the sorted hash objects.
+    const sortedSymbols = symbolHashes.map(item => item.symbol);
+    return sortedSymbols;
+}
+
+/**
+ * Generates a cryptographically secure permutation of symbols based on an input string.
+ *
+ * This helper function encodes the input string into a binary array and delegates the permutation
+ * generation to the `generateSecurePermutation` function.
+ *
+ * @async
+ * @function generateSecurePermutationFromString
+ * @param {string} inputString - The input string used to seed the permutation generation.
+ * @param {Array<string>} symbolsArray - An array of symbols to be permuted.
+ * @returns {Promise<Array<string>>} A promise that resolves to the securely permuted array of symbols.
+ *
+ * @example
+ * const input = "secureSeed";
+ * const symbols = ["apple", "banana", "cherry", "date"];
+ * generateSecurePermutationFromString(input, symbols).then(permutation => {
+ *   console.log(permutation);
+ *   // Output might be: ["cherry", "apple", "date", "banana"]
+ * });
+ */
+async function generateSecurePermutationFromString(inputString, symbolsArray) {
+    // Initialize a TextEncoder to convert the input string to a Uint8Array.
+    const encoder = new TextEncoder();
+    const inputBytes = encoder.encode(inputString);
+
+    // Delegate to the main generateSecurePermutation function.
+    return generateSecurePermutation(inputBytes, symbolsArray);
 }

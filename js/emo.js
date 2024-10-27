@@ -3,7 +3,7 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.0.0";
+    return "3.1.0";
 }
 
 /**
@@ -144,38 +144,52 @@ async function returnHash(seed) {
 }
 
 /**
- * Generates a set of keys based on the input password using various hash algorithms.
+ * Generates a set of keys based on the input password using various hash algorithms and generate a 48-bit salt if not provided.
  * @param {string} pass - The password input.
- * @returns {Promise<{ aesKey1: Uint8Array, aesKey2: Uint8Array, xorKey: Uint8Array }>} An object containing AES-GCM key, AES-CTR key, and XOR key as 256-bit Uint8Arrays.
+ * @param {Uint8Array} inputSalt - A 32-bit salt to use for hashing, generates random salt when not provided
+ * @returns {Promise<{ aesKey1: Uint8Array, aesKey2: Uint8Array, xorKey: Uint8Array, customSalt: Uint8Array }>} An object containing AES-GCM key, AES-CTR key, XOR key and a custom salt as Uint8Arrays (256-bit, 256-bit, 4096-byte, 48-bit).
  */
-async function getPassword(pass) {
+async function getCryptoKeys(keyInput, inputSalt = null) {
     // Default keys when password is empty
-    if (pass === "") {
+    if (!keyInput) {
         const defaultKeys = {
             aesKey1: await generate256BitKey(encodeUTF8("I'm looking for friends :)")),
             aesKey2: await generate256BitKey(encodeUTF8("Do you wanna be my friend?")),
-            xorKey: await generate256BitKey(encodeUTF8("You are a kind stranger."))
+            xorKey: await generate256BitKey(encodeUTF8("You are a kind stranger.")),
+            customSalt: crypto.getRandomValues(new Uint8Array(4))
         };
         return defaultKeys;
     }
 
     console.log("Started Calculating Password Hash.");
+    console.time("keyHash");
 
     // Step 1: Generate seedHash by concatenating multiple hashes of the password
-    const passBytes = encodeUTF8(pass);
+    const passBytes = encodeUTF8(keyInput);
     const hashes = await Promise.all([
         hashData(passBytes, 'SHA-512'),
         hashData(passBytes, 'SHA-256'),
         hashData(passBytes, 'SHA-1'),
         hashData(passBytes, 'SHA-384'),
     ]);
-    const seedHash = concatUint8Arrays(...hashes);
+
+    // Step 1.5: Generate or set the custom salt for hashing
+    let customSalt;
+
+    if (inputSalt) {
+        customSalt = inputSalt;
+    } else {
+        customSalt = crypto.getRandomValues(new Uint8Array(6));
+    }
 
     // Step 2: Generate initial hashPass using returnHash
+    hashes.push(customSalt);
+    const seedHash = concatUint8Arrays(...hashes);
+
     let hashPass = await returnHash(new Uint8Array(seedHash));
 
-    // Step 3: Determine security level
-    const securityLevel = await getSecLevel(pass);
+    // Step 3: Determine security level (number of key dependent hash iterations)
+    const securityLevel = await getSecLevel(keyInput);
 
     // Step 4: Iterate hashPass based on security level
     for (let i = 0; i < securityLevel; i++) {
@@ -186,7 +200,8 @@ async function getPassword(pass) {
                 (i * 69 >> 8) & 0xFF,
                 (i * 69 >> 16) & 0xFF,
                 (i * 69 >> 24) & 0xFF
-            ])
+            ]),
+            customSalt
         );
         hashPass = await returnHash(iterationInput);
     }
@@ -203,7 +218,8 @@ async function getPassword(pass) {
                 (i * 420 >> 8) & 0xFF,
                 (i * 420 >> 16) & 0xFF,
                 (i * 420 >> 24) & 0xFF
-            ])
+            ]),
+            customSalt
         );
         hashPass = await returnHash(iterationInput);
     }
@@ -218,7 +234,8 @@ async function getPassword(pass) {
                 (i * 99 >> 8) & 0xFF,
                 (i * 99 >> 16) & 0xFF,
                 (i * 99 >> 24) & 0xFF
-            ])
+            ]),
+            customSalt
         );
         hashPass = await returnHash(iterationInput);
     }
@@ -226,20 +243,22 @@ async function getPassword(pass) {
 
     const xorKey = await generate4kByteKey(hashPass, xorKeySalts);
 
-    return { aesKey1, aesKey2, xorKey };
+    console.timeEnd("keyHash");
+
+    return { aesKey1, aesKey2, xorKey, customSalt };
 }
 
 /**
  * Encrypts a message using AES-256-GCM, AES-256-CTR, and XOR encryption, then converts it to emojis.
  * @param {string} message - The message to encrypt.
- * @param {object} keys - An object containing aesKey1, aesKey2, and xorKey as Uint8Arrays.
+ * @param {string} keyInput - The input key as string
  * @returns {Promise<string>} The encrypted message represented as emojis.
  */
-async function encrypt(message, keys) {
+async function encrypt(message, keyInput) {
 
-    if (!keys || !(keys.aesKey1 instanceof Uint8Array) || !(keys.aesKey2 instanceof Uint8Array) || !(keys.xorKey instanceof Uint8Array)) {
-        throw new Error("Invalid keys provided.");
-    }
+
+    // Generate 3 keys and a used customSalt
+    const keys = await getCryptoKeys(keyInput);
 
     // Step 1: AES-256-GCM Encryption
     const messageBytes = encodeUTF8(message);
@@ -251,27 +270,39 @@ async function encrypt(message, keys) {
     // Step 3: XOR Encryption
     const xorEncrypted = XORencrypt(keys.xorKey, aesCtrEncrypted);
 
-    // Step 4: Convert Encrypted Data to Emojis
-    const emojis = getEmojiArray();
-    const encryptedEmoji = mapBytesToSymbols(xorEncrypted, emojis);
+    // Step 4: Concat customSalt with encrypted output
+    const finalOutput = concatUint8Arrays(keys.customSalt, xorEncrypted);
+
+    // Step 5: generate a custom emoji array permutation using the key
+    const standardEmojiArray = getEmojiArray();
+    const emojiArrayPermutation = await generateSecurePermutationFromString(keyInput, standardEmojiArray);
+
+    // Step 6: Convert Encrypted Data to Emojis
+    const encryptedEmoji = mapBytesToSymbols(finalOutput, emojiArrayPermutation);
 
     return encryptedEmoji.join("​");
 }
 
 /**
  * Decrypts a message represented as emojis using XOR, AES-256-CTR, and AES-256-GCM decryption.
- * @param {string} message - The encrypted message represented as emojis.
- * @param {object} keys - An object containing aesKey1, aesKey2, and xorKey as Uint8Arrays.
+ * @param {string} message - The encrypted message represented as emojis containing the custom hash salt as first 6 bytes.
+ * @param {string} keyInput - The input key as string
  * @returns {Promise<string>} The decrypted message.
  */
-async function decrypt(message, keys) {
-    if (!keys || !(keys.aesKey1 instanceof Uint8Array) || !(keys.aesKey2 instanceof Uint8Array) || !(keys.xorKey instanceof Uint8Array)) {
-        throw new Error("Invalid keys provided.");
-    }
+async function decrypt(message, keyInput) {
 
     try {
-        const emojis = getEmojiArray();
-        const encryptedBytes = mapSymbolsToBytes(message.split("​"), emojis);
+        // Step 0: generate a custom emoji array permutation using the key
+        const standardEmojiArray = getEmojiArray();
+        const emojiArrayPermutation = await generateSecurePermutationFromString(keyInput, standardEmojiArray);
+
+        const decodedBytes = mapSymbolsToBytes(message.split("​"), emojiArrayPermutation);
+
+        // Step 0.5: Split between salt and encrypted bytes
+        const customSalt = decodedBytes.slice(0,6);
+        const encryptedBytes = decodedBytes.slice(6);
+
+        const keys = await getCryptoKeys(keyInput, customSalt)
 
         // Step 1: XOR Decryption
         const aesCtrEncrypted = XORdecrypt(keys.xorKey, encryptedBytes);
@@ -336,15 +367,11 @@ function getEmojiArray() {
  * @returns {string} The encrypted key string.
  */
 async function generateRandomKey() {
-    let keys = {};
 
-    keys.aesKey1 = await generate256BitKey(new Uint8Array([0,1,2,3,4,5,6,7,8]));
-    keys.aesKey2 = await generate256BitKey(new Uint8Array([0,1,2,4,8,16,32,64,128]));
-    keys.xorKey = await generate256BitKey(new Uint8Array([10,20,40,20,10,20,40,20,10]));
+    const key = '';
+    const message = generateRandomString();
 
-    let message = generateRandomString();
-
-    let keyString = await encrypt(message, keys);
+    const keyString = await encrypt(message, key);
 
     return keyString;
 }
