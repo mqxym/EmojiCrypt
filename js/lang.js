@@ -14,8 +14,8 @@ function getTranslation(key, langIndex) {
             "Текст 📄 🔄 🌈 Emoji", // Russian
             "Texto 📄 🔄 🌈 Emoji", // Spanish
             "Texte 📄 🔄 🌈 Emoji", // French
-            "", // Placeholder for additional languages
-            ""
+            "النص 📄 🔄 🌈 إيموجي", // Arabic
+            "" // Placeholder for additional languages
         ],
         "enableDarkMode": [
             "Dark Mode",
@@ -24,7 +24,7 @@ function getTranslation(key, langIndex) {
             "Тёмный режим",
             "Modo Oscuro",
             "Mode Sombre",
-            "",
+            "الوضع الداكن",
             ""
         ],
         "disableDarkMode": [
@@ -34,7 +34,7 @@ function getTranslation(key, langIndex) {
             "Светлый режим",
             "Modo Claro",
             "Mode Clair",
-            "",
+            "الوضع الفاتح",
             ""
         ],
         "chooseAppMenu": [
@@ -44,7 +44,7 @@ function getTranslation(key, langIndex) {
             "Выбрать приложение",
             "Elegir aplicación",
             "Choisir l'application",
-            "",
+            "اختر التطبيق",
             ""
         ],
         "convertMenu": [
@@ -54,7 +54,7 @@ function getTranslation(key, langIndex) {
             "🔄 Конвертировать",
             "🔄 Convertir",
             "🔄 Convertir",
-            "",
+            "🔄 تحويل",
             ""
         ],
         "encryptMenu": [
@@ -64,7 +64,7 @@ function getTranslation(key, langIndex) {
             "🔐 Шифровать",
             "🔐 Encriptar",
             "🔐 Chiffrer",
-            "",
+            "🔐 تشفير",
             ""
         ],
         "aboutMenu": [
@@ -74,7 +74,7 @@ function getTranslation(key, langIndex) {
             "О приложении",
             "Acerca de",
             "À propos",
-            "",
+            "حول",
             ""
         ],
         // Encryption section elements
@@ -85,7 +85,7 @@ function getTranslation(key, langIndex) {
             "Удалить <br> сообщение",
             "Eliminar <br> Mensaje",
             "Supprimer <br> Message",
-            "",
+            "حذف <br> الرسالة",
             ""
         ],
         "encryptDecryptButton": [
@@ -95,7 +95,7 @@ function getTranslation(key, langIndex) {
             "🔀 Шифровать / Расшифровывать",
             "🔀 Encriptar / Desencriptar",
             "🔀 Chiffrer / Déchiffrer",
-            "",
+            "🔀 تشفير / فك تشفير",
             ""
         ],
         "copyKeyButton": [
@@ -105,7 +105,7 @@ function getTranslation(key, langIndex) {
             "Копировать",
             "Copiar",
             "Copier",
-            "",
+            "نسخ",
             ""
         ],
         "keyInstructions": [
@@ -115,7 +115,7 @@ function getTranslation(key, langIndex) {
             "Загрузить или сохранить ключи",
             "Cargar o guardar claves",
             "Charger ou sauvegarder les clés",
-            "",
+            "تحميل أو حفظ المفاتيح",
             ""
         ],
         "loadKeyButton": [
@@ -125,7 +125,7 @@ function getTranslation(key, langIndex) {
             "📲 Загрузить",
             "📲 Cargar",
             "📲 Charger",
-            "",
+            "📲 تحميل",
             ""
         ],
         "saveKeyButton": [
@@ -135,7 +135,7 @@ function getTranslation(key, langIndex) {
             "💾 Сохранить",
             "💾 Guardar",
             "💾 Sauvegarder",
-            "",
+            "💾 حفظ",
             ""
         ],
         "copyEncryptOutputButton": [
@@ -145,7 +145,7 @@ function getTranslation(key, langIndex) {
             "Копировать <br>в буфер <br> обмена",
             "Copiar <br>al <br>portapapeles",
             "Copier <br>dans le <br> presse-papiers",
-            "",
+            "نسخ <br>إلى <br>الحافظة",
             ""
         ],
         "encryptOutputTextarea": [
@@ -155,7 +155,7 @@ function getTranslation(key, langIndex) {
             "Расшифрованное/зашифрованное сообщение",
             "Mensaje desencriptado/encriptado",
             "Message déchiffré/chiffré",
-            "",
+            "الرسالة المفكوكة / المشفرة",
             ""
         ],
         // Convert section elements
@@ -166,7 +166,7 @@ function getTranslation(key, langIndex) {
             "🔄 Конвертировать",
             "🔄 Convertir",
             "🔄 Convertir",
-            "",
+            "🔄 تحويل",
             ""
         ],
         "clearConvertInputButton": [
@@ -176,7 +176,7 @@ function getTranslation(key, langIndex) {
             "Удалить <br> сообщение",
             "Eliminar <br> Mensaje",
             "Supprimer <br> Message",
-            "",
+            "حذف <br> الرسالة",
             ""
         ],
         "copyConvertOutputButton": [
@@ -186,7 +186,7 @@ function getTranslation(key, langIndex) {
             "Копировать <br>в буфер обмена",
             "Copiar <br>al <br>portapapeles",
             "Copier <br>dans le <br>presse-papiers",
-            "",
+            "نسخ <br>إلى الحافظة",
             ""
         ],
         "convertOutputTextarea": [
@@ -196,7 +196,7 @@ function getTranslation(key, langIndex) {
             "Преобразованное сообщение",
             "Mensaje convertido",
             "Message converti",
-            "",
+            "الرسالة المحولة",
             ""
         ],
         "encryptMessageInput": [
@@ -206,7 +206,7 @@ function getTranslation(key, langIndex) {
             "Сообщение",
             "Mensaje",
             "Message",
-            "",
+            "الرسالة",
             ""
         ],
         "convertMessageInput": [
@@ -216,28 +216,28 @@ function getTranslation(key, langIndex) {
             "Сообщение",
             "Mensaje",
             "Message",
-            "",
+            "الرسالة",
             ""
         ],
-        "keyInput": [
-            "(optional)",
-            "(optional)",
-            "(可选)",
-            "(необязательно)",
-            "(opcional)",
-            "(facultatif)",
-            "",
+       "keyInput": [
+            "Secure password",
+            "Sicheres Passwort",
+            "安全的密码",
+            "Надежный пароль",
+            "Contraseña segura",
+            "Mot de passe sécurisé",
+            "كلمة مرور آمنة",
             ""
         ],
         // Messages and other elements
         "footerHighlight": [
-            "Secure on-device encryption! Version " + getVersion() + "<br> Combined AES-256, Blowfish & XOR <br>No data sent. No cookies = no tracking. No logging.",
-            "Sichere Verschlüsselung auf dem Gerät! Version " + getVersion() + "<br> Kombiniert AES-256, Blowfish & XOR <br>Keine Daten werden gesendet. Keine Cookies = kein Tracking. Kein Logging.",
-            "设备上的安全加密！版本 " + getVersion() + "<br> 组合 AES-256、Blowfish 和 XOR <br> 不发送数据。没有 Cookie = 无跟踪。无日志。",
-            "Безопасное шифрование на устройстве! Версия " + getVersion() + "<br> Комбинация AES-256, Blowfish & XOR <br> Данные не отправляются. Нет куки = нет отслеживания. Нет логирования.",
-            "¡Encriptación segura en el dispositivo! Versión " + getVersion() + "<br> Combinación de AES-256, Blowfish y XOR <br> No se envían datos. Sin cookies = sin seguimiento. Sin registros.",
-            "Chiffrement sécurisé sur l'appareil ! Version " + getVersion() + "<br> Combinaison AES-256, Blowfish & XOR <br> Aucune donnée envoyée. Pas de cookies = pas de suivi. Pas de journalisation.",
-            "",
+            "Secure on-device encryption! Version " + getVersion() + "<br> Combined AES-256 & XOR <br>No data sent. No cookies = no tracking. No logging.",
+            "Sichere Verschlüsselung auf dem Gerät! Version " + getVersion() + "<br> Kombiniert AES-256 & XOR <br>Keine Daten werden gesendet. Keine Cookies = kein Tracking. Kein Logging.",
+            "设备上的安全加密！版本 " + getVersion() + "<br> 组合 AES-256 和 XOR <br> 不发送数据。没有 Cookie = 无跟踪。无日志。",
+            "Безопасное шифрование на устройстве! Версия " + getVersion() + "<br> Комбинация AES-256 & XOR <br> Данные не отправляются. Нет куки = нет отслеживания. Нет логирования.",
+            "¡Encriptación segura en el dispositivo! Versión " + getVersion() + "<br> Combinación de AES-256 y XOR <br> No se envían datos. Sin cookies = sin seguimiento. Sin registros.",
+            "Chiffrement sécurisé sur l'appareil ! Version " + getVersion() + "<br> Combinaison AES-256 & XOR <br> Aucune donnée envoyée. Pas de cookies = pas de suivi. Pas de journalisation.",
+            "تشفير آمن على الجهاز! الإصدار " + getVersion() + "<br> يجمع بين AES-256 و XOR <br>لا يتم إرسال بيانات. لا كوكيز = لا تتبع. لا سجلات.",
             ""
         ],
         "footerSource": [
@@ -247,7 +247,7 @@ function getTranslation(key, langIndex) {
             "Исходный код (Github)",
             "Código fuente (Github)",
             "Code source (Github)",
-            "",
+            "شفرة المصدر (GitHub)",
             ""
         ],
         "explanation": [
@@ -257,7 +257,7 @@ function getTranslation(key, langIndex) {
             "<h6>Шифруйте или расшифровывайте тексты или сообщения с помощью пароля. Выводятся эмодзи, ключ — эмодзи. С NasaEmoji вы можете отправлять секретные сообщения кому угодно! Создайте и поделитесь общим ключом с получателем любым удобным способом. Сохраните ключ в одном из 5 слотов для удобного доступа.</h6>",
             "<h6>¡Cifra o descifra textos o mensajes con una contraseña! La salida son emojis, la clave son emojis. Con NasaEmoji, ¡puedes enviar mensajes secretos a cualquiera! Genera y comparte una clave común con tu destinatario usando el método que prefieras. Guarda la clave en uno de los 5 espacios para acceder fácilmente.</h6>",
             "<h6>Tu peux chiffrer ou déchiffrer des textes ou des messages avec un mot de passe. Le résultat ? Des emojis, et la clé, c'est aussi des emojis. Avec NasaEmoji, tu peux envoyer des messages secrets à qui tu veux ! Crée et partage une clé avec ton destinataire comme tu veux. Garde la clé dans un des 5 emplacements pour la retrouver facilement.</h6>",
-            "",
+            "<h6>قم بتشفير أو فك تشفير النصوص أو الرسائل باستخدام كلمة مرور. المخرجات هي إيموجي، والمفتاح هو إيموجي. مع NasaEmoji، يمكنك إرسال رسائل سرية إلى أي شخص! قم بإنشاء ومشاركة مفتاح مشترك مع مستلمك باستخدام الطريقة التي تختارها. احفظ المفتاح في أحد الخمسة فتحات لسهولة الوصول.</h6>",
             ""
         ],
         // Status messages
@@ -268,7 +268,7 @@ function getTranslation(key, langIndex) {
             "💾 Сохранено",
             "💾 Guardado",
             "💾 Enregistré",
-            "",
+            "💾 محفوظ",
             ""
         ],
         "loadKey": [
@@ -278,7 +278,7 @@ function getTranslation(key, langIndex) {
             "📲 Загружено",
             "📲 Cargado",
             "📲 Chargé",
-            "",
+            "📲 محمل",
             ""
         ],
         "error": [
@@ -288,7 +288,7 @@ function getTranslation(key, langIndex) {
             "❌ Ошибка",
             "❌ Error",
             "❌ Erreur",
-            "",
+            "❌ خطأ",
             ""
         ],
         // Messages during encryption/decryption
@@ -299,7 +299,7 @@ function getTranslation(key, langIndex) {
             "⚙️ Шифруем...",
             "⚙️ Encriptando...",
             "⚙️ Chiffrement...",
-            "",
+            "⚙️ جاري التشفير...",
             ""
         ],
         "btnEncodeFailed": [
@@ -309,7 +309,7 @@ function getTranslation(key, langIndex) {
             "💔 Ошибка. Попробуйте снова?",
             "💔 Error. ¿Intentar de nuevo?",
             "💔 Erreur. Réessayer ?",
-            "",
+            "💔 خطأ. حاول مرة أخرى؟",
             ""
         ],
         "btnEncodeSuccess": [
@@ -319,7 +319,7 @@ function getTranslation(key, langIndex) {
             "💚 Зашифровано!",
             "💚 ¡Encriptado!",
             "💚 Chiffré !",
-            "",
+            "💚 تم التشفير!",
             ""
         ],
         "btnDecodeWorking": [
@@ -329,7 +329,7 @@ function getTranslation(key, langIndex) {
             "⚙️ Расшифровываем...",
             "⚙️ Desencriptando...",
             "⚙️ Déchiffrement...",
-            "",
+            "⚙️ جاري فك التشفير...",
             ""
         ],
         "btnDecodeFailed": [
@@ -339,7 +339,7 @@ function getTranslation(key, langIndex) {
             "💔 Не удалось. Неправильный ключ/пароль?",
             "💔 Falló. ¿Clave/contraseña incorrecta?",
             "💔 Échec. Mauvaise clé/mot de passe ?",
-            "",
+            "💔 فشل. مفتاح / كلمة مرور خاطئة؟",
             ""
         ],
         "btnDecodeSuccess": [
@@ -349,7 +349,7 @@ function getTranslation(key, langIndex) {
             "💚 Расшифровано!",
             "💚 ¡Desencriptado!",
             "💚 Déchiffré !",
-            "",
+            "💚 تم فك التشفير!",
             ""
         ],
         // Messages during conversion
@@ -360,7 +360,7 @@ function getTranslation(key, langIndex) {
             "⚙️ Кодируем...",
             "⚙️ Codificando...",
             "⚙️ Encodage...",
-            "",
+            "⚙️ جاري الترميز...",
             ""
         ],
         "btnEncodeFailedConvert": [
@@ -370,7 +370,7 @@ function getTranslation(key, langIndex) {
             "💔 Кодирование не удалось",
             "💔 Falló la codificación",
             "💔 Échec de l'encodage",
-            "",
+            "💔 فشل الترميز",
             ""
         ],
         "btnEncodeSuccessConvert": [
@@ -380,7 +380,7 @@ function getTranslation(key, langIndex) {
             "💚 Закодировано!",
             "💚 ¡Codificado!",
             "💚 Encodé !",
-            "",
+            "💚 تم الترميز!",
             ""
         ],
         "btnDecodeWorkingConvert": [
@@ -390,7 +390,7 @@ function getTranslation(key, langIndex) {
             "⚙️ Декодируем...",
             "⚙️ Decodificando...",
             "⚙️ Décodage...",
-            "",
+            "⚙️ جاري فك الترميز...",
             ""
         ],
         "btnDecodeFailedConvert": [
@@ -400,7 +400,7 @@ function getTranslation(key, langIndex) {
             "💔 Декодирование не удалось",
             "💔 Falló la decodificación",
             "💔 Échec du décodage",
-            "",
+            "💔 فشل فك الترميز",
             ""
         ],
         "btnDecodeSuccessConvert": [
@@ -410,7 +410,7 @@ function getTranslation(key, langIndex) {
             "💚 Декодировано!",
             "💚 ¡Decodificado!",
             "💚 Décodé !",
-            "",
+            "💚 تم فك الترميز!",
             ""
         ],
         // FAQ
@@ -421,7 +421,7 @@ function getTranslation(key, langIndex) {
             "Что такое NasaEmoji?",
             "¿Qué es NasaEmoji?",
             "Qu'est-ce que NasaEmoji ?",
-            "",
+            "ما هو NasaEmoji؟",
             ""
         ],
         "faqAnswer1": [
@@ -431,7 +431,7 @@ function getTranslation(key, langIndex) {
             "NasaEmoji — это универсальный инструмент, который позволяет конвертировать текст в эмодзи и шифровать сообщения с использованием эмодзи. Сайт предлагает два основных приложения: <strong>Конвертация</strong> и <strong>Шифрование</strong>. Приложение Конвертация позволяет преобразовывать любой текст в эмодзи и обратно без шифрования, в то время как приложение Шифрование позволяет безопасно шифровать и дешифровать сообщения, используя эмодзи в качестве ключей и вывода.",
             "NasaEmoji es una herramienta versátil que te permite convertir texto a emojis y encriptar mensajes usando emojis. El sitio ofrece dos aplicaciones principales: <strong>Conversión</strong> y <strong>Encriptación</strong>. La aplicación de Conversión te permite transformar cualquier texto en emojis y viceversa sin encriptación, mientras que la aplicación de Encriptación te permite encriptar y desencriptar mensajes de manera segura usando emojis como claves y salida.",
             "NasaEmoji est un outil polyvalent qui vous permet de convertir du texte en émojis et de chiffrer des messages en utilisant des émojis. Le site propose deux applications principales : <strong>Conversion</strong> et <strong>Cryptage</strong>. L'application de Conversion vous permet de transformer n'importe quel texte en émojis et vice versa sans cryptage, tandis que l'application de Cryptage vous permet de chiffrer et déchiffrer des messages de manière sécurisée en utilisant des émojis comme clés et sorties.",
-            "",
+            "NasaEmoji هو أداة متعددة الاستخدامات تتيح لك تحويل النص إلى إيموجي وتشفير الرسائل باستخدام إيموجي. يقدم الموقع تطبيقين رئيسيين: <strong>التحويل</strong> و<strong>التشفير</strong>. يتيح لك تطبيق التحويل تحويل أي نص إلى إيموجي والعودة دون تشفير، بينما يمكِّنك تطبيق التشفير من تشفير وفك تشفير الرسائل بأمان باستخدام إيموجي كمفاتيح ومخرجات.",
             ""
         ],
             "faqQuestion2": [
@@ -441,7 +441,7 @@ function getTranslation(key, langIndex) {
               "Как использовать NasaEmoji?",
               "¿Cómo uso NasaEmoji?",
               "Comment utiliser NasaEmoji ?",
-              "",
+              "كيف أستخدم NasaEmoji؟",
               ""
             ],
             "faqAnswer2": [
@@ -451,7 +451,7 @@ function getTranslation(key, langIndex) {
               "NasaEmoji имеет два приложения: <strong>Конвертация</strong> и <strong>Шифрование</strong>. По умолчанию сайт открывается с приложением <strong>Конвертация</strong>. Вы можете переключаться между приложениями, используя выпадающее меню <strong>Выбрать приложение</strong> в навигационной панели.<strong>Чтобы конвертировать текст в эмодзи:</strong><ul>    <li>Убедитесь, что вы находитесь в приложении <strong>Конвертация</strong>.</li>    <li>Введите ваше сообщение в поле ввода.</li>    <li>Нажмите кнопку <strong>🔄 Конвертировать</strong>.</li>    <li>Ваше конвертированное сообщение появится в поле вывода.</li></ul><strong>Чтобы зашифровать сообщение:</strong><ul>    <li>Переключитесь на приложение <strong>Шифрование</strong>, используя выпадающее меню <strong>Выбрать приложение</strong>.</li>    <li>Введите ваше сообщение в поле ввода.</li>    <li>Сгенерируйте ключ, нажав кнопку <strong>🔄</strong> рядом с полем ввода ключа, или введите свой собственный ключ.</li>    <li>Нажмите кнопку <strong>🔀 Шифровать / Расшифровывать</strong>.</li>    <li>Ваше зашифрованное сообщение появится в поле вывода.</li></ul>",
               "NasaEmoji cuenta con dos aplicaciones: <strong>Conversión</strong> y <strong>Encriptación</strong>. Por defecto, el sitio se abre con la aplicación <strong>Conversión</strong>. Puedes cambiar entre aplicaciones usando el menú desplegable <strong>Elegir aplicación</strong> en la barra de navegación.<strong>Para Convertir Texto a Emojis:</strong><ul>    <li>Asegúrate de estar en la aplicación <strong>Conversión</strong>.</li>    <li>Ingresa tu mensaje en el campo de entrada.</li>    <li>Haz clic en el botón <strong>🔄 Convertir</strong>.</li>    <li>Tu mensaje convertido aparecerá en el campo de salida.</li></ul><strong>Para Encriptar un Mensaje:</strong><ul>    <li>Cambia a la aplicación <strong>Encriptación</strong> usando el menú desplegable <strong>Elegir aplicación</strong>.</li>    <li>Ingresa tu mensaje en el campo de entrada.</li>    <li>Genera una clave haciendo clic en el botón <strong>🔄</strong> junto al campo de entrada de clave, o ingresa tu propia clave.</li>    <li>Haz clic en el botón <strong>🔀 Encriptar / Desencriptar</strong>.</li>    <li>Tu mensaje encriptado aparecerá en el campo de salida.</li></ul>",
               "NasaEmoji dispose de deux applications : <strong>Conversion</strong> et <strong>Cryptage</strong>. Par défaut, le site s'ouvre avec l'application <strong>Conversion</strong>. Vous pouvez basculer entre les applications en utilisant le menu déroulant <strong>Choisir l'application</strong> dans la barre de navigation.<strong>Pour convertir du texte en émojis :</strong><ul>    <li>Assurez-vous que vous êtes dans l'application <strong>Conversion</strong>.</li>    <li>Entrez votre message dans le champ de saisie.</li>    <li>Cliquez sur le bouton <strong>🔄 Convertir</strong>.</li>    <li>Votre message converti apparaîtra dans le champ de sortie.</li></ul><strong>Pour chiffrer un message :</strong><ul>    <li>Changez pour l'application <strong>Cryptage</strong> en utilisant le menu déroulant <strong>Choisir l'application</strong>.</li>    <li>Entrez votre message dans le champ de saisie.</li>    <li>Générez une clé en cliquant sur le bouton <strong>🔄</strong> à côté du champ de saisie de clé, ou entrez votre propre clé.</li>    <li>Cliquez sur le bouton <strong>🔀 Chiffrer / Déchiffrer</strong>.</li>    <li>Votre message chiffré apparaîtra dans le champ de sortie.</li></ul>",
-              "",
+              "يحتوي NasaEmoji على تطبيقين: <strong>التحويل</strong> و<strong>التشفير</strong>. بشكل افتراضي، يفتح الموقع مع تطبيق <strong>التحويل</strong>. يمكنك التبديل بين التطبيقات باستخدام القائمة المنسدلة <strong>اختر التطبيق</strong> في شريط التنقل.<strong>لتحويل النص إلى إيموجي:</strong><ul>    <li>تأكد من أنك في تطبيق <strong>التحويل</strong>.</li>    <li>أدخل رسالتك في حقل الإدخال.</li>    <li>انقر على زر <strong>🔄 تحويل</strong>.</li>    <li>ستظهر رسالتك المحولة في حقل الإخراج.</li></ul><strong>لتشفير رسالة:</strong><ul>    <li>انتقل إلى تطبيق <strong>التشفير</strong> باستخدام القائمة المنسدلة <strong>اختر التطبيق</strong>.</li>    <li>أدخل رسالتك في حقل الإدخال.</li>    <li>قم بإنشاء مفتاح بالنقر على زر <strong>🔄</strong> بجانب حقل إدخال المفتاح، أو أدخل مفتاحك الخاص.</li>    <li>انقر على زر <strong>🔀 تشفير / فك تشفير</strong>.</li>    <li>ستظهر رسالتك المشفرة في حقل الإخراج.</li></ul>",
               ""
             ],
             "faqQuestion3": [
@@ -461,7 +461,7 @@ function getTranslation(key, langIndex) {
               "Как я могу конвертировать текст в эмодзи?",
               "¿Cómo convierto texto a emojis?",
               "Comment convertir du texte en émojis ?",
-              "",
+              "كيف أحول النص إلى إيموجي؟",
               ""
             ],
             "faqAnswer3": [
@@ -471,7 +471,7 @@ function getTranslation(key, langIndex) {
               "Чтобы конвертировать текст в эмодзи:<ul>    <li>Убедитесь, что вы находитесь в приложении <strong>Конвертация</strong> (приложение по умолчанию).</li>    <li>Введите свое сообщение в поле ввода.</li>    <li>Нажмите кнопку <strong>🔄 Конвертировать</strong>.</li>    <li>Конвертированное сообщение появится в поле вывода.</li>    <li>Вы можете скопировать вывод, используя кнопку <strong>Скопировать в буфер обмена</strong>.</li></ul>",
               "Para convertir texto a emojis:<ul>    <li>Asegúrate de estar en la aplicación <strong>Conversión</strong> (la aplicación predeterminada).</li>    <li>Ingresa tu mensaje en el campo de entrada.</li>    <li>Haz clic en el botón <strong>🔄 Convertir</strong>.</li>    <li>Tu mensaje convertido aparecerá en el campo de salida.</li>    <li>Puedes copiar la salida usando el botón <strong>Copiar al portapapeles</strong>.</li></ul>",
               "Pour convertir du texte en émojis :<ul>    <li>Assurez-vous que vous êtes dans l'application <strong>Conversion</strong> (l'application par défaut).</li>    <li>Entrez votre message dans le champ de saisie.</li>    <li>Cliquez sur le bouton <strong>🔄 Convertir</strong>.</li>    <li>Le message converti apparaîtra dans le champ de sortie.</li>    <li>Vous pouvez copier la sortie en utilisant le bouton <strong>Copier dans le presse-papiers</strong>.</li></ul>",
-              "",
+              "لتحويل النص إلى إيموجي:<ul>    <li>تأكد من أنك في تطبيق <strong>التحويل</strong> (التطبيق الافتراضي).</li>    <li>أدخل رسالتك في حقل الإدخال.</li>    <li>انقر على زر <strong>🔄 تحويل</strong>.</li>    <li>ستظهر رسالتك المحولة في حقل الإخراج.</li>    <li>يمكنك نسخ المخرجات باستخدام زر <strong>نسخ إلى الحافظة</strong>.</li></ul>",
               ""
             ],
             "faqQuestion4": [
@@ -481,7 +481,7 @@ function getTranslation(key, langIndex) {
               "Как зашифровать сообщение?",
               "¿Cómo encripto un mensaje?",
               "Comment chiffrer un message ?",
-              "",
+              "كيف أشفر رسالة؟",
               ""
             ],
             "faqAnswer4": [
@@ -491,7 +491,7 @@ function getTranslation(key, langIndex) {
               "Чтобы зашифровать сообщение:<ul>    <li>Переключитесь на приложение <strong>Шифрование</strong>, используя выпадающее меню <strong>Выбрать приложение</strong>.</li>    <li>Введите свое сообщение в поле ввода.</li>    <li>Сгенерируйте ключ, нажав кнопку <strong>🔄</strong> рядом с полем ввода ключа, или введите свой собственный ключ.</li>    <li>Нажмите кнопку <strong>🔀 Шифровать / Расшифровывать</strong>.</li>    <li>Ваше зашифрованное сообщение появится в поле вывода.</li></ul>",
               "Para encriptar un mensaje:<ul>    <li>Cambia a la aplicación <strong>Encriptación</strong> usando el menú desplegable <strong>Elegir aplicación</strong>.</li>    <li>Ingresa tu mensaje en el campo de entrada.</li>    <li>Genera una clave haciendo clic en el botón <strong>🔄</strong> junto al campo de entrada de clave, o ingresa tu propia clave.</li>    <li>Haz clic en el botón <strong>🔀 Encriptar / Desencriptar</strong>.</li>    <li>Tu mensaje encriptado aparecerá en el campo de salida.</li></ul>",
               "Pour chiffrer un message :<ul>    <li>Changez pour l'application <strong>Cryptage</strong> en utilisant le menu déroulant <strong>Choisir l'application</strong>.</li>    <li>Entrez votre message dans le champ de saisie.</li>    <li>Générez une clé en cliquant sur le bouton <strong>🔄</strong> à côté du champ de saisie de clé, ou entrez votre propre clé.</li>    <li>Cliquez sur le bouton <strong>🔀 Chiffrer / Déchiffrer</strong>.</li>    <li>Votre message chiffré apparaîtra dans le champ de sortie.</li></ul>",
-              "",
+              "لتشفير رسالة:<ul>    <li>انتقل إلى تطبيق <strong>التشفير</strong> باستخدام القائمة المنسدلة <strong>اختر التطبيق</strong>.</li>    <li>أدخل رسالتك في حقل الإدخال.</li>    <li>قم بإنشاء مفتاح بالنقر على زر <strong>🔄</strong> بجانب حقل إدخال المفتاح، أو أدخل مفتاحك الخاص.</li>    <li>انقر على زر <strong>🔀 تشفير / فك تشفير</strong>.</li>    <li>ستظهر رسالتك المشفرة في حقل الإخراج.</li></ul>",
               ""
             ],
             "faqQuestion5": [
@@ -501,7 +501,7 @@ function getTranslation(key, langIndex) {
               "Как расшифровать сообщение?",
               "¿Cómo desencripto un mensaje?",
               "Comment déchiffrer un message ?",
-              "",
+              "كيف أفك تشفير رسالة؟",
               ""
             ],
             "faqAnswer5": [
@@ -511,7 +511,7 @@ function getTranslation(key, langIndex) {
               "Чтобы расшифровать сообщение:<ul>    <li>Переключитесь на приложение <strong>Шифрование</strong>.</li>    <li>Вставьте зашифрованное сообщение-эмодзи в поле ввода.</li>    <li>Введите ключ, использованный для шифрования, в поле ввода ключа.</li>    <li>Нажмите кнопку <strong>🔀 Шифровать / Расшифровывать</strong>.</li>    <li>Ваше расшифрованное сообщение появится в поле вывода.</li></ul>",
               "Para desencriptar un mensaje:<ul>    <li>Cambia a la aplicación <strong>Encriptación</strong>.</li>    <li>Pega el mensaje de emoji encriptado en el campo de entrada.</li>    <li>Ingresa la clave utilizada para la encriptación en el campo de entrada de clave.</li>    <li>Haz clic en el botón <strong>🔀 Encriptar / Desencriptar</strong>.</li>    <li>Tu mensaje desencriptado aparecerá en el campo de salida.</li></ul>",
               "Pour déchiffrer un message :<ul>    <li>Changez pour l'application <strong>Cryptage</strong>.</li>    <li>Collez le message emoji chiffré dans le champ de saisie.</li>    <li>Entrez la clé utilisée pour le cryptage dans le champ de saisie de clé.</li>    <li>Cliquez sur le bouton <strong>🔀 Chiffrer / Déchiffrer</strong>.</li>    <li>Votre message déchiffré apparaîtra dans le champ de sortie.</li></ul>",
-              "",
+              "لفك تشفير رسالة:<ul>    <li>انتقل إلى تطبيق <strong>التشفير</strong>.</li>    <li>الصق الرسالة المشفرة بإيموجي في حقل الإدخال.</li>    <li>أدخل المفتاح المستخدم في التشفير في حقل إدخال المفتاح.</li>    <li>انقر على زر <strong>🔀 تشفير / فك تشفير</strong>.</li>    <li>ستظهر رسالتك المفكوكة في حقل الإخراج.</li></ul>",
               ""
             ],
             "faqQuestion6": [
@@ -521,7 +521,7 @@ function getTranslation(key, langIndex) {
               "Как сгенерировать эмодзи-ключ?",
               "¿Cómo genero una clave de emoji?",
               "Comment générer une clé emoji ?",
-              "",
+              "كيف أُولّد مفتاح إيموجي؟",
               ""
             ],
             "faqAnswer6": [
@@ -531,49 +531,9 @@ function getTranslation(key, langIndex) {
               "Чтобы сгенерировать эмодзи-ключ в приложении <strong>Шифрование</strong>:<ul>    <li>Нажмите кнопку <strong>🔄</strong> рядом с полем ввода ключа.</li>    <li>Сгенерированный ключ появится в поле ввода ключа.</li>    <li>Вы можете скопировать ключ, используя кнопку <strong>Copy</strong>.</li>    <li>Сохраните ключ в одном из 5 доступных слотов, используя кнопку <strong>💾 Сохранить</strong> для дальнейшего использования.</li></ul>",
               "Para generar una clave de emoji en la aplicación <strong>Encriptación</strong>:<ul>    <li>Haz clic en el botón <strong>🔄</strong> junto al campo de entrada de clave.</li>    <li>La clave generada aparecerá en el campo de entrada de clave.</li>    <li>Puedes copiar la clave usando el botón <strong>Copiar</strong>.</li>    <li>Guarda la clave en una de las 5 ranuras disponibles usando el botón <strong>💾 Guardar</strong> para uso futuro.</li></ul>",
               "Pour générer une clé emoji dans l'application <strong>Cryptage</strong> :<ul>    <li>Cliquez sur le bouton <strong>🔄</strong> à côté du champ de saisie de clé.</li>    <li>La clé générée apparaîtra dans le champ de saisie de clé.</li>    <li>Vous pouvez copier la clé en utilisant le bouton <strong>Copier</strong>.</li>    <li>Sauvegardez la clé dans l'un des 5 emplacements disponibles en utilisant le bouton <strong>💾 Sauvegarder</strong> pour une utilisation future.</li></ul>",
-              "",
+              "لإنشاء مفتاح إيموجي في تطبيق <strong>التشفير</strong>:<ul>    <li>انقر على زر <strong>🔄</strong> بجانب حقل إدخال المفتاح.</li>    <li>سيظهر المفتاح المُولد في حقل إدخال المفتاح.</li>    <li>يمكنك نسخ المفتاح باستخدام زر <strong>نسخ</strong>.</li>    <li>احفظ المفتاح في أحد الخمسة فتحات المتاحة باستخدام زر <strong>💾 حفظ</strong> للاستخدام المستقبلي.</li></ul>",
               ""
             ], 
-        "faqQuestion7": [
-            "Is my data secure?",
-            "Sind meine Daten sicher?",
-            "我的数据安全吗？",
-            "Мои данные в безопасности?",
-            "¿Está segura mi información?",
-            "Mes données sont-elles sécurisées ?",
-            "",
-            ""
-        ],
-        "faqAnswer7": [
-            "Yes, all encryption and decryption processes occur locally on your device. NasaEmoji does not send any data over the internet, ensuring your messages remain private.",
-            "Ja, alle Verschlüsselungs- und Entschlüsselungsprozesse finden lokal auf deinem Gerät statt. NasaEmoji sendet keine Daten über das Internet, wodurch deine Nachrichten privat bleiben.",
-            "是的，所有加密和解密过程都在你的设备上本地进行。NasaEmoji 不会通过互联网发送任何数据，确保你的消息保持私密。",
-            "Да, все процессы шифрования и дешифрования происходят локально на вашем устройстве. NasaEmoji не отправляет никаких данных через интернет, обеспечивая сохранность ваших сообщений.",
-            "Sí, todos los procesos de encriptación y desencriptación ocurren localmente en tu dispositivo. NasaEmoji no envía ningún dato a través de internet, asegurando que tus mensajes permanezcan privados.",
-            "Oui, tous les processus de chiffrement et de déchiffrement se déroulent localement sur votre appareil. NasaEmoji n'envoie aucune donnée sur Internet, garantissant que vos messages restent privés.",
-            "",
-            ""
-        ],
-        "faqQuestion8": [
-            "Can I use NasaEmoji offline?",
-            "Kann ich NasaEmoji offline nutzen?",
-            "我可以离线使用 NasaEmoji 吗？",
-            "Могу ли я использовать NasaEmoji офлайн?",
-            "¿Puedo usar NasaEmoji sin conexión?",
-            "Puis-je utiliser NasaEmoji hors ligne ?",
-            "",
-            ""
-        ],
-        "faqAnswer8": [
-            "Yes, you can use NasaEmoji offline by adding it to your device as a Progressive Web App (PWA). This allows you to access the tool without an internet connection.",
-            "Ja, du kannst NasaEmoji offline nutzen, indem du es als Progressive Web App (PWA) auf deinem Gerät hinzufügst. Dadurch kannst du auf das Tool ohne Internetverbindung zugreifen.",
-            "是的，你可以通过将 NasaEmoji 添加到你的设备作为渐进式 Web 应用程序（PWA）来离线使用。这样你就可以在没有互联网连接的情况下访问该工具。",
-            "Да, вы можете использовать NasaEmoji офлайн, добавив его на ваше устройство как прогрессивное веб-приложение (PWA). Это позволит вам получить доступ к инструменту без подключения к интернету.",
-            "Sí, puedes usar NasaEmoji sin conexión agregándolo a tu dispositivo como una Aplicación Web Progresiva (PWA). Esto te permite acceder a la herramienta sin una conexión a internet.",
-            "Oui, vous pouvez utiliser NasaEmoji hors ligne en l'ajoutant à votre appareil en tant qu'Application Web Progressive (PWA). Cela vous permet d'accéder à l'outil sans connexion internet.",
-            "",
-            ""
-        ],
         "faqQuestion9": [
                 "How do I add NasaEmoji to my home screen or desktop?",
                 "Wie füge ich NasaEmoji zu meinem Startbildschirm oder Desktop hinzu?",
@@ -581,7 +541,7 @@ function getTranslation(key, langIndex) {
                 "Как добавить NasaEmoji на главный экран или рабочий стол?",
                 "¿Cómo agrego NasaEmoji a mi pantalla de inicio o escritorio?",
                 "Comment ajouter NasaEmoji à votre écran d'accueil ou bureau ?",
-                "",
+                "كيف أضيف NasaEmoji إلى شاشة البداية أو سطح المكتب؟",
                 ""
             ],
             "faqAnswer9": [
@@ -591,7 +551,7 @@ function getTranslation(key, langIndex) {
                 "Ты можешь добавить NasaEmoji как Progressive Web App (PWA) на свой главный экран или рабочий стол для быстрого доступа.<br><strong>На iOS (Safari):</strong><ol><li>Открой https://NasaEmoji.com в Safari.</li><li>Нажми на значок <strong>Поделиться</strong> (квадрат со стрелкой вверх).</li><li>Прокрути вниз и нажми <strong>Добавить на главный экран</strong>.</li><li>Нажми <strong>Добавить</strong> в правом верхнем углу.</li></ol><strong>На Android (Chrome и других браузерах):</strong><ol><li>Открой https://NasaEmoji.com в своем браузере.</li><li>Нажми на значок <strong>Меню</strong> (три точки) в правом верхнем углу.</li><li>Выбери <strong>Добавить на главный экран</strong> или <strong>Установить приложение</strong>.</li><li>Следуй инструкциям на экране.</li></ol><strong>На macOS (Safari):</strong><ol><li>Открой https://NasaEmoji.com в Safari.</li><li>Перейди в <strong>Файл</strong> > <strong>Добавить в Dock</strong>.</li></ol><strong>На рабочем столе (Chrome):</strong><ol><li>Открой https://NasaEmoji.com в Chrome.</li><li>Нажми на значок <strong>Установить</strong> в адресной строке (компьютер со стрелкой вниз).</li><li>Нажми на <strong>Установить</strong>.</li></ol><strong>На рабочем столе (Firefox и других браузерах):</strong><p>Firefox не поддерживает прямую установку PWA. Ты можешь добавить сайт в закладки или создать ярлык вручную.</p>",
                 "Puedes agregar NasaEmoji como una Aplicación Web Progresiva (PWA) a tu pantalla de inicio o escritorio para un acceso rápido.<br><strong>En iOS (Safari):</strong><ol><li>Abre https://NasaEmoji.com en Safari.</li><li>Toca el ícono de <strong>Compartir</strong> (un cuadrado con una flecha hacia arriba).</li><li>Desplázate hacia abajo y toca <strong>Agregar a la pantalla de inicio</strong>.</li><li>Toca <strong>Agregar</strong> en la esquina superior derecha.</li></ol><strong>En Android (Chrome y otros navegadores):</strong><ol><li>Abre https://NasaEmoji.com en tu navegador.</li><li>Toca el ícono de <strong>Menú</strong> (tres puntos) en la esquina superior derecha.</li><li>Selecciona <strong>Agregar a la pantalla de inicio</strong> o <strong>Instalar aplicación</strong>.</li><li>Sigue las instrucciones en pantalla.</li></ol><strong>En macOS (Safari):</strong><ol><li>Abre https://NasaEmoji.com en Safari.</li><li>Ve a <strong>Archivo</strong> > <strong>Agregar al Dock</strong>.</li></ol><strong>En el escritorio (Chrome):</strong><ol><li>Abre https://NasaEmoji.com en Chrome.</li><li>Haz clic en el ícono de <strong>Instalar</strong> en la barra de direcciones (una computadora con una flecha hacia abajo).</li><li>Haz clic en <strong>Instalar</strong>.</li></ol><strong>En el escritorio (Firefox y otros navegadores):</strong><p>Firefox no soporta la instalación de PWA directamente. Puedes agregar el sitio a tus marcadores o crear un acceso directo manualmente.</p>",
                 "Tu peux ajouter NasaEmoji en tant qu'application web progressive (PWA) à ton écran d'accueil ou bureau pour un accès rapide.<br><strong>Sur iOS (Safari) :</strong><ol><li>Ouvre https://NasaEmoji.com dans Safari.</li><li>Tape sur l'icône <strong>Partager</strong> (un carré avec une flèche vers le haut).</li><li>Fais défiler vers le bas et tape sur <strong>Ajouter à l'écran d'accueil</strong>.</li><li>Tape sur <strong>Ajouter</strong> dans le coin supérieur droit.</li></ol><strong>Sur Android (Chrome et autres navigateurs) :</strong><ol><li>Ouvre https://NasaEmoji.com dans ton navigateur.</li><li>Tape sur l'icône <strong>Menu</strong> (trois points) dans le coin supérieur droit.</li><li>Sélectionne <strong>Ajouter à l'écran d'accueil</strong> ou <strong>Installer l'application</strong>.</li><li>Suivez les instructions à l'écran.</li></ol><strong>Sur macOS (Safari) :</strong><ol><li>Ouvre https://NasaEmoji.com dans Safari.</li><li>Va dans <strong>Fichier</strong> > <strong>Ajouter au Dock</strong>.</li></ol><strong>Sur Desktop (Chrome) :</strong><ol><li>Ouvre https://NasaEmoji.com dans Chrome.</li><li>Clique sur l'icône <strong>Installer</strong> dans la barre d'adresse (un ordinateur avec une flèche vers le bas).</li><li>Clique sur <strong>Installer</strong>.</li></ol><strong>Sur Desktop (Firefox et autres navigateurs) :</strong><p>Firefox ne prend pas en charge l'installation directe des PWA. Tu peux ajouter le site à tes favoris ou créer un raccourci manuellement.</p>",
-                "",
+                "يمكنك إضافة NasaEmoji كتطبيق ويب تقدمي (PWA) إلى شاشة البداية أو سطح المكتب للوصول السريع.<br><strong>على iOS (Safari):</strong><ol><li>افتح https://NasaEmoji.com في Safari.</li><li>اضغط على أيقونة <strong>مشاركة</strong> (مربع مع سهم لأعلى).</li><li>قم بالتمرير لأسفل واضغط على <strong>إضافة إلى شاشة البداية</strong>.</li><li>اضغط على <strong>إضافة</strong> في الزاوية العليا اليمنى.</li></ol><strong>على Android (Chrome ومتصفحات أخرى):</strong><ol><li>افتح https://NasaEmoji.com في متصفحك.</li><li>اضغط على أيقونة <strong>القائمة</strong> (ثلاث نقاط) في الزاوية العليا اليمنى.</li><li>اختر <strong>إضافة إلى شاشة البداية</strong> أو <strong>تثبيت التطبيق</strong>.</li><li>اتبع التعليمات على الشاشة.</li></ol><strong>على macOS (Safari):</strong><ol><li>افتح https://NasaEmoji.com في Safari.</li><li>اذهب إلى <strong>ملف</strong> > <strong>إضافة إلى Dock</strong>.</li></ol><strong>على سطح المكتب (Chrome):</strong><ol><li>افتح https://NasaEmoji.com في Chrome.</li><li>انقر على أيقونة <strong>تثبيت</strong> في شريط العنوان (كمبيوتر مع سهم للأسفل).</li><li>انقر على <strong>تثبيت</strong>.</li></ol><strong>على سطح المكتب (Firefox ومتصفحات أخرى):</strong><p>Firefox لا يدعم تثبيت PWA مباشرة. يمكنك إضافة الموقع إلى المفضلة أو إنشاء اختصار يدويًا.</p>",
                 ""
             ],
         "faqQuestion10": [
@@ -601,7 +561,7 @@ function getTranslation(key, langIndex) {
             "Мои данные в безопасности?",
             "¿Está segura mi información?",
             "Mes données sont-elles sécurisées ?",
-            "",
+            "هل بياناتي آمنة؟",
             ""
         ],
         "faqAnswer10": [
@@ -611,7 +571,7 @@ function getTranslation(key, langIndex) {
             "Да, все шифрования и дешифрования происходят локально на вашем устройстве. Данные никуда не отправляются, что обеспечивает сохранность ваших сообщений.",
             "Sí, todas las encriptaciones y desencriptaciones ocurren localmente en tu dispositivo. No se envían datos a ningún lado, asegurando que tus mensajes permanezcan privados.",
             "Oui, tous les processus de chiffrement et de déchiffrement se déroulent localement sur votre appareil. Aucune donnée n'est envoyée nulle part, garantissant que vos messages restent privés.",
-            "",
+            "نعم، جميع عمليات التشفير وفك التشفير تتم محليًا على جهازك. لا يقوم NasaEmoji بإرسال أي بيانات عبر الإنترنت.",
             ""
         ],
         "faqQuestion11": [
@@ -621,7 +581,7 @@ function getTranslation(key, langIndex) {
             "Могу ли я конвертировать текст в эмодзи без шифрования?",
             "¿Puedo convertir texto a emojis sin encriptación?",
             "Puis-je convertir du texte en émojis sans chiffrement ?",
-            "",
+            "هل يمكنني تحويل النص إلى إيموجي بدون تشفير؟",
             ""
         ],
         "faqAnswer11": [
@@ -631,7 +591,7 @@ function getTranslation(key, langIndex) {
             "Да, NasaEmoji позволяет конвертировать любой текст в эмодзи и обратно без шифрования, используя функцию \"Convert\".",
             "Sí, NasaEmoji te permite convertir cualquier texto a emojis y viceversa sin encriptación utilizando la función \"Convert\".",
             "Oui, NasaEmoji vous permet de convertir n'importe quel texte en émojis et vice versa sans chiffrement en utilisant la fonctionnalité \"Convert\".",
-            "",
+            "نعم، يتيح لك NasaEmoji تحويل أي نص إلى إيموجي والعودة بدون تشفير باستخدام ميزة \"تحويل\".",
             ""
         ],
         "faqQuestion12": [
@@ -641,17 +601,17 @@ function getTranslation(key, langIndex) {
             "Какие алгоритмы шифрования использует NasaEmoji?",
             "¿Qué algoritmos de cifrado utiliza NasaEmoji?",
             "Quels algorithmes de chiffrement NasaEmoji utilise-t-il ?",
-            "",
+            "ما هي خوارزميات التشفير التي يستخدمها NasaEmoji؟",
             ""
         ],
         "faqAnswer12": [
-            "NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.",
-            "NasaEmoji verwendet eine Kombination aus AES-256, Blowfish und XOR Verschlüsselungsalgorithmen, um deine Nachrichten zu sichern.",
-            "NasaEmoji 使用 AES-256、Blowfish 和 XOR 加密算法的组合来保护您的消息。",
-            "NasaEmoji использует комбинацию алгоритмов шифрования AES-256, Blowfish и XOR для защиты ваших сообщений.",
-            "NasaEmoji utiliza una combinación de algoritmos de cifrado AES-256, Blowfish y XOR para asegurar tus mensajes.",
-            "NasaEmoji utilise une combinaison des algorithmes de chiffrement AES-256, Blowfish et XOR pour sécuriser tes messages.",
-            "",
+            "NasaEmoji uses a combination of AES-GCM, AES-CTR, and XOR encryption algorithms to secure your messages.",
+            "NasaEmoji verwendet eine Kombination aus AES-GCM, AES-CTR und XOR Verschlüsselungsalgorithmen, um deine Nachrichten zu sichern.",
+            "NasaEmoji 使用 AES-GCM、AES-CTR 和 XOR 加密算法的组合来保护您的消息。",
+            "NasaEmoji использует комбинацию алгоритмов шифрования AES-GCM, AES-CTR и XOR для защиты ваших сообщений.",
+            "NasaEmoji utiliza una combinación de algoritmos de cifrado AES-GCM, AES-CTR y XOR para asegurar tus mensajes.",
+            "NasaEmoji utilise une combinaison des algorithmes de chiffrement AES-GCM, AES-CTR et XOR pour sécuriser tes messages.",
+            "يستخدم NasaEmoji مزيجًا من خوارزميات التشفير AES-GCM و AES-CTR و XOR لتأمين رسائلك.",
             ""
         ],
         "faqQuestion13": [
@@ -661,7 +621,7 @@ function getTranslation(key, langIndex) {
             "Почему используются несколько алгоритмов шифрования?",
             "¿Por qué se utilizan múltiples algoritmos de cifrado?",
             "Pourquoi plusieurs algorithmes de chiffrement sont-ils utilisés ?",
-            "",
+            "لماذا يتم استخدام خوارزميات تشفير متعددة؟",
             ""
         ],
         "faqAnswer13": [
@@ -671,7 +631,7 @@ function getTranslation(key, langIndex) {
             "Использование нескольких алгоритмов повышает безопасность путем добавления слоев шифрования, что затрудняет расшифровку сообщения несанкционированными лицами.",
             "El uso de múltiples algoritmos mejora la seguridad al agregar capas de cifrado, lo que dificulta que partes no autorizadas descifren el mensaje.",
             "L'utilisation de plusieurs algorithmes améliore la sécurité en ajoutant des couches de chiffrement, ce qui rend plus difficile pour les parties non autorisées de déchiffrer le message.",
-            "",
+            "يعمل استخدام خوارزميات متعددة على تعزيز الأمان عن طريق إضافة طبقات من التشفير، مما يجعل من الصعب على الأطراف غير المصرح لها فك تشفير الرسالة.",
             ""
         ],
         "faqQuestion14": [
@@ -681,7 +641,7 @@ function getTranslation(key, langIndex) {
             "Что такое хеширование ключа и зачем оно используется?",
             "¿Qué es el hash de clave y por qué se utiliza?",
             "Qu'est-ce que le hachage de clé et pourquoi est-il utilisé ?",
-            "",
+            "ما هو تجزئة المفتاح ولماذا يتم استخدامها؟",
             ""
         ],
         "faqAnswer14": [
@@ -691,7 +651,7 @@ function getTranslation(key, langIndex) {
             "Хеширование ключа преобразует ваш ключ в хеш фиксированного размера с помощью нескольких алгоритмов, повышая безопасность путем предотвращения прямого доступа к исходному ключу и усложнения атак перебором.",
             "El hash de clave transforma tu clave en un hash de tamaño fijo utilizando múltiples algoritmos, mejorando la seguridad al prevenir el acceso directo a la clave original y dificultar los ataques de fuerza bruta.",
             "Le hachage de clé transforme ta clé en un hachage de taille fixe en utilisant plusieurs algorithmes, améliorant la sécurité en empêchant l'accès direct à la clé originale et en rendant les attaques par force brute plus difficiles.",
-            "",
+            "تجزئة المفتاح تحول مفتاحك إلى تجزئة بحجم ثابت باستخدام خوارزميات متعددة، مما يعزز الأمان عن طريق منع الوصول المباشر إلى المفتاح الأصلي وجعل هجمات القوة الغاشمة أكثر صعوبة.",
             ""
         ],
         "faqQuestion15": [
@@ -701,7 +661,7 @@ function getTranslation(key, langIndex) {
             "Как хеширование ключа предотвращает атаки перебором?",
             "¿Cómo previene el hash de clave los ataques de fuerza bruta?",
             "Comment le hachage de clé prévient-il les attaques par force brute ?",
-            "",
+            "كيف يمنع تجزئة المفتاح هجمات القوة الغاشمة؟",
             ""
         ],
         "faqAnswer15": [
@@ -711,7 +671,7 @@ function getTranslation(key, langIndex) {
             "Хешируя ключ несколько раз с различными алгоритмами и солями, увеличивается вычислительное усилие, необходимое для угадывания ключа, что сдерживает попытки перебора.",
             "Al hashear la clave múltiples veces con diferentes algoritmos y sales, aumenta el esfuerzo computacional requerido para adivinar la clave, disuadiendo así los intentos de fuerza bruta.",
             "En hachant la clé plusieurs fois avec différents algorithmes et sels, cela augmente l'effort computationnel nécessaire pour deviner la clé, dissuadant ainsi les tentatives par force brute.",
-            "",
+            "من خلال تجزئة المفتاح عدة مرات باستخدام خوارزميات وأملاح مختلفة، يزيد ذلك من الجهد الحسابي المطلوب لتخمين المفتاح، وبالتالي يردع محاولات القوة الغاشمة.",
             ""
         ],
         "faqQuestion16": [
@@ -721,27 +681,7 @@ function getTranslation(key, langIndex) {
             "Что такое библиотека CryptoJS?",
             "¿Qué es la biblioteca CryptoJS?",
             "Qu'est-ce que la bibliothèque CryptoJS ?",
-            "",
-            ""
-        ],
-        "faqAnswer16": [
-            "CryptoJS is a widely used JavaScript library that provides standard and secure cryptographic algorithms for encryption and hashing.",
-            "CryptoJS ist eine weit verbreitete JavaScript-Bibliothek, die standardisierte und sichere kryptografische Algorithmen für Verschlüsselung und Hashing bereitstellt.",
-            "CryptoJS 是一个广泛使用的 JavaScript 库，提供用于加密和哈希的标准和安全的加密算法。",
-            "CryptoJS — широко используемая библиотека JavaScript, которая предоставляет стандартные и безопасные криптографические алгоритмы для шифрования и хеширования.",
-            "CryptoJS es una biblioteca de JavaScript ampliamente utilizada que proporciona algoritmos criptográficos estándar y seguros para cifrado y hash.",
-            "CryptoJS est une bibliothèque JavaScript largement utilisée qui fournit des algorithmes cryptographiques standard et sécurisés pour le chiffrement et le hachage.",
-            "",
-            ""
-        ],
-        "faqQuestion17": [
-            "How secure is the CryptoJS library?",
-            "Wie sicher ist die CryptoJS-Bibliothek?",
-            "CryptoJS 库有多安全？",
-            "Насколько безопасна библиотека CryptoJS?",
-            "¿Qué tan segura es la biblioteca CryptoJS?",
-            "Quelle est la sécurité de la bibliothèque CryptoJS ?",
-            "",
+            "ما هي مكتبة CryptoJS؟",
             ""
         ],
         "faqAnswer17": [
@@ -751,7 +691,7 @@ function getTranslation(key, langIndex) {
             "CryptoJS считается безопасной, поскольку правильно реализует известные криптографические алгоритмы. Он используется во многих приложениях для безопасной обработки данных.",
             "CryptoJS se considera segura ya que implementa correctamente algoritmos criptográficos bien conocidos. Se utiliza en muchas aplicaciones para el manejo seguro de datos.",
             "CryptoJS est considérée comme sécurisée car elle implémente correctement des algorithmes cryptographiques bien connus. Elle est utilisée dans de nombreuses applications pour la gestion sécurisée des données.",
-            "",
+            "تعتبر CryptoJS آمنة حيث تقوم بتنفيذ خوارزميات التشفير المعروفة بشكل صحيح. يتم استخدامها في العديد من التطبيقات لمعالجة البيانات بأمان.",
             ""
         ],
         "faqQuestion18": [
@@ -761,7 +701,7 @@ function getTranslation(key, langIndex) {
             "Как NasaEmoji обрабатывает хранение ключей?",
             "¿Cómo maneja NasaEmoji el almacenamiento de claves?",
             "Comment NasaEmoji gère-t-il le stockage des clés ?",
-            "",
+            "كيف يتعامل NasaEmoji مع تخزين المفاتيح؟",
             ""
         ],
         "faqAnswer18": [
@@ -771,7 +711,7 @@ function getTranslation(key, langIndex) {
             "Вы можете сохранить ключи локально в одном из 5 доступных слотов, используя локальное хранилище вашего браузера для быстрого доступа.",
             "Puedes guardar claves localmente en una de las 5 ranuras disponibles utilizando el almacenamiento local de tu navegador para un acceso rápido.",
             "Tu peux enregistrer des clés localement dans l'un des 5 emplacements disponibles en utilisant le stockage local de ton navigateur pour un accès rapide.",
-            "",
+            "يمكنك حفظ المفاتيح محليًا في أحد الخمسة فتحات المتاحة باستخدام التخزين المحلي لمتصفحك للوصول السريع.",
             ""
         ],
         "faqQuestion19": [
@@ -781,7 +721,7 @@ function getTranslation(key, langIndex) {
             "Отправляет ли NasaEmoji какие-либо данные через интернет?",
             "¿NasaEmoji envía datos a través de Internet?",
             "NasaEmoji envoie-t-il des données sur Internet ?",
-            "",
+            "هل يرسل NasaEmoji أي بيانات عبر الإنترنت؟",
             ""
         ],
         "faqAnswer19": [
@@ -791,7 +731,7 @@ function getTranslation(key, langIndex) {
             "Нет, все операции выполняются локально на вашем устройстве. NasaEmoji не отправляет никаких данных через интернет.",
             "No, todas las operaciones se realizan localmente en tu dispositivo. NasaEmoji no envía ningún dato a través de Internet.",
             "Non, toutes les opérations sont effectuées localement sur ton appareil. NasaEmoji n'envoie aucune donnée sur Internet.",
-            "",
+            "لا، جميع العمليات تتم محليًا على جهازك. لا يقوم NasaEmoji بإرسال أي بيانات عبر الإنترنت.",
             ""
         ],
         "faqQuestion20": [
@@ -801,7 +741,7 @@ function getTranslation(key, langIndex) {
             "Могу ли я использовать NasaEmoji офлайн?",
             "¿Puedo usar NasaEmoji sin conexión?",
             "Puis-je utiliser NasaEmoji hors ligne ?",
-            "",
+            "هل يمكنني استخدام NasaEmoji بدون اتصال بالإنترنت؟",
             ""
         ],
         "faqAnswer20": [
@@ -811,7 +751,7 @@ function getTranslation(key, langIndex) {
             "Да, вы можете скачать NasaEmoji для локального использования и использовать его офлайн без подключения к интернету. Последнюю версию программы можно скачать по этой <a href=\"https://github.com/mqxym/EmojiCrypt/releases\">ссылке</a>.<ul><li>Скачайте исходный код на GitHub в формате zip.</li><li>Распакуйте zip.</li><li>Откройте index.html в браузере по вашему выбору.</li></ul>",
             "Sí, puedes descargar NasaEmoji para ejecución local y usarlo sin conexión a Internet. La última versión del programa se puede descargar en este <a href=\"https://github.com/mqxym/EmojiCrypt/releases\">enlace</a>.<ul><li>Descarga el código fuente en GitHub como zip.</li><li>Descomprime el zip.</li><li>Abre index.html con el navegador de tu elección.</li></ul>",
             "Oui, tu peux télécharger NasaEmoji pour une exécution locale et l'utiliser hors ligne sans connexion Internet. La dernière version du programme peut être téléchargée via ce <a href=\"https://github.com/mqxym/EmojiCrypt/releases\">lien</a>.<ul><li>Télécharge le code source sur GitHub au format zip.</li><li>Décompresse le zip.</li><li>Ouvre index.html avec le navigateur de ton choix.</li></ul>",
-            "",
+            "نعم، يمكنك تنزيل NasaEmoji للتشغيل المحلي واستخدامه بدون اتصال بالإنترنت. يمكن تنزيل أحدث إصدار من البرنامج تحت هذا <a href=\"https://github.com/mqxym/EmojiCrypt/releases\">الرابط</a>.<ul><li>قم بتنزيل شفرة المصدر من GitHub كملف zip.</li><li>افتح ملف zip.</li><li>افتح index.html باستخدام المتصفح الذي تختاره.</li></ul>",
             ""
         ],
         "faqQuestion21": [
@@ -821,7 +761,7 @@ function getTranslation(key, langIndex) {
             "Является ли шифрование стандартизированным?",
             "¿El cifrado está estandarizado?",
             "Le chiffrement est-il standardisé ?",
-            "",
+            "هل التشفير موحد؟",
             ""
         ],
         "faqAnswer21": [
@@ -831,7 +771,7 @@ function getTranslation(key, langIndex) {
             "NasaEmoji использует стандартные алгоритмы шифрования, но комбинирует их уникальным образом. Хотя это безопасно, рекомендуется для личного использования, а не для критически важных приложений безопасности.",
             "NasaEmoji utiliza algoritmos de cifrado estándar pero los combina de manera única. Aunque es seguro, se recomienda para uso casual en lugar de aplicaciones de seguridad críticas.",
             "NasaEmoji utilise des algorithmes de chiffrement standard mais les combine de manière unique. Bien que sécurisé, il est recommandé pour un usage personnel plutôt que pour des applications de sécurité critiques.",
-            "",
+            "يستخدم NasaEmoji خوارزميات تشفير معيارية ولكنه يجمعها بشكل فريد. على الرغم من أنه آمن، يُنصح بالاستخدام الشخصي بدلاً من تطبيقات الأمان الحيوية.",
             ""
         ],
         "faqQuestion22": [
@@ -841,7 +781,7 @@ function getTranslation(key, langIndex) {
             "Могу ли я доверять NasaEmoji для очень конфиденциальной информации?",
             "¿Puedo confiar en NasaEmoji para información altamente sensible?",
             "Puis-je faire confiance à NasaEmoji pour des informations hautement sensibles ?",
-            "",
+            "هل يمكنني الوثوق بـ NasaEmoji للمعلومات الحساسة جدًا؟",
             ""
         ],
         "faqAnswer22": [
@@ -851,7 +791,7 @@ function getTranslation(key, langIndex) {
             "Хотя NasaEmoji использует сильное шифрование, он в основном предназначен для личного использования. Для очень конфиденциальной информации обратитесь к специалистам по безопасности.",
             "Aunque NasaEmoji emplea un cifrado fuerte, está diseñado principalmente para uso personal y casual. Para información altamente sensible, consulta a profesionales de seguridad.",
             "Bien que NasaEmoji utilise un chiffrement fort, il est principalement conçu pour un usage personnel. Pour des informations hautement sensibles, consulte des professionnels de la sécurité.",
-            "",
+            "بينما يستخدم NasaEmoji تشفيرًا قويًا، فهو مصمم بشكل أساسي للاستخدام الشخصي والعفوي. بالنسبة للمعلومات الحساسة جدًا، يُفضل استشارة متخصصي الأمان.",
             ""
         ],
         "faqQuestion23": [
@@ -861,7 +801,7 @@ function getTranslation(key, langIndex) {
             "Является ли NasaEmoji открытым исходным кодом?",
             "¿NasaEmoji es de código abierto?",
             "NasaEmoji est-il open-source ?",
-            "",
+            "هل NasaEmoji مفتوح المصدر؟",
             ""
         ],
         "faqAnswer23": [
@@ -871,7 +811,7 @@ function getTranslation(key, langIndex) {
             "Да, исходный код NasaEmoji доступен на <a href=\"https://github.com/mqxym/EmojiCrypt\">GitHub</a>, что позволяет вам просматривать и вносить вклад в его разработку.",
             "Sí, el código fuente de NasaEmoji está disponible en <a href=\"https://github.com/mqxym/EmojiCrypt\">GitHub</a>, lo que te permite revisar y contribuir a su desarrollo.",
             "Oui, le code source de NasaEmoji est disponible sur <a href=\"https://github.com/mqxym/EmojiCrypt\">GitHub</a>, ce qui te permet de le consulter et de contribuer à son développement.",
-            "",
+            "نعم، شفرة مصدر NasaEmoji متاحة على <a href=\"https://github.com/mqxym/EmojiCrypt\">GitHub</a>، مما يتيح لك مراجعتها والمساهمة في تطويرها.",
             ""
         ],
         "faqQuestion24": [
@@ -881,7 +821,7 @@ function getTranslation(key, langIndex) {
             "Как я могу внести вклад в NasaEmoji?",
             "¿Cómo puedo contribuir a NasaEmoji?",
             "Comment puis-je contribuer à NasaEmoji ?",
-            "",
+            "كيف يمكنني المساهمة في NasaEmoji؟",
             ""
         ],
         "faqAnswer24": [
@@ -891,7 +831,7 @@ function getTranslation(key, langIndex) {
             "Вы можете внести вклад, посетив <a href=\"https://github.com/mqxym/EmojiCrypt\">репозиторий на GitHub</a>, сообщив об ошибках, предложив улучшения или отправив pull-запросы. Улучшения перевода всегда приветствуются.",
             "Puedes contribuir visitando el <a href=\"https://github.com/mqxym/EmojiCrypt\">repositorio de GitHub</a>, informando problemas, sugiriendo mejoras o enviando pull requests. Se aprecian siempre las mejoras en las traducciones.",
             "Tu peux contribuer en visitant le <a href=\"https://github.com/mqxym/EmojiCrypt\">dépôt GitHub</a>, en signalant des problèmes, en suggérant des améliorations ou en soumettant des pull requests. Les améliorations des traductions sont toujours appréciées.",
-            "",
+            "يمكنك المساهمة بزيارة <a href=\"https://github.com/mqxym/EmojiCrypt\">مستودع GitHub</a>، الإبلاغ عن المشكلات، اقتراح التحسينات، أو تقديم طلبات سحب. تحسين الترجمات دائمًا مرحب به.",
             ""
         ]
     };
