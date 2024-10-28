@@ -24,33 +24,26 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.js"></script>
     <style>
-        body,
+       body,
         html {
-            height: 100%;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
         }
-        /*
-        body {
+
+        .wrapper {
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;     
-        }*/
-
-        .info-section {
-            left: 100%;
-            /*height: auto;*/
-        }
-
-        .encrypt-section {
-            left: -100%;
+            flex-direction: column;
         }
 
         .main-container {
+            flex: 1;
             position: relative;
-            /*flex: 1;*/
+            overflow: hidden;
         }
 
         .main-content {
-            position: absolute;
             width: 100%;
         }
 
@@ -132,228 +125,181 @@
             </ul>
         </div>
     </nav>
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Encryption/Decryption Section -->
-        <div class="p-2 m-3 bg-danger border rounded rounded-sm d-none" id="errorHeader">
-            <span class="text-light">
-                Your browser does not support this application. Please update your system.
-            </span>
-        </div>
-        <!-- Encryption/Decryption Section -->
-        <div class="main-content p-3 encrypt-section" id="encryptSection">
-            <form class="form">
-                <!-- Message Input -->
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">✉️</span>
-                    </div>
-                    <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="encryptMessageInput" rows="5"></textarea>
-                    <div class="input-group-append">
-                        <button id="clearEncryptInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
-                    </div>
-                </div>
-                <!-- Key Input -->
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="keyIcon">🔑</span>
-                    </div>
-                    <input type="text" placeholder="Secure password" class="form-control" id="keyInput" aria-describedby="keyIcon">
-                    <div class="input-group-append">
-                        <button id="generateKeyButton" type="button" class="btn btn-secondary btn-block bg-dark">🔄</button>
-                    </div>
-                    <div class="input-group-append">
-                        <button id="copyKeyButton" type="button" class="btn btn-secondary bg-dark btn-block">Copy</button>
-                    </div>
-                </div>
-                <hr>
-                <!-- Key Storage Instructions -->
-                <div id="keyInstructions" class="mb-2">
-                    Load or save keys
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <select class="form-control" id="keySlotSelect">
-                                <option value="1">Slot 1️⃣</option>
-                                <option value="2">Slot 2️⃣</option>
-                                <option value="3">Slot 3️⃣</option>
-                                <option value="4">Slot 4️⃣</option>
-                                <option value="5">Slot 5️⃣</option>
-                            </select>
+    <div class="wrapper">
+        <!-- Main Content -->
+        <div class="main-container">
+            <!-- Encryption/Decryption Section -->
+            <div class="p-2 m-3 bg-danger border rounded rounded-sm d-none" id="errorHeader">
+                <span class="text-light">
+                    Your browser does not support this application. Please update your system.
+                </span>
+            </div>
+            <!-- Encryption/Decryption Section -->
+            <div class="main-content p-3 encrypt-section" id="encryptSection">
+                <form class="form">
+                    <!-- Message Input -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">✉️</span>
+                        </div>
+                        <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="encryptMessageInput" rows="5"></textarea>
+                        <div class="input-group-append">
+                            <button id="clearEncryptInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
                         </div>
                     </div>
-                    <div class="col">
-                        <button id="loadKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">📲 Load</button>
-                        <button id="saveKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">💾 Save</button>
+                    <!-- Key Input -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="keyIcon">🔑</span>
+                        </div>
+                        <input type="text" placeholder="Secure password" class="form-control" id="keyInput" aria-describedby="keyIcon">
+                        <div class="input-group-append">
+                            <button id="generateKeyButton" type="button" class="btn btn-secondary btn-block bg-dark">🔄</button>
+                        </div>
+                        <div class="input-group-append">
+                            <button id="copyKeyButton" type="button" class="btn btn-secondary bg-dark btn-block">Copy</button>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <!-- Encrypt/Decrypt Button -->
-                <button id="encryptDecryptButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
-            </form>
-            <hr>
-            <!-- Output Message -->
-            <div class="input-group mb-3">
-                <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
-                <div class="input-group-append">
-                    <button id="copyEncryptOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
-                </div>
-            </div>
-        </div>
-        <!-- Conversion Section -->
-        <div class="main-content p-3 convert-section" id="convertSection">
-            <div class="mb-3" id="convertTopMessage"></div>
-            <form class="form">
-                <!-- Message Input -->
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">✉️</span>
+                    <hr>
+                    <!-- Key Storage Instructions -->
+                    <div id="keyInstructions" class="mb-2">
+                        Load or save keys
                     </div>
-                    <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="convertMessageInput" rows="5"></textarea>
-                    <div class="input-group-append">
-                        <button id="clearConvertInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
-                    </div>
-                </div>
-                <hr>
-                <!-- Convert Button -->
-                <button id="convertButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔄 Convert</button>
-            </form>
-            <hr>
-            <!-- Output Message -->
-            <div class="input-group mb-3">
-                <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
-                <div class="input-group-append">
-                    <button id="copyConvertOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
-                </div>
-            </div>
-            <hr><hr>
-
-            <!-- Private Conversion Algorithm -->
-            <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection">💎 Private Algorithm</a>
-            <div id="privateAlgorithmSection" class="collapse">
-                <div class="card">
-                    <div class="card-body">
-                        <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
-                        Your link to the private conversion algorithm: <br>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">🧬</span>
-                            </div>
-                            <textarea rows="5" class="form-control" readonly id="privateConversionLink" placeholder="(Link here)"></textarea>
-                            <div class="input-group-append">
-                                <button id="copyPrivateConversionLink" type="button" class="btn btn-secondary btn-block bg-dark">Copy</button>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <select class="form-control" id="keySlotSelect">
+                                    <option value="1">Slot 1️⃣</option>
+                                    <option value="2">Slot 2️⃣</option>
+                                    <option value="3">Slot 3️⃣</option>
+                                    <option value="4">Slot 4️⃣</option>
+                                    <option value="5">Slot 5️⃣</option>
+                                </select>
                             </div>
                         </div>
-                        <button id="disablePrivateConversionButton" type="button" class="d-none btn btn-secondary bg-danger btn-block mb-2">🗑️ Remove private algorithm</button>
+                        <div class="col">
+                            <button id="loadKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">📲 Load</button>
+                            <button id="saveKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">💾 Save</button>
+                        </div>
                     </div>
-                   
-                    <div class="card-footer">
-                        <i>
-                            Using a private algorithm is just another layer of obfuscation, but can be cracked pretty easily. 
-                            <br>
-                            Especially, when using the same algorithm more than once.
-                        </i>
+                    <hr>
+                    <!-- Encrypt/Decrypt Button -->
+                    <button id="encryptDecryptButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
+                </form>
+                <hr>
+                <!-- Output Message -->
+                <div class="input-group mb-3">
+                    <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
+                    <div class="input-group-append">
+                        <button id="copyEncryptOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
                     </div>
                 </div>
             </div>
-            <i class="text-muted"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
-        </div>
-        <!-- About Section -->
-		<div class="p-3 main-content info-section" id="aboutSection">
-            <div class="text-center">
-                <h6 id="explanation">[Explanation text]</h6>
+            <!-- Conversion Section -->
+            <div class="main-content p-3 convert-section" id="convertSection">
+                <div class="mb-3" id="convertTopMessage"></div>
+                <form class="form">
+                    <!-- Message Input -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">✉️</span>
+                        </div>
+                        <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="convertMessageInput" rows="5"></textarea>
+                        <div class="input-group-append">
+                            <button id="clearConvertInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <!-- Convert Button -->
+                    <button id="convertButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔄 Convert</button>
+                </form>
+                <hr>
+                <!-- Output Message -->
+                <div class="input-group mb-3">
+                    <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
+                    <div class="input-group-append">
+                        <button id="copyConvertOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
+                    </div>
+                </div>
+                <hr><hr>
+
+                <!-- Private Conversion Algorithm -->
+                <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection">💎 Private Algorithm</a>
+                <div id="privateAlgorithmSection" class="collapse">
+                    <div class="card">
+                        <div class="card-body">
+                            <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
+                            Your link to the private conversion algorithm: <br>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">🧬</span>
+                                </div>
+                                <textarea rows="5" class="form-control" readonly id="privateConversionLink" placeholder="(Link here)"></textarea>
+                                <div class="input-group-append">
+                                    <button id="copyPrivateConversionLink" type="button" class="btn btn-secondary btn-block bg-dark">Copy</button>
+                                </div>
+                            </div>
+                            <button id="disablePrivateConversionButton" type="button" class="d-none btn btn-secondary bg-danger btn-block mb-2">🗑️ Remove private algorithm</button>
+                        </div>
+                    
+                        <div class="card-footer">
+                            <i>
+                                Using a private algorithm is just another layer of obfuscation, but can be cracked pretty easily. 
+                                <br>
+                                Especially, when using the same algorithm more than once.
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <i class="text-muted"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
             </div>
-            <hr>
-            <!-- FAQ Section -->
-            <h4 class="m-2">How to</h4>
-            <div class="accordion" id="faqAccordion">
-                <!-- FAQ Item 1 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading1">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
-                                <strong id="faqQuestion1">What is NasaEmoji?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse1" class="collapse show" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer1">NasaEmoji is a versatile tool that allows you to convert text to emojis and encrypt messages using emojis. The site offers two main apps: <strong>Conversion</strong> and <strong>Encryption</strong>. The Conversion app lets you transform any text into emojis and back without encryption, while the Encryption app enables you to securely encrypt and decrypt messages using emojis as keys and output.</span>
+            <!-- About Section -->
+            <div class="p-3 main-content info-section" id="aboutSection">
+                <div class="text-center">
+                    <h6 id="explanation">[Explanation text]</h6>
+                </div>
+                <hr>
+                <!-- FAQ Section -->
+                <h4 class="m-2">How to</h4>
+                <div class="accordion" id="faqAccordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading1">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
+                                    <strong id="faqQuestion1">What is NasaEmoji?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse1" class="collapse show" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer1">NasaEmoji is a versatile tool that allows you to convert text to emojis and encrypt messages using emojis. The site offers two main apps: <strong>Conversion</strong> and <strong>Encryption</strong>. The Conversion app lets you transform any text into emojis and back without encryption, while the Encryption app enables you to securely encrypt and decrypt messages using emojis as keys and output.</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- FAQ Item 2 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading2">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
-                                <strong id="faqQuestion2">How do I use NasaEmoji?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer2">NasaEmoji features two apps: <strong>Conversion</strong> and <strong>Encryption</strong>. By default, the site opens with the <strong>Conversion</strong> app. You can switch between apps using the <strong>Choose App</strong> dropdown in the navigation bar.
-
-                            <br><br>
-                            <strong>To Convert Text to Emojis:</strong>
-                            <ul>
-                                <li>Ensure you're on the <strong>Conversion</strong> app.</li>
-                                <li>Enter your message in the input field.</li>
-                                <li>Click the <strong>🔄 Convert</strong> button.</li>
-                                <li>Your converted message will appear in the output field.</li>
-                            </ul>
-
-                            <strong>To Encrypt a Message:</strong>
-                            <ul>
-                                <li>Switch to the <strong>Encryption</strong> app using the <strong>Choose App</strong> dropdown.</li>
-                                <li>Enter your message in the input field.</li>
-                                <li>Generate a key by clicking the <strong>🔄</strong> button next to the key input field, or enter your own key.</li>
-                                <li>Click the <strong>🔀 Encrypt / Decrypt</strong> button.</li>
-                                <li>Your encrypted message will appear in the output field.</li>
-                            </ul>
-                            </span>
+                    <!-- FAQ Item 2 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading2">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                                    <strong id="faqQuestion2">How do I use NasaEmoji?</strong>
+                                </button>
+                            </h5>
                         </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 3 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading3">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
-                                <strong id="faqQuestion3">How do I convert text to emojis?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer3">
-                                To convert text to emojis:
+                        <div id="faqCollapse2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer2">NasaEmoji features two apps: <strong>Conversion</strong> and <strong>Encryption</strong>. By default, the site opens with the <strong>Conversion</strong> app. You can switch between apps using the <strong>Choose App</strong> dropdown in the navigation bar.
+
+                                <br><br>
+                                <strong>To Convert Text to Emojis:</strong>
                                 <ul>
-                                    <li>Ensure you're on the <strong>Conversion</strong> app (the default app).</li>
+                                    <li>Ensure you're on the <strong>Conversion</strong> app.</li>
                                     <li>Enter your message in the input field.</li>
                                     <li>Click the <strong>🔄 Convert</strong> button.</li>
-                                    <li>The converted message will appear in the output field.</li>
-                                    <li>You can copy the output using the <strong>Copy to clipboard</strong> button.</li>
+                                    <li>Your converted message will appear in the output field.</li>
                                 </ul>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 4 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading4">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
-                                <strong id="faqQuestion4">How do I encrypt a message?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse4" class="collapse" aria-labelledby="faqHeading4" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer4">
-                                To encrypt a message:
+
+                                <strong>To Encrypt a Message:</strong>
                                 <ul>
                                     <li>Switch to the <strong>Encryption</strong> app using the <strong>Choose App</strong> dropdown.</li>
                                     <li>Enter your message in the input field.</li>
@@ -361,325 +307,428 @@
                                     <li>Click the <strong>🔀 Encrypt / Decrypt</strong> button.</li>
                                     <li>Your encrypted message will appear in the output field.</li>
                                 </ul>
-                            </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading3">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                                    <strong id="faqQuestion3">How do I convert text to emojis?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer3">
+                                    To convert text to emojis:
+                                    <ul>
+                                        <li>Ensure you're on the <strong>Conversion</strong> app (the default app).</li>
+                                        <li>Enter your message in the input field.</li>
+                                        <li>Click the <strong>🔄 Convert</strong> button.</li>
+                                        <li>The converted message will appear in the output field.</li>
+                                        <li>You can copy the output using the <strong>Copy to clipboard</strong> button.</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading4">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                                    <strong id="faqQuestion4">How do I encrypt a message?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse4" class="collapse" aria-labelledby="faqHeading4" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer4">
+                                    To encrypt a message:
+                                    <ul>
+                                        <li>Switch to the <strong>Encryption</strong> app using the <strong>Choose App</strong> dropdown.</li>
+                                        <li>Enter your message in the input field.</li>
+                                        <li>Generate a key by clicking the <strong>🔄</strong> button next to the key input field, or enter your own key.</li>
+                                        <li>Click the <strong>🔀 Encrypt / Decrypt</strong> button.</li>
+                                        <li>Your encrypted message will appear in the output field.</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 5 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading5">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
+                                    <strong id="faqQuestion5">How do I decrypt a message?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse5" class="collapse" aria-labelledby="faqHeading5" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer5">
+                                    To decrypt a message:
+                                    <ul>
+                                        <li>Switch to the <strong>Encryption</strong> app.</li>
+                                        <li>Paste the encrypted emoji message into the input field.</li>
+                                        <li>Enter the key used for encryption in the key input field.</li>
+                                        <li>Click the <strong>🔀 Encrypt / Decrypt</strong> button.</li>
+                                        <li>Your decrypted message will appear in the output field.</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 6 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading6">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
+                                    <strong id="faqQuestion6">How do I generate an emoji key?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse6" class="collapse" aria-labelledby="faqHeading6" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer6">
+                                    To generate an emoji key in the <strong>Encryption</strong> app:
+                                    <ul>
+                                        <li>Click the <strong>🔄</strong> button next to the key input field.</li>
+                                        <li>The generated key will appear in the key input field.</li>
+                                        <li>You can copy the key using the <strong>Copy</strong> button.</li>
+                                        <li>Save the key in one of the 5 available slots using the <strong>💾 Save</strong> button for future use.</li>
+                                    </ul>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 9 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading9">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
+                                    <strong id="faqQuestion9">How do I add NasaEmoji to my home screen or desktop?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse9" class="collapse" aria-labelledby="faqHeading9" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <span id="faqAnswer9">
+                                    <p>You can add NasaEmoji as a Progressive Web App (PWA) to your home screen or desktop for quick access.</p>
+                                    <strong>On iOS (Safari):</strong>
+                                    <ol>
+                                        <li>Open NasaEmoji in Safari.</li>
+                                        <li>Tap the <strong>Share</strong> icon (a square with an upward arrow).</li>
+                                        <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+                                        <li>Tap <strong>Add</strong> in the upper-right corner.</li>
+                                    </ol>
+                                    <strong>On Android (Chrome and other browsers):</strong>
+                                    <ol>
+                                        <li>Open NasaEmoji in your browser.</li>
+                                        <li>Tap the <strong>Menu</strong> icon (three dots) in the upper-right corner.</li>
+                                        <li>Select <strong>Add to Home screen</strong> or <strong>Install App</strong>.</li>
+                                        <li>Follow the on-screen instructions.</li>
+                                    </ol>
+                                    <strong>On macOS (Safari):</strong>
+                                    <ol>
+                                        <li>Open NasaEmoji in Safari.</li>
+                                        <li>Go to <strong>File</strong> > <strong>Add to Dock</strong>.</li>
+                                    </ol>
+                                    <strong>On Desktop (Chrome):</strong>
+                                    <ol>
+                                        <li>Open NasaEmoji in Chrome.</li>
+                                        <li>Click the <strong>Install</strong> icon in the address bar (a computer with a down arrow).</li>
+                                        <li>Click <strong>Install</strong>.</li>
+                                    </ol>
+                                    <strong>On Desktop (Firefox and other browsers):</strong>
+                                    <p>Firefox does not support installing PWAs directly. You can bookmark the site or create a shortcut manually.</p>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- FAQ Item 5 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading5">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
-                                <strong id="faqQuestion5">How do I decrypt a message?</strong>
-                            </button>
-                        </h5>
+                <h4 class="m-2">Security</h4>
+                <div class="accordion" id="faqAccordionSecurity">
+                    <!-- FAQ Item 10 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading10">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
+                                    <strong id="faqQuestion10">Is my data secure?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse10" class="collapse" aria-labelledby="faqHeading10" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer10">Yes, all encryption and decryption happen locally on your device. No data is sent anywhere, ensuring your messages remain private.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div id="faqCollapse5" class="collapse" aria-labelledby="faqHeading5" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer5">
-                                To decrypt a message:
-                                <ul>
-                                    <li>Switch to the <strong>Encryption</strong> app.</li>
-                                    <li>Paste the encrypted emoji message into the input field.</li>
-                                    <li>Enter the key used for encryption in the key input field.</li>
-                                    <li>Click the <strong>🔀 Encrypt / Decrypt</strong> button.</li>
-                                    <li>Your decrypted message will appear in the output field.</li>
-                                </ul>
-                            </span>
+                    <!-- FAQ Item 11 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading11">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
+                                    <strong id="faqQuestion11">Can I convert text to emojis without encryption?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse11" class="collapse" aria-labelledby="faqHeading11" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer11">Yes, NasaEmoji allows you to convert any text to emojis and back without encryption using the "Convert" feature.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 12 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading12">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
+                                    <strong id="faqQuestion12">What encryption algorithms does NasaEmoji use?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse12" class="collapse" aria-labelledby="faqHeading12" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer12">NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 13 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading13">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
+                                    <strong id="faqQuestion13">Why are multiple encryption algorithms used?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse13" class="collapse" aria-labelledby="faqHeading13" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer13">Using multiple algorithms enhances security by adding layers of encryption, making it more difficult for unauthorized parties to decrypt the message.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 14 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading14">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
+                                    <strong id="faqQuestion14">What is key hashing and why is it used?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse14" class="collapse" aria-labelledby="faqHeading14" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer14">Key hashing transforms your key into a fixed-size hash using multiple algorithms, enhancing security by preventing direct access to the original key and making brute-force attacks more difficult.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 15 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading15">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
+                                    <strong id="faqQuestion15">How does key hashing prevent brute-force attacks?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse15" class="collapse" aria-labelledby="faqHeading15" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer15">By hashing the key multiple times with different algorithms and salts, it increases the computational effort required to guess the key, thus deterring brute-force attempts.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 18 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading18">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
+                                    <strong id="faqQuestion18">How does NasaEmoji handle key storage?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse18" class="collapse" aria-labelledby="faqHeading18" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer18">You can save keys locally in one of the 5 available slots using your browser's local storage for quick access.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 19 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading19">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
+                                    <strong id="faqQuestion19">Does NasaEmoji send any data over the internet?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse19" class="collapse" aria-labelledby="faqHeading19" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer19">No, all operations are performed locally on your device. NasaEmoji does not send any data over the internet.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 20 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading20">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
+                                    <strong id="faqQuestion20">Can I use NasaEmoji offline?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse20" class="collapse" aria-labelledby="faqHeading20" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer20">Yes, you can download NasaEmoji for local execution and use it offline without an internet connection.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 21 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading21">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse21" aria-expanded="false" aria-controls="faqCollapse21">
+                                    <strong id="faqQuestion21">Is the encryption standardized?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse21" class="collapse" aria-labelledby="faqHeading21" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer21">NasaEmoji uses standard encryption algorithms but combines them in a unique way. While secure, it is recommended for casual use rather than critical security applications.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- FAQ Item 22 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading22">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse22" aria-expanded="false" aria-controls="faqCollapse22">
+                                    <strong id="faqQuestion22">Can I trust NasaEmoji for highly sensitive information?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse22" class="collapse" aria-labelledby="faqHeading22" data-parent="#faqAccordionSecurity">
+                            <div class="card-body">
+                                <span id="faqAnswer22">While NasaEmoji employs strong encryption, it is primarily designed for personal and casual use. For highly sensitive information, consult security professionals.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- FAQ Item 6 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading6">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
-                                <strong id="faqQuestion6">How do I generate an emoji key?</strong>
-                            </button>
-                        </h5>
+                <h4 class="m-2">Code</h4>
+                <div class="accordion" id="faqAccordionCode">
+                    <!-- FAQ Item 23 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading23">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse23" aria-expanded="false" aria-controls="faqCollapse23">
+                                    <strong id="faqQuestion23">Is NasaEmoji open-source?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse23" class="collapse" aria-labelledby="faqHeading23" data-parent="#faqAccordionCode">
+                            <div class="card-body">
+                                <span id="faqAnswer23">Yes, NasaEmoji's source code is available on GitHub, allowing you to review and contribute to its development.</span>
+                            </div>
+                        </div>
                     </div>
-                    <div id="faqCollapse6" class="collapse" aria-labelledby="faqHeading6" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer6">
-                                To generate an emoji key in the <strong>Encryption</strong> app:
-                                <ul>
-                                    <li>Click the <strong>🔄</strong> button next to the key input field.</li>
-                                    <li>The generated key will appear in the key input field.</li>
-                                    <li>You can copy the key using the <strong>Copy</strong> button.</li>
-                                    <li>Save the key in one of the 5 available slots using the <strong>💾 Save</strong> button for future use.</li>
-                                </ul>
-                            </span>
+                    <!-- FAQ Item 24 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading24">
+                            <h5 class="mb-0">
+                                <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse24" aria-expanded="false" aria-controls="faqCollapse24">
+                                    <strong id="faqQuestion24">How can I contribute to NasaEmoji?</strong>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faqCollapse24" class="collapse" aria-labelledby="faqHeading24" data-parent="#faqAccordionCode">
+                            <div class="card-body">
+                                <span id="faqAnswer24">You can contribute by visiting the GitHub repository, reporting issues, suggesting improvements, or submitting pull requests.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- FAQ Item 9 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading9">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
-                                <strong id="faqQuestion9">How do I add NasaEmoji to my home screen or desktop?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse9" class="collapse" aria-labelledby="faqHeading9" data-parent="#faqAccordion">
-                        <div class="card-body">
-                            <span id="faqAnswer9">
-                                <p>You can add NasaEmoji as a Progressive Web App (PWA) to your home screen or desktop for quick access.</p>
-                                <strong>On iOS (Safari):</strong>
-                                <ol>
-                                    <li>Open NasaEmoji in Safari.</li>
-                                    <li>Tap the <strong>Share</strong> icon (a square with an upward arrow).</li>
-                                    <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
-                                    <li>Tap <strong>Add</strong> in the upper-right corner.</li>
-                                </ol>
-                                <strong>On Android (Chrome and other browsers):</strong>
-                                <ol>
-                                    <li>Open NasaEmoji in your browser.</li>
-                                    <li>Tap the <strong>Menu</strong> icon (three dots) in the upper-right corner.</li>
-                                    <li>Select <strong>Add to Home screen</strong> or <strong>Install App</strong>.</li>
-                                    <li>Follow the on-screen instructions.</li>
-                                </ol>
-                                <strong>On macOS (Safari):</strong>
-                                <ol>
-                                    <li>Open NasaEmoji in Safari.</li>
-                                    <li>Go to <strong>File</strong> > <strong>Add to Dock</strong>.</li>
-                                </ol>
-                                <strong>On Desktop (Chrome):</strong>
-                                <ol>
-                                    <li>Open NasaEmoji in Chrome.</li>
-                                    <li>Click the <strong>Install</strong> icon in the address bar (a computer with a down arrow).</li>
-                                    <li>Click <strong>Install</strong>.</li>
-                                </ol>
-                                <strong>On Desktop (Firefox and other browsers):</strong>
-                                <p>Firefox does not support installing PWAs directly. You can bookmark the site or create a shortcut manually.</p>
-                            </span>
-                        </div>
-                    </div>
+                <hr>
+                <p class="text-center">
+                    <b id="footerHighlight">[Footer Highlight]</b>
+                </p>
+                <div class="form-group text-center">
                 </div>
-            </div>
-            <h4 class="m-2">Security</h4>
-            <div class="accordion" id="faqAccordionSecurity">
-                <!-- FAQ Item 10 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading10">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
-                                <strong id="faqQuestion10">Is my data secure?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse10" class="collapse" aria-labelledby="faqHeading10" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer10">Yes, all encryption and decryption happen locally on your device. No data is sent anywhere, ensuring your messages remain private.</span>
-                        </div>
-                    </div>
+                <hr>
+                <div class="text-center">
+                    <a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
+                    <br>
+                    Copy Url: https://nasaemoji.com
+                    <br>
                 </div>
-                <!-- FAQ Item 11 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading11">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
-                                <strong id="faqQuestion11">Can I convert text to emojis without encryption?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse11" class="collapse" aria-labelledby="faqHeading11" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer11">Yes, NasaEmoji allows you to convert any text to emojis and back without encryption using the "Convert" feature.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 12 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading12">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
-                                <strong id="faqQuestion12">What encryption algorithms does NasaEmoji use?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse12" class="collapse" aria-labelledby="faqHeading12" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer12">NasaEmoji uses a combination of AES-256, Blowfish, and XOR encryption algorithms to secure your messages.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 13 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading13">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
-                                <strong id="faqQuestion13">Why are multiple encryption algorithms used?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse13" class="collapse" aria-labelledby="faqHeading13" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer13">Using multiple algorithms enhances security by adding layers of encryption, making it more difficult for unauthorized parties to decrypt the message.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 14 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading14">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
-                                <strong id="faqQuestion14">What is key hashing and why is it used?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse14" class="collapse" aria-labelledby="faqHeading14" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer14">Key hashing transforms your key into a fixed-size hash using multiple algorithms, enhancing security by preventing direct access to the original key and making brute-force attacks more difficult.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 15 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading15">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
-                                <strong id="faqQuestion15">How does key hashing prevent brute-force attacks?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse15" class="collapse" aria-labelledby="faqHeading15" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer15">By hashing the key multiple times with different algorithms and salts, it increases the computational effort required to guess the key, thus deterring brute-force attempts.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 18 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading18">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
-                                <strong id="faqQuestion18">How does NasaEmoji handle key storage?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse18" class="collapse" aria-labelledby="faqHeading18" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer18">You can save keys locally in one of the 5 available slots using your browser's local storage for quick access.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 19 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading19">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
-                                <strong id="faqQuestion19">Does NasaEmoji send any data over the internet?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse19" class="collapse" aria-labelledby="faqHeading19" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer19">No, all operations are performed locally on your device. NasaEmoji does not send any data over the internet.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 20 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading20">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
-                                <strong id="faqQuestion20">Can I use NasaEmoji offline?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse20" class="collapse" aria-labelledby="faqHeading20" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer20">Yes, you can download NasaEmoji for local execution and use it offline without an internet connection.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 21 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading21">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse21" aria-expanded="false" aria-controls="faqCollapse21">
-                                <strong id="faqQuestion21">Is the encryption standardized?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse21" class="collapse" aria-labelledby="faqHeading21" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer21">NasaEmoji uses standard encryption algorithms but combines them in a unique way. While secure, it is recommended for casual use rather than critical security applications.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 22 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading22">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse22" aria-expanded="false" aria-controls="faqCollapse22">
-                                <strong id="faqQuestion22">Can I trust NasaEmoji for highly sensitive information?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse22" class="collapse" aria-labelledby="faqHeading22" data-parent="#faqAccordionSecurity">
-                        <div class="card-body">
-                            <span id="faqAnswer22">While NasaEmoji employs strong encryption, it is primarily designed for personal and casual use. For highly sensitive information, consult security professionals.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h4 class="m-2">Code</h4>
-            <div class="accordion" id="faqAccordionCode">
-                <!-- FAQ Item 23 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading23">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse23" aria-expanded="false" aria-controls="faqCollapse23">
-                                <strong id="faqQuestion23">Is NasaEmoji open-source?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse23" class="collapse" aria-labelledby="faqHeading23" data-parent="#faqAccordionCode">
-                        <div class="card-body">
-                            <span id="faqAnswer23">Yes, NasaEmoji's source code is available on GitHub, allowing you to review and contribute to its development.</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- FAQ Item 24 -->
-                <div class="card">
-                    <div class="card-header" id="faqHeading24">
-                        <h5 class="mb-0">
-                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse24" aria-expanded="false" aria-controls="faqCollapse24">
-                                <strong id="faqQuestion24">How can I contribute to NasaEmoji?</strong>
-                            </button>
-                        </h5>
-                    </div>
-                    <div id="faqCollapse24" class="collapse" aria-labelledby="faqHeading24" data-parent="#faqAccordionCode">
-                        <div class="card-body">
-                            <span id="faqAnswer24">You can contribute by visiting the GitHub repository, reporting issues, suggesting improvements, or submitting pull requests.</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <p class="text-center">
-                <b id="footerHighlight">[Footer Highlight]</b>
-            </p>
-            <div class="form-group text-center">
-            </div>
-            <hr>
-            <div class="text-center">
-                <a href="https://github.com/mqxym/EmojiCrypt" id="footerSource">Sourcecode (Github)</a>
-                <br>
-                Copy Url: https://nasaemoji.com
-                <br>
             </div>
         </div>
+
+        <footer class="bg-light text-left p-2">
+            <div class="mb-2">
+                <small class="text-muted">
+                    Powered by <a class="text-muted" target="_blank" href="https://github.com/mqxym/EmojiCrypt"><u>EmojiCrypt</u></a> version <span id="versionFooter">3.1.0</span> built by <a class="text-muted" target="_blank" href="https://maxim.omg.lol"><u>@mqxym</u></a>
+                    <br>
+                    Legacy versions: 
+                    <a class="text-muted" target="_blank" href="https://v1.nasaemoji.com"><u>v1.1.0</u></a> 
+                    <span> | </span>
+                    <a class="text-muted" target="_blank" href="https://v2.nasaemoji.com"><u>v2.2.4</u></a> 
+                    <i>(not recommended)</i>
+                    <br>
+                    <a class="text-muted" target="_blank" href="https://github.com/mqxym/EmojiCrypt/releases"><u>Download</u></a> 
+                    <span> | </span>
+                    <a class="text-muted" target="_blank" href="https://github.com/mqxym/EmojiCrypt/releases"><u>Changelog</u></a> 
+                    <span> | </span>
+                    <a class="text-muted" data-toggle="collapse" data-target="#privacyPolicySection" aria-expanded="true" aria-controls="privacyPolicySection" onclick="setTimeout(() => document.getElementById('privacyPolicySection').scrollIntoView({ behavior: 'smooth' }), 100)" ><u>Privacy Policy</u></a> 
+                </small>
+            </div>
+            <div id="privacyPolicySection" class="collapse">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Privacy Policy for NasaEmoji</h5>
+                        <p class="card-text">
+                          <strong>Effective Date:</strong> 2023/05/01
+                        </p>
+                        <p class="card-text">
+                          <strong>Introduction:</strong> At NasaEmoji (accessible from <a href="https://nasaemoji.com">https://nasaemoji.com</a>), we prioritize your privacy and are committed to providing a secure experience. This Privacy Policy outlines the practices regarding data collection, usage, and protection. Please read this policy carefully.
+                        </p>
+                        
+                        <p class="card-text">
+                          <strong>Data Collection:</strong> NasaEmoji does not collect, store, or process any personal information, including but not limited to IP addresses, names, addresses, or contact details. We strive to ensure complete user anonymity.
+                        </p>
+                    
+                        <p class="card-text">
+                          <strong>Cookies:</strong> NasaEmoji does not use cookies to track or monitor user behavior.
+                        </p>
+                        
+                        <p class="card-text">
+                          <strong>Third Parties:</strong> No third parties are involved in the operation of this website. NasaEmoji functions independently and does not share or disclose user information with any external entities.
+                        </p>
+                        
+                        <p class="card-text">
+                          <strong>Data Processing:</strong> All data entered on NasaEmoji is processed locally on your device. No data is transmitted from your device to any server, ensuring complete privacy and control over your input.
+                        </p>
+                        
+                        <p class="card-text">
+                          <strong>Changes to This Privacy Policy:</strong> NasaEmoji reserves the right to update this Privacy Policy as necessary. We encourage you to review this policy periodically to stay informed of any changes.
+                        </p>
+                        
+                        <p class="card-text">
+                          <strong>Contact Us:</strong> For any questions or concerns regarding this Privacy Policy, please contact us at <a href="mailto:maxim@omg.lol">maxim@omg.lol</a>.
+                        </p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        By using NasaEmoji, you acknowledge and agree to the terms outlined in this Privacy Policy.
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-    <!--
-    <footer class="bg-light text-center">
-        <div class="container">
-          <span class="text-muted">Powered by EmojiCrypt Version 3.0.0</span>
-        </div>
-      </footer>
-    -->
+
     <!-- External Scripts -->
     <script src="js/lib.js" defer></script>
     <script src="js/emo.js" defer></script>
@@ -707,8 +756,12 @@
          * Sets the custom emoji array for conversion when the id is the URL
          */
         async function updatePrivateAlgorithmFromUrl() {
+            if (currentMenu != 'convertSection') {
+                privateConversionId = null;
+                return;
+            }
             privateConversionId = getPrivateIdfromUrl() || localStorage.getItem("pa");
-            if (privateConversionId) {
+            if ( privateConversionId ) {
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 $('#privateConversionLink').val(window.location.href);
                 $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
@@ -923,6 +976,7 @@
             { selector: '.collapse', classes: 'bg-dark text-light' },
             { selector: '.input-group-text', classes: 'bg-dark text-light' },
             { selector: '.form-control', classes: 'bg-secondary text-light' },
+            { selector: 'footer', removeClasses: 'bg-light', classes: 'bg-dark text-light' },
         ];
     
         /**
@@ -1006,8 +1060,20 @@
         function setInitialSectionPositions() {
             const currentIndex = menuOrder.indexOf(currentMenu);
             menuOrder.forEach((section, index) => {
+                const $section = $(`#${section}`);
                 const offset = (index - currentIndex) * 100; // Offset in percent
-                $(`#${section}`).css('left', `${offset}%`);
+
+                // Set the left position
+                $section.css('left', `${offset}%`);
+
+                // Set position property
+                if (index === currentIndex) {
+                    // Visible section contributes to page height
+                    $section.css('position', 'relative');
+                } else {
+                    // Off-screen sections do not contribute to page height
+                    $section.css('position', 'absolute');
+                }
             });
         }
     
@@ -1047,30 +1113,34 @@
          * @param {string} toDiv - The ID of the target section.
          * @param {function} callback - Callback function after animation completes.
          */
-        function animateTransition(fromDiv, toDiv, callback) {
+         function animateTransition(fromDiv, toDiv, callback) {
             const fromIndex = menuOrder.indexOf(fromDiv);
             const toIndex = menuOrder.indexOf(toDiv);
-            const direction = toIndex > fromIndex ? 'left' : 'right';
-    
-            const fromAnimation = {};
-            const toAnimation = {};
-    
-            if (direction === 'left') {
-                fromAnimation.left = '-100%';
-                toAnimation.left = '0%';
-                $(`#${toDiv}`).css('left', '100%');
-            } else {
-                fromAnimation.left = '100%';
-                toAnimation.left = '0%';
-                $(`#${toDiv}`).css('left', '-100%');
+            const offset = (toIndex - fromIndex) * 100; // Calculate the offset
+
+            console.log(fromIndex)
+
+            // Update positions and positions properties
+            if ( fromIndex < toIndex ) {
+                $(`#${fromDiv}`).css('position', 'absolute');
+                $(`#${toDiv}`).css('position', 'relative');
             }
-    
-            $(`#${fromDiv}`).animate(fromAnimation, 500);
-            $(`#${toDiv}`).animate(toAnimation, 500, () => {
+           
+
+            // Animate the 'from' section off-screen
+            $(`#${fromDiv}`).animate({ left: `${-offset}%` }, 500);
+
+            // Bring the 'to' section into view
+            $(`#${toDiv}`).css('left', `${offset}%`).animate({ left: '0%' }, 500, function () {
+                if ( fromIndex > toIndex ) {
+                    $(`#${fromDiv}`).css('position', 'absolute');
+                    $(`#${toDiv}`).css('position', 'relative');
+                }
                 if (typeof callback === 'function') callback();
+
             });
         }
-    
+            
         /**
          * Transition to the target section with an animation.
          * @param {string} targetDiv - The ID of the target section.
@@ -1089,7 +1159,8 @@
                     animateTransition(intermediate, targetDiv, () => {
                         currentMenu = targetDiv;
                         isTransitioning = false;
-    
+                        
+                        updatePrivateAlgorithmFromUrl();
                         if (pushState) updateURLParameter();
                         updateLanguageMenuLinks();
                         updateNavigationLinks();
@@ -1101,7 +1172,8 @@
                 animateTransition(currentMenu, targetDiv, () => {
                     currentMenu = targetDiv;
                     isTransitioning = false;
-    
+                    
+                    updatePrivateAlgorithmFromUrl();
                     if (pushState) updateURLParameter();
                     updateLanguageMenuLinks();
                     updateNavigationLinks();
@@ -1178,6 +1250,7 @@
             updateMetadata();
             updatePrivateAlgorithmFromUrl();
             updateURLParameter();
+            $("#versionFooter").html(getVersion());
     
             // Handle back/forward button navigation
             window.onpopstate = function () {
