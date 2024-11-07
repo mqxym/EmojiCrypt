@@ -3,8 +3,18 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.2.0";
+    return "3.3.0";
 }
+
+/*
+Hash count analysis 
+
+let s1 = 0;
+let s2 = 0;
+let s3 = 0;
+let s5 = 0;
+
+*/
 
 /**
  * Calculates a security level based on the SHA-256 hash of the password.
@@ -61,72 +71,91 @@ async function returnHash(seed) {
         nibbles.push(byte & 0xF);
     }
 
+    const caseSalts = [
+        encodeUTF8("SF39"),
+        encodeUTF8("DS44"),
+        encodeUTF8("XL55"),
+        encodeUTF8("NC01"),
+        encodeUTF8("LU50"),
+        encodeUTF8("GL12"),
+        encodeUTF8("GG31"),
+        encodeUTF8("HL11"),
+        encodeUTF8("XF91"),
+        encodeUTF8("BM15"),
+        encodeUTF8("TT85"),
+        encodeUTF8("RF19"),
+        encodeUTF8("MS25"),
+        encodeUTF8("0X80"),
+        encodeUTF8("MX55"),
+        encodeUTF8("WT66"),
+    ];
+
     for (const nibble of nibbles) {
         let hashInput;
 
         switch (nibble) {
             case 0:
-                hashInput = concatUint8Arrays(key, encodeUTF8("SF39"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[0], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-384');
                 break;
             case 1:
-                hashInput = concatUint8Arrays(key, encodeUTF8("DS44"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[1], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-384');
                 break;
             case 2:
-                hashInput = concatUint8Arrays(key, encodeUTF8("XL55"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[2], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-384');
                 break;
             case 3:
-                hashInput = concatUint8Arrays(key, encodeUTF8("NC01"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[3], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-384');
                 break;
             case 4:
-                hashInput = concatUint8Arrays(key, encodeUTF8("LU50"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[4], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-512');
                 break;
             case 5:
-                hashInput = concatUint8Arrays(key, encodeUTF8("GL12"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[5], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-512');
                 break;
             case 6:
-                hashInput = concatUint8Arrays(key, encodeUTF8("GG31"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[6], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-512');
                 break;
             case 7:
-                hashInput = concatUint8Arrays(key, encodeUTF8("HL11"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[7], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-512');
                 break;
             case 8:
-                hashInput = concatUint8Arrays(key, encodeUTF8("XF91"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[8], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-256');
                 break;
             case 9:
-                hashInput = concatUint8Arrays(key, encodeUTF8("BM15"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[9], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-256');
                 break;
             case 10:
-                hashInput = concatUint8Arrays(key, encodeUTF8("TT85"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[10], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-256');
                 break;
             case 11:
-                hashInput = concatUint8Arrays(key, encodeUTF8("RF19"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[11], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-1');
                 break;
             case 12:
-                hashInput = concatUint8Arrays(key, encodeUTF8("MS25"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[12], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-1');
                 break;
             case 13:
-                hashInput = concatUint8Arrays(key, encodeUTF8("0X80"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[13], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-1');
                 break;
             case 14:
-                hashInput = concatUint8Arrays(key, encodeUTF8("MX55"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[14], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-1');
                 break;
             case 15:
-                hashInput = concatUint8Arrays(key, encodeUTF8("WT66"), pastHashes[0], pastHashes[1]);
+                hashInput = concatUint8Arrays(key, caseSalts[15], pastHashes[0], pastHashes[1]);
                 key = await hashData(hashInput, 'SHA-256');
                 break;
         }
@@ -136,7 +165,10 @@ async function returnHash(seed) {
         pastHashes.shift();
     }
 
-    return key;
+    const finalHashInput = concatUint8Arrays(...pastHashes);
+    const finalHash = await hashData(finalHashInput, 'SHA-512');
+
+    return finalHash;
 }
 
 /**
@@ -188,7 +220,7 @@ async function getCryptoKeys(keyInput, inputSalt = null) {
     const securityLevelKeyBased = await getSecLevel(keyInput);
     const securityLevelSaltBased = customSalt[0];
     const securityLevelCombined = Math.floor((securityLevelKeyBased + securityLevelSaltBased) / 2);
-    const securityLevel = 383 + securityLevelCombined - 25;
+    const securityLevel = 383 + securityLevelCombined - 121;
 
     // Step 4: Iterate hashPass based on security level
     for (let i = 0; i < securityLevel; i++) {
@@ -244,6 +276,16 @@ async function getCryptoKeys(keyInput, inputSalt = null) {
 
     console.timeEnd("keyHash");
 
+    /*
+    Hash count analysis
+    console.log(s1, s2, s3, s5, s1+s2+s3+s5)
+
+    s1 = 0;
+    s2 = 0;
+    s3 = 0;
+    s5 = 0;
+    */
+
     return { aesKey1, aesKey2, xorKey, customSalt };
 }
 
@@ -279,7 +321,7 @@ async function encrypt(message, keyInput) {
     // Step 6: Convert Encrypted Data to Emojis
     const encryptedEmoji = mapBytesToSymbols(finalOutput, emojiArrayPermutation);
 
-    return encryptedEmoji.join("​");
+    return encryptedEmoji.join('');
 }
 
 /**
@@ -295,7 +337,9 @@ async function decrypt(message, keyInput) {
         const standardEmojiArray = getEmojiArray();
         const emojiArrayPermutation = await generateSecurePermutationFromString(keyInput, standardEmojiArray);
 
-        const decodedBytes = mapSymbolsToBytes(message.split("​"), emojiArrayPermutation);
+        const emojiArray = extractEmojis(message);
+
+        const decodedBytes = mapSymbolsToBytes(emojiArray, emojiArrayPermutation);
 
         // Step 0.5: Split between salt and encrypted bytes and get the CryptoKeys using the salt
         const customSalt = decodedBytes.slice(0,6);
@@ -323,20 +367,20 @@ async function decrypt(message, keyInput) {
 /**
  * Encodes a message into emojis without encryption.
  * @param {string} message - The message to encode.
- * @param {Array<string>} customEmojiArray - An custom order of the emoji Array generated by the private algorithm 
+ * @param {Array<string>} customEmojiArray - A custom order of the emoji Array generated by the private algorithm 
  * @returns {string} The encoded message represented as emojis.
  */
 function encode(message, customEmojiArray = null) {
     const bytes = new TextEncoder().encode(message);
     const emojis = customEmojiArray || getEmojiArray();
     const encodedEmoji = mapBytesToSymbols(bytes, emojis);
-    return encodedEmoji.join("​");
+    return encodedEmoji.join('');
 }
 
 /**
  * Decodes a message from emojis without decryption.
  * @param {string} message - The message represented as emojis.
- * @param {Array<string>} customEmojiArray - An custom order of the emoji Array generated by the private algorithm
+ * @param {Array<string>} customEmojiArray - A custom order of the emoji Array generated by the private algorithm
  * @returns {string} The decoded message.
  */
 function decode(message, customEmojiArray = null) {
@@ -345,7 +389,9 @@ function decode(message, customEmojiArray = null) {
     const emojis = customEmojiArray || getEmojiArray();
     try {
         // Split into array and map emojis to bytes
-        bytes = mapSymbolsToBytes(message.split("​"), emojis);
+        const emojiArray = extractEmojis(message);
+
+        bytes = mapSymbolsToBytes(emojiArray, emojis);
         decoded = new TextDecoder().decode(Uint8Array.from(bytes));
     } catch (err) {
         return "";
@@ -383,14 +429,14 @@ async function generateRandomKey() {
  * @returns {string|boolean} Returns 'emoji' if it's an encoded emoji string, otherwise false.
  */
 function checkInputString(inputString) {
+    const counts = countEmojisAndNonEmojis(inputString);
+
     if (inputString === "") {
         console.log("Input is empty");
         return false;
     }
-
-    // Count the number of zero-width spaces (used as separators)
-    if ((inputString.split('​').length - 1) > 2) {
-        console.log("Input is Encoded Emoji");
+    // at least 3 emojis and emoji only should count as encoded
+    if (counts.matches > 2 && counts.notMatches == 0) {
         return "emoji";
     }
     return false;

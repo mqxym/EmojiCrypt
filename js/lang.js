@@ -355,7 +355,7 @@ function getTranslation(key, langIndex) {
         // Messages during conversion
         "btnEncodeWorkingConvert": [
             "⚙️ Encoding...",
-            "⚙️ Kodieren...",
+            "⚙️ Umwandeln...",
             "⚙️ 编码中...",
             "⚙️ Кодируем...",
             "⚙️ Codificando...",
@@ -365,7 +365,7 @@ function getTranslation(key, langIndex) {
         ],
         "btnEncodeFailedConvert": [
             "💔 Encoding failed",
-            "💔 Kodierung fehlgeschlagen",
+            "💔 Umwandeln fehlgeschlagen",
             "💔 编码失败",
             "💔 Кодирование не удалось",
             "💔 Falló la codificación",
@@ -375,7 +375,7 @@ function getTranslation(key, langIndex) {
         ],
         "btnEncodeSuccessConvert": [
             "💚 Encoded!",
-            "💚 Kodiert!",
+            "💚 Umgewandelt!",
             "💚 已编码！",
             "💚 Закодировано!",
             "💚 ¡Codificado!",
@@ -385,7 +385,7 @@ function getTranslation(key, langIndex) {
         ],
         "btnDecodeWorkingConvert": [
             "⚙️ Decoding...",
-            "⚙️ Dekodieren...",
+            "⚙️ Umwandeln...",
             "⚙️ 解码中...",
             "⚙️ Декодируем...",
             "⚙️ Decodificando...",
@@ -395,7 +395,7 @@ function getTranslation(key, langIndex) {
         ],
         "btnDecodeFailedConvert": [
             "💔 Decoding failed",
-            "💔 Dekodierung fehlgeschlagen",
+            "💔 Umwandeln fehlgeschlagen",
             "💔 解码失败",
             "💔 Декодирование не удалось",
             "💔 Falló la decodificación",
@@ -405,7 +405,7 @@ function getTranslation(key, langIndex) {
         ],
         "btnDecodeSuccessConvert": [
             "💚 Decoded!",
-            "💚 Dekodiert!",
+            "💚 Umgewandelt!",
             "💚 已解码！",
             "💚 Декодировано!",
             "💚 ¡Decodificado!",
@@ -839,7 +839,7 @@ function getTranslation(key, langIndex) {
     if (translations[key]) {
         return translations[key][langIndex];
     } else {
-        // Return the key itself if translation is not found
-        return key;
+        // Return english if translation is not found
+        return translations[0];
     }
 }

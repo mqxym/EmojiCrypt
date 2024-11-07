@@ -1,4 +1,4 @@
-# EmojiCrypt Version 3.2.0 🌈
+# EmojiCrypt Version 3.3.0 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
@@ -50,7 +50,7 @@ The idea is to implement a protocol where only you and the receiver knows what t
     3. The hash before that
     4. A custom, fixed salt that differs in each of the 16 switch cases
 - Custom Hash Loop Lengths: As of version 1.1.0, different encryption algorithms have varying hash loop lengths and intermediate salt integers. Therefore, each of the three encryption algorithms uses a custom, deterministically derived key: 256-bit for AES and 4096-byte for XOR (as of version 3.0.0)
-- *On modern devices, the hashing time can range from a minimum of 400 to a maximum of 1500 miliseconds and it is heavily dependent of the random salt*
+- *On modern devices, the hashing time can range from a minimum of ~700 to a maximum of ~1000 miliseconds and it is dependent of the random salt resulting in more or less hash rounds and a different distribution in more computationally intensive hash functions (SHA-384,SHA-512)*
 - Additional obfuscation: As of version 3.1.0, the binary-to-emoji algorithm employs a unique emoji sorting order derived from the input key.
 
 ## Includes ⤴️

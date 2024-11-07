@@ -224,12 +224,12 @@
                 <hr><hr>
 
                 <!-- Private Conversion Algorithm -->
-                <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection">💎 Private Algorithm</a>
+                <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection" id="showPrivateAlgorithmButton">💎 Private Algorithm</a>
                 <div id="privateAlgorithmSection" class="collapse">
                     <div class="card">
                         <div class="card-body">
                             <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
-                            Your link to the private conversion algorithm: <br>
+                            <span id="privateLinkText">Your link to the private conversion algorithm: </span> <br>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">🧬</span>
@@ -243,7 +243,7 @@
                         </div>
                     
                         <div class="card-footer">
-                            <i>
+                            <i id="privateAlgorithmDisclaimer">
                                 Using a private algorithm is just another layer of obfuscation, but can be cracked pretty easily. 
                                 <br>
                                 Especially, when using the same algorithm more than once.
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                 </div>
-                <i class="text-muted"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
+                <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
             </div>
             <!-- About Section -->
             <div class="p-3 main-content info-section" id="aboutSection">
@@ -670,7 +670,7 @@
 
         <footer class="bg-light text-left p-2">
             <div class="mb-2">
-                <small class="text-muted">
+                <small id="siteFooter" class="text-muted">
                     Powered by <a class="text-muted" target="_blank" href="https://github.com/mqxym/EmojiCrypt"><u>EmojiCrypt</u></a> version <span id="versionFooter">3.1.0</span> built by <a class="text-muted" target="_blank" href="https://maxim.omg.lol"><u>@mqxym</u></a>
                     <br>
                     Legacy versions: 
