@@ -128,12 +128,20 @@
     <div class="wrapper">
         <!-- Main Content -->
         <div class="main-container">
-            <!-- Encryption/Decryption Section -->
+            <!-- Crypto API Error Header -->
             <div class="p-2 m-3 bg-danger border rounded rounded-sm d-none" id="errorHeader">
                 <span class="text-light">
-                    Your browser does not support this application. Please update your system.
+                    Your browser does not support this application. Please update your browser or system.
                 </span>
             </div>
+            <!-- Javascript Support Error Header -->
+            <noscript>
+                <div class="p-2 m-3 bg-danger border rounded rounded-sm">
+                    <span class="text-light">
+                        Your browser does not support this application. Please enable JavaScript in your browser settings.
+                    </span>
+                </div>
+            </noscript>
             <!-- Encryption/Decryption Section -->
             <div class="main-content p-3 encrypt-section" id="encryptSection">
                 <form class="form">
@@ -670,7 +678,7 @@
 
         <footer class="bg-light text-left p-2">
             <div class="mb-2">
-                <small id="siteFooter" class="text-muted">
+                <small class="text-muted">
                     Powered by <a class="text-muted" target="_blank" href="https://github.com/mqxym/EmojiCrypt"><u>EmojiCrypt</u></a> version <span id="versionFooter">3.1.0</span> built by <a class="text-muted" target="_blank" href="https://maxim.omg.lol"><u>@mqxym</u></a>
                     <br>
                     Legacy versions: 
@@ -764,7 +772,7 @@
             if ( privateConversionId ) {
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 $('#privateConversionLink').val(window.location.href);
-                $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
+                $('#convertTopMessage').html(getTranslation('privateAlgorithmHeader', languageIndex));
                 $('#disablePrivateConversionButton').removeClass('d-none');
             } else {
                 customEmojiArray = null;
@@ -851,6 +859,13 @@
             { selector: '#explanation', key: 'explanation' },
             { selector: '#footerHighlight', key: 'footerHighlight' },
             { selector: '#footerSource', key: 'footerSource' },
+            { selector: '#privateLinkText', key: 'privateLinkText' },
+            { selector: '#copyPrivateConversionLink', key: 'copyPrivateConversionLink' },
+            { selector: '#disablePrivateConversionButton', key: 'disablePrivateConversionButton' },
+            { selector: '#privateAlgorithmDisclaimer', key: 'privateAlgorithmDisclaimer' },
+            { selector: '#generatePrivateConversionButton', key: 'generatePrivateConversionButton' },
+            { selector: '#privateAlgorithmFooter', key: 'privateAlgorithmFooter' },
+            { selector: '#showPrivateAlgorithmButton', key: 'showPrivateAlgorithmButton' },
         ];
     
         // Elements to update placeholder attributes
@@ -1483,17 +1498,17 @@
 
                 $('#privateConversionLink').val(window.location.href);
                 $('#disablePrivateConversionButton').removeClass('d-none');
-                $('#convertTopMessage').html("<i class='text-muted'>A private algorithm is used. <br>Click '💎 Private Algorithm' for more information.</i>")
-                $thisButton.removeClass('bg-dark').addClass('bg-success').text("⚙️ Private algorithm generated!");
+                $('#convertTopMessage').html(getTranslation('privateAlgorithmHeader', languageIndex));
+                $thisButton.removeClass('bg-dark').addClass('bg-success').text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex));
                 await new Promise((r) => setTimeout(r, 5000));
-                $thisButton.addClass('bg-dark').removeClass('bg-success').text("🔮 Generate (new) private algorithm");
+                $thisButton.addClass('bg-dark').removeClass('bg-success').text(getTranslation('generatePrivateConversionButton', languageIndex));
 
             });
 
             // Handle remove private algorithm button
             $('#disablePrivateConversionButton').click(async function () {
                 if (customEmojiArray) {
-                    if (confirm("Do you want to remove the private algorithm?")) {
+                    if (confirm(getTranslation('modalDisablePrivateAlgorithm', languageIndex))) {
                         if (localStorage.getItem("pa")) {
                             localStorage.removeItem("pa");
                         }
@@ -1503,10 +1518,10 @@
                         updateURLParameter();
                         $('#privateConversionLink').val(null);
                         $('#convertTopMessage').addClass('d-none');
-                        $thisButton.text("Algorithm removed.");
+                        $thisButton.text(getTranslation('btnPrivateAlgorithmRemoved', languageIndex));
                         await new Promise((r) => setTimeout(r, 4000));
                         $thisButton.addClass('d-none');
-                        $thisButton.text("🗑️ Remove private algorithm");
+                        $thisButton.text(getTranslation('disablePrivateConversionButton', languageIndex));
                     }
                 }
             });
