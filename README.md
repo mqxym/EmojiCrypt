@@ -1,4 +1,4 @@
-# EmojiCrypt Version 3.3.0 🌈
+# EmojiCrypt Version 3.3.2 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
@@ -22,8 +22,8 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - Generate emoji keys which look like encrypted messages
 - Save keys within the browser
 - Site can be added to homescreen on Android and iOS to act as an app (Webapp)
-- The web app is available in 7 languages (feel free to improve the automated translations, not all features have been translated yet)
-- Dark mode
+- The web app is available in 7 languages (feel free to improve the automated translations)
+- Auto Dark mode
 
 ### Basic Security Information 🔐
 

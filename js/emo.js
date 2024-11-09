@@ -3,7 +3,7 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.3.0";
+    return "3.3.2";
 }
 
 /*
