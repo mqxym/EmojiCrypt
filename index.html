@@ -206,6 +206,41 @@
             <!-- Conversion Section -->
             <div class="main-content p-3 convert-section" id="convertSection">
                 <div class="mb-3" id="convertTopMessage"></div>
+                <div class="mb-3 d-none" id="convertSimpleEncryptionSection">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="checkbox" id="doSimpleEncryption" class="form-check-input" checked value="">
+                          <span id="simpleEncryptionText">Use a <a class="text-muted" data-toggle="collapse" data-target="#simpleEncryptionExplanation" aria-expanded="true" aria-controls="simpleEncryptionExplanation" ><u>Simple Encryption</u></a> with your unique key</span>
+                        </label>
+                      </div>
+                      <div id="simpleEncryptionExplanation" class="collapse mt-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Simple Encryption</h5>
+                                <p class="card-text">
+                                    The simple encryption algorithm uses XOR as its basis.<br>
+                                    The XOR encryption key is the same length as the text being encrypted.<br>
+                                    The key is derived using the <strong>PBKDF2 key derivation algorithm</strong> with a random 96-bit salt and the <strong>SHA-512 hash</strong> of the unique algorithm, ensuring that even identical input text produces a different cipher.<br><hr>
+
+                                    This method helps prevent:
+                                    <ul>
+                                        <li>Guessing the private algorithm key due to the XOR process.</li>
+                                        <li>Guessing the XOR key via known plaintext (The key used is always unique, and patterns do not repeat because of the adaptive length).</li>
+                                    </ul>
+
+                                    However, this method is not as robust as standard algorithms like AES-GCM due to:
+                                    <ul>
+                                        <li>XOR not being considered a secure method for data encryption.</li>
+                                        <li>Missing data integrity checks (authentication): The data is not verified for integrity, which could lead to tampering and other attack vectors.</li>
+                                    </ul>
+
+                                    <strong>For a standardized encryption process, use the 🔐 Encrypt function on this site.</strong>
+                                </p>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <form class="form">
                     <!-- Message Input -->
                     <div class="input-group mb-3">
@@ -255,11 +290,13 @@
                                 Using a private algorithm is just another layer of obfuscation, but can be cracked pretty easily. 
                                 <br>
                                 Especially, when using the same algorithm more than once.
+                                <br>
+                                You can improve the security by enabling simple encryption, for details click on "Simple Encryption" on the top of the page.
                             </i>
                         </div>
                     </div>
                 </div>
-                <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages.</i>
+                <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages and use simple encrypt to add a another layer of security.</i>
             </div>
             <!-- About Section -->
             <div class="p-3 main-content info-section" id="aboutSection">
@@ -799,6 +836,7 @@
                 $('#privateConversionLink').val(window.location.href);
                 $('#convertTopMessage').html(getTranslation('privateAlgorithmHeader', languageIndex));
                 $('#disablePrivateConversionButton').removeClass('d-none');
+                $('#convertSimpleEncryptionSection').removeClass('d-none');
             } else {
                 customEmojiArray = null;
             }
@@ -1444,8 +1482,10 @@
                     // Encoding
                     $thisButton.html(getTranslation('btnEncodeWorkingConvert', languageIndex));
                     await new Promise((r) => setTimeout(r, 15));
+
+                    const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
     
-                    const encodedText = encode(inputText, customEmojiArray);
+                    const encodedText = await encode(inputText, customEmojiArray, doSimpleEncrypt);
     
                     if (!encodedText) {
                         $thisButton.html(getTranslation('btnEncodeFailedConvert', languageIndex));
@@ -1456,9 +1496,11 @@
                 } else {
                     // Decoding
                     $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
+
+                    const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
                     await new Promise((r) => setTimeout(r, 15));
     
-                    const decodedText = decode(inputText, customEmojiArray);
+                    const decodedText = await decode(inputText, customEmojiArray, doSimpleEncrypt);
     
                     if (!decodedText) {
                         $thisButton.html(getTranslation('btnDecodeFailedConvert', languageIndex));
@@ -1570,6 +1612,7 @@
 
                 $('#privateConversionLink').val(window.location.href);
                 $('#disablePrivateConversionButton').removeClass('d-none');
+                $('#convertSimpleEncryptionSection').removeClass('d-none');
                 $('#convertTopMessage').html(getTranslation('privateAlgorithmHeader', languageIndex));
                 $thisButton.removeClass('bg-dark').addClass('bg-success').text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex));
                 await new Promise((r) => setTimeout(r, 5000));
@@ -1590,6 +1633,7 @@
                         updateURLParameter();
                         $('#privateConversionLink').val(null);
                         $('#convertTopMessage').addClass('d-none');
+                        $('#convertSimpleEncryptionSection').addClass('d-none');
                         $thisButton.text(getTranslation('btnPrivateAlgorithmRemoved', languageIndex));
                         await new Promise((r) => setTimeout(r, 4000));
                         $thisButton.addClass('d-none');
