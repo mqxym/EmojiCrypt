@@ -1,4 +1,4 @@
-# EmojiCrypt Version 3.3.2 🌈
+# EmojiCrypt Version 3.4.2 🌈
 
 Your convenient and secure text encryption, where emojis are all that matters.
 This repo is hosted here:
@@ -34,7 +34,7 @@ The idea is to implement a protocol where only you and the receiver knows what t
 
 - Three Chained Encryption Methods: Your text is encrypted using three chained encryption methods: AES-GCM, AES-CTR, and XOR; leveraging the browser Crypto API.
 - The encryption step for AES-GCM use a random 96-bit IV that differs from the one used in the next AES encryption step; AES-CTR with a random 128-bit IV.
-- Final XOR Encryption: The final XOR encryption employs a 4096-byte key derived through hash methods. These methods generate salts with SHA-256 in a deterministic manner from a fixed seed and concatenate them with the used key (using SHA-512 for the final rounds) before combining everything into a single key.
+- Final XOR Encryption: The final XOR encryption employs a 4096-byte key derived through hash methods. These methods generate salts with SHA-256 in a deterministic manner from a fixed seed and concatenate them with the used key (using SHA-512 for the final rounds) before combining everything into a single key (PBKDF2 may be used in the future).
 - Key Hashing Process: During encryption, your key is hashed with four SHA algorithms in a long loop, making it difficult to brute-force the key. The length of the loop also depends on the key.
 - Hash salts: As of version 3.1.0, each encryption process uses a random 48-bit salt that is fed into the complex hashing algorithm, ensuring each encryption operation has a unique key.
 - Hash Structure: There is a *main* loop and a *small* loop.
@@ -52,6 +52,9 @@ The idea is to implement a protocol where only you and the receiver knows what t
 - Custom Hash Loop Lengths: As of version 1.1.0, different encryption algorithms have varying hash loop lengths and intermediate salt integers. Therefore, each of the three encryption algorithms uses a custom, deterministically derived key: 256-bit for AES and 4096-byte for XOR (as of version 3.0.0)
 - *On modern devices, the hashing time can range from a minimum of ~700 to a maximum of ~1000 miliseconds and it is dependent of the random salt resulting in more or less hash rounds and a different distribution in more computationally intensive hash functions (SHA-384,SHA-512)*
 - Additional obfuscation: As of version 3.1.0, the binary-to-emoji algorithm employs a unique emoji sorting order derived from the input key.
+
+*Why not use a standard key derivation process for obtaining the AES Keys?*
+I chose to implement a custom hash algorithm to introduce additional complexity for attackers attempting brute force attacks. This approach incorporates multiple fixed and variable salts and avoids a simple iterative hashing process by including hashes from earlier rounds, not just the last one.
 
 ## Includes ⤴️
 
