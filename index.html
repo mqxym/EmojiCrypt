@@ -18,7 +18,9 @@
     <meta name="expires" content="" />
     <meta name="revisit-after" content="2 days" />
     <!-- CSS and JS Links -->
+    <link rel="stylesheet" href="css/customcolor.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    
     <title>🌘 - to the moon! Text to Emoji and Emoji-Encryption</title>
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -29,6 +31,14 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+        }
+
+        .dark-custom {
+            background-color: #1d1f29 !important;
+        }
+        
+        .dark-custom2 {
+            background-color: #2b2d38 !important;
         }
 
         .wrapper {
@@ -205,11 +215,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 order-md-2 order-2 w-100">
-                        <h4 class="m-2">Information</h4>
+                    <div id="informationEncryption" class="col-md-6 order-md-2 order-2 w-100">
+                        <h4 class="m-2">Information <a class="hide-information">(<u>hide</u>)</a></h4>
                         <div class="accordion" id="faqEncryptionAccordion">
                             <!-- FAQ Item 1 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading1">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse1" aria-expanded="true" aria-controls="faqEncryptionCollapse1">
@@ -224,7 +234,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 4 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading4">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse4" aria-expanded="false" aria-controls="faqEncryptionCollapse4">
@@ -248,7 +258,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 5 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading5">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse5" aria-expanded="false" aria-controls="faqEncryptionCollapse5">
@@ -272,7 +282,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 6 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading6">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse6" aria-expanded="false" aria-controls="faqEncryptionCollapse6">
@@ -295,7 +305,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 12 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading12">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse12" aria-expanded="false" aria-controls="faqEncryptionCollapse12">
@@ -310,7 +320,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 19 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading19">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse19" aria-expanded="false" aria-controls="faqEncryptionCollapse19">
@@ -325,7 +335,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 22 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading22">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse22" aria-expanded="false" aria-controls="faqEncryptionCollapse22">
@@ -340,7 +350,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 9 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqEncryptionHeading9">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqEncryptionCollapse9" aria-expanded="false" aria-controls="faqEncryptionCollapse9">
@@ -385,6 +395,13 @@
                             </div>
                         </div>
                     </div>
+                    <div id="bannerEncryption" class="col-md-6 d-none order-md-2 order-2 w-100 justify-content-center align-items-center text-center">
+                        <div>
+                          <img src="icon/favicon500.png" alt="To the moon!" class="img-fluid mb-2" style="max-width: 150px;">
+                          <h3>To the moon! </h3>
+                          <h5>... and far beyond</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Conversion Section -->
@@ -400,7 +417,7 @@
                                 </label>
                             </div>
                             <div id="simpleEncryptionExplanation" class="collapse mt-2">
-                                <div class="card">
+                                <div class="card mb-1">
                                     <div class="card-body">
                                         <h5 class="card-title">Simple Encryption</h5>
                                         <p class="card-text">
@@ -455,7 +472,7 @@
                         <!-- Private Conversion Algorithm -->
                         <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection" id="showPrivateAlgorithmButton">💎 Private Algorithm</a>
                         <div id="privateAlgorithmSection" class="collapse">
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-body">
                                     <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
                                     <span id="privateLinkText">Your link to the private conversion algorithm: </span> <br>
@@ -485,11 +502,11 @@
                         <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages and use simple encrypt to add a another layer of security.</i>
             
                     </div>
-                    <div class="col-md-6 order-md-2 order-2 w-100">
-                        <h4 class="m-2">Information</h4>
+                    <div id="informationConversion" class="col-md-6 order-md-2 order-2 w-100">
+                        <h4 class="m-2">Information <a class="hide-information">(<u>hide</u>)</a></h4>
                         <div class="accordion" id="faqConversionAccordion">
                             <!-- FAQ Item 1 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqConversionHeading1">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqConversionCollapse1" aria-expanded="true" aria-controls="faqConversionCollapse1">
@@ -504,7 +521,7 @@
                                 </div>
                             </div>
                              <!-- FAQ Item 3 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqConversionHeading3">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse3" aria-expanded="false" aria-controls="faqConversionCollapse3">
@@ -528,7 +545,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 25 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqConversionHeading25">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse25" aria-expanded="false" aria-controls="faqConversionCollapse25">
@@ -553,7 +570,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 19 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqConversionHeading19">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse19" aria-expanded="false" aria-controls="faqConversionCollapse19">
@@ -568,7 +585,7 @@
                                 </div>
                             </div>
                             <!-- FAQ Item 9 -->
-                            <div class="card">
+                            <div class="card mb-1">
                                 <div class="card-header" id="faqConversionHeading9">
                                     <h5 class="mb-0">
                                         <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse9" aria-expanded="false" aria-controls="faqConversionCollapse9">
@@ -613,6 +630,13 @@
                             </div>
                         </div>
                     </div>
+                    <div id="bannerConversion" class="col-md-6 d-none order-md-2 order-2 w-100 justify-content-center align-items-center text-center">
+                        <div>
+                          <img src="icon/favicon500.png" alt="To the moon!" class="img-fluid mb-2" style="max-width: 150px;">
+                          <h3>To the moon! </h3>
+                          <h5>... and far beyond</h5>
+                        </div>
+                    </div>
                 </div> 
             </div>
             <!-- About Section -->
@@ -625,7 +649,7 @@
                 <h4 class="m-2">How to</h4>
                 <div class="accordion" id="faqAccordion">
                     <!-- FAQ Item 1 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading1">
                             <h5 class="mb-0">
                                 <button class="btn faq-button" type="button" data-toggle="collapse" data-target="#faqCollapse1" aria-expanded="true" aria-controls="faqCollapse1">
@@ -640,7 +664,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 2 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading2">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
@@ -674,7 +698,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 3 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading3">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
@@ -698,7 +722,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 25 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading25">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse25" aria-expanded="false" aria-controls="faqCollapse25">
@@ -723,7 +747,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 4 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading4">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
@@ -747,7 +771,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 5 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading5">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse5" aria-expanded="false" aria-controls="faqCollapse5">
@@ -771,7 +795,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 6 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading6">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse6" aria-expanded="false" aria-controls="faqCollapse6">
@@ -794,7 +818,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 9 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading9">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse9" aria-expanded="false" aria-controls="faqCollapse9">
@@ -841,7 +865,7 @@
                 <h4 class="m-2">Security</h4>
                 <div class="accordion" id="faqAccordionSecurity">
                     <!-- FAQ Item 10 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading10">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse10" aria-expanded="false" aria-controls="faqCollapse10">
@@ -856,7 +880,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 11 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading11">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse11" aria-expanded="false" aria-controls="faqCollapse11">
@@ -871,7 +895,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 12 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading12">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse12" aria-expanded="false" aria-controls="faqCollapse12">
@@ -886,7 +910,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 13 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading13">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse13" aria-expanded="false" aria-controls="faqCollapse13">
@@ -901,7 +925,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 14 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading14">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse14" aria-expanded="false" aria-controls="faqCollapse14">
@@ -916,7 +940,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 15 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading15">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse15" aria-expanded="false" aria-controls="faqCollapse15">
@@ -931,7 +955,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 18 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading18">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse18" aria-expanded="false" aria-controls="faqCollapse18">
@@ -946,7 +970,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 19 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading19">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse19" aria-expanded="false" aria-controls="faqCollapse19">
@@ -961,7 +985,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 20 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading20">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse20" aria-expanded="false" aria-controls="faqCollapse20">
@@ -976,7 +1000,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 21 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading21">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse21" aria-expanded="false" aria-controls="faqCollapse21">
@@ -991,7 +1015,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 22 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading22">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse22" aria-expanded="false" aria-controls="faqCollapse22">
@@ -1009,7 +1033,7 @@
                 <h4 class="m-2">Code</h4>
                 <div class="accordion" id="faqAccordionCode">
                     <!-- FAQ Item 23 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading23">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse23" aria-expanded="false" aria-controls="faqCollapse23">
@@ -1024,7 +1048,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 24 -->
-                    <div class="card">
+                    <div class="card mb-1">
                         <div class="card-header" id="faqHeading24">
                             <h5 class="mb-0">
                                 <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse24" aria-expanded="false" aria-controls="faqCollapse24">
@@ -1157,6 +1181,18 @@
             } else {
                 customEmojiArray = null;
             }
+        }
+
+
+        /**
+         * Hides information FAQ tab for conversion and encryption section forever
+         */
+
+        function hideInformation() {
+            $('#bannerEncryption').removeClass('d-none').addClass('d-flex');
+            $('#bannerConversion').removeClass('d-none').addClass('d-flex');
+            $('#informationEncryption').addClass('d-none');
+            $('#informationConversion').addClass('d-none');
         }
 
         // =======================================
@@ -1420,19 +1456,19 @@
         }
     
         const darkModeClassToggles = [
-            { selector: 'body', classes: 'bg-dark text-light dark-mode' },
-            { selector: '.navbar', removeClasses: 'navbar-light bg-light', addClasses: 'navbar-dark bg-dark' },
-            { selector: '.main-content', classes: 'bg-dark text-light' },
-            { selector: '.dropdown-menu', classes: 'bg-dark' },
+            { selector: 'body', classes: 'dark-custom text-light dark-mode' },
+            { selector: '.navbar', removeClasses: 'navbar-light bg-light', addClasses: 'navbar-dark dark-custom2' },
+            { selector: '.main-content', classes: 'dark-custom text-light' },
+            { selector: '.dropdown-menu', classes: 'dark-custom2' },
             { selector: '.dropdown-item', classes: 'text-light' },
-            { selector: '.card', classes: 'bg-dark text-light' },
-            { selector: '.card-header', classes: 'bg-dark' },
-            { selector: '.card-body', classes: 'bg-dark text-light' },
+            { selector: '.card', classes: 'dark-custom text-light' },
+            { selector: '.card-header', classes: 'dark-custom2' },
+            { selector: '.card-body', classes: 'dark-custom text-light' },
             { selector: '.faq-button', classes: 'text-light' },
-            { selector: '.collapse', classes: 'bg-dark text-light' },
-            { selector: '.input-group-text', classes: 'bg-dark text-light' },
-            { selector: '.form-control', classes: 'bg-secondary text-light' },
-            { selector: 'footer', removeClasses: 'bg-light', classes: 'bg-dark text-light' },
+            { selector: '.collapse', classes: 'dark-custom2 text-light' },
+            { selector: '.input-group-text', classes: 'dark-custom text-light' },
+            { selector: '.form-control', classes: 'dark-custom2 text-light' },
+            { selector: 'footer', removeClasses: 'bg-light', classes: 'dark-custom2 text-light' },
         ];
 
         /**
@@ -1723,6 +1759,10 @@
             updatePrivateAlgorithmFromUrl();
             updateURLParameter();
             $("#versionFooter").html(getVersion());
+
+            if(localStorage.getItem('informationHidden')) {
+                hideInformation();
+            }
     
             // Handle back/forward button navigation
             window.onpopstate = function () {
@@ -1774,7 +1814,6 @@
                 if (!inputType) {
                     // Encryption
                     $thisButton.html(getTranslation('btnEncodeWorking', languageIndex));
-                    await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
                     const keyInput = $('#keyInput').val();
@@ -1790,7 +1829,6 @@
                 } else {
                     // Decryption
                     $thisButton.html(getTranslation('btnDecodeWorking', languageIndex));
-                    await new Promise((r) => setTimeout(r, 15));
     
                     const message = inputText;
                     const keyInput = $('#keyInput').val();
@@ -1828,7 +1866,6 @@
                 if (!inputType) {
                     // Encoding
                     $thisButton.html(getTranslation('btnEncodeWorkingConvert', languageIndex));
-                    await new Promise((r) => setTimeout(r, 15));
 
                     const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
     
@@ -1845,7 +1882,6 @@
                     $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
 
                     const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
-                    await new Promise((r) => setTimeout(r, 15));
     
                     const decodedText = await decode(inputText, customEmojiArray, doSimpleEncrypt);
     
@@ -2020,6 +2056,14 @@
     
                 // Update the URL
                 history.pushState(null, '', href);
+            });
+
+            // Hide Information
+            $('.hide-information').click(async function () {
+                if (confirm("Do you really want to hide this information tab forever?")) {
+                        //localStorage.setItem('informationHidden', 'true')
+                        hideInformation();
+                    }
             });
         });
     </script>    
