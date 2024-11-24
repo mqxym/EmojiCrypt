@@ -2061,7 +2061,7 @@
             // Hide Information
             $('.hide-information').click(async function () {
                 if (confirm("Do you really want to hide this information tab forever?")) {
-                        //localStorage.setItem('informationHidden', 'true')
+                        localStorage.setItem('informationHidden', 'true')
                         hideInformation();
                     }
             });
