@@ -589,9 +589,6 @@ async function simpleXOREncrypt(data, password) {
     } catch (err) {
         return "";
     }
-    
-
-    console.log(xorKey);
 
     // Perform XOR encryption
     const xorEncrypted = XORencrypt(xorKey, data);
@@ -665,7 +662,7 @@ async function simpleXORDecrypt(data, password) {
  * @throws {Error} If key derivation fails.
  */
 async function generatePBKDF2Key(password, iv, keyLengthBits) {
-    const iterations = 100000; // Number of PBKDF2 iterations
+    const iterations = 1000; // Number of PBKDF2 iterations
     const hash = 'SHA-512'; // Hash function for PBKDF2
     const bytesPerIteration = 64;
     const keyLength = keyLengthBits / 8; 

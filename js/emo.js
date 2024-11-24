@@ -3,7 +3,7 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.4.0";
+    return "3.4.1";
 }
 
 /*
@@ -410,10 +410,8 @@ async function decode(message, customEmojiArray = null, doSimpleEncrypt = false)
 
         bytesArray = Uint8Array.from(bytes);
 
-        if (doSimpleEncrypt && customEmojiArray) {
-            // No flag is set
-            if (bytesArray[0] !== 255) return decodeUTF8(bytesArray);
-
+        // flag is set
+        if (bytesArray[0] === 255) {
             const customEmojiArrayString = emojis.join('');
             const customEmojiArrayBytes = encodeUTF8(customEmojiArrayString);
             const key = await hashData(customEmojiArrayBytes, 'SHA-512');
