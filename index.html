@@ -92,25 +92,6 @@
             color: #cccccc; /* Light gray placeholder color for dark mode */
         }
 
-          /*      
-        input:focus, textarea:focus, select:focus, .btn:focus {
-            outline: none !important; 
-            box-shadow: none !important;
-            border: 2px solid;
-            border-image-slice: 1; 
-            backdrop-filter: blur(3px);
-            border-image-source: linear-gradient(to right, rgb(250, 113, 113), rgb(255, 201, 102), rgb(255, 255, 119), rgb(120, 251, 120), rgb(96, 96, 255), rgb(196, 119, 252), rgb(253, 172, 253));
-            border-radius: .25rem;
-        }*/
-
-
-        .active-bounce {
-            display: inline-block;
-            position: relative;
-            animation: bounce 2s infinite ease-in-out;
-            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3)); /* True shadow follows logo's transparency */
-        }
-
         input:focus, textarea:focus, select:focus {
             box-shadow: none !important;
             outline: none !important;
@@ -152,6 +133,13 @@
         .gradient-blur:focus::before,
         .gradient-blur:active::before {
             opacity: 1;
+        }
+
+        .active-bounce {
+            display: inline-block;
+            position: relative;
+            animation: bounce 2s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3)); /* True shadow follows logo's transparency */
         }
 
         /* Keyframes for up-and-down bounce */
@@ -250,6 +238,7 @@
                                     <button id="clearEncryptInputButton" type="button" class="btn btn-block bg-light">Delete <br> Message</button>
                                 </div>
                             </div>
+                            <hr>
                             <!-- Key Input -->
                             <div class="input-group gradient-blur mb-3">
                                 <div class="input-group-prepend">
@@ -263,7 +252,6 @@
                                     <button id="copyKeyButton" type="button" class="btn bg-light btn-block">Copy</button>
                                 </div>
                             </div>
-                            <hr>
                             <!-- Key Storage Instructions -->
                             <div id="keyInstructions" class="mb-2">
                                 Load or save keys
@@ -287,9 +275,8 @@
                             </div>
                             <hr>
                             <!-- Encrypt/Decrypt Button -->
-                            <button id="encryptDecryptButton" type="button" class="btn bg-light btn-block mb-2">🔀 Encrypt / Decrypt</button>
+                            <button id="encryptDecryptButton" type="button" class="btn bg-light btn-block mb-4">🔀 Encrypt / Decrypt</button>
                         </form>
-                        <hr>
                         <!-- Output Message -->
                         <div class="input-group gradient-blur mb-3">
                             <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
@@ -529,7 +516,7 @@
                         </div>
                         <form class="form">
                             <!-- Message Input -->
-                            <div class="input-group gradient-blur mb-3">
+                            <div class="input-group gradient-blur mb-1">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">✉️</span>
                                 </div>
@@ -540,17 +527,16 @@
                             </div>
                             <hr>
                             <!-- Convert Button -->
-                            <button id="convertButton" type="button" class="btn bg-light btn-block mb-2">🔄 Convert</button>
+                            <button id="convertButton" type="button" class="btn bg-light btn-block mb-4">🔄 Convert</button>
                         </form>
-                        <hr>
+                        
                         <!-- Output Message -->
-                        <div class="input-group gradient-blur mb-3">
+                        <div class="input-group gradient-blur mb-5">
                             <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
                             <div class="input-group-append">
                                 <button id="copyConvertOutputButton" type="button" class="btn bg-light btn-block">Copy <br>to clipboard</button>
                             </div>
                         </div>
-                        <hr><hr>
 
                         <!-- Private Conversion Algorithm -->
                         <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection" id="showPrivateAlgorithmButton">💎 Private Algorithm</a>
@@ -730,7 +716,7 @@
                     </div>
                     <div id="bannerConversion" class="col-lg-6 d-none order-md-2 order-2 w-100 justify-content-center align-items-center text-center">
                         <div>
-                          <img src="icon/favicon500.png" alt="To the moon!" class="img-fluid mb-2" style="max-width: 150px;">
+                          <img src="icon/favicon500.png" alt="To the moon!" class="active-bounce img-fluid mb-2" style="max-width: 150px;">
                           <h3>To the moon! </h3>
                           <h5>... and far beyond</h5>
                         </div>
