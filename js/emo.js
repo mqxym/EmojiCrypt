@@ -3,7 +3,7 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.4.2";
+    return "3.4.4";
 }
 
 /*
@@ -469,4 +469,95 @@ function checkInputString(inputString) {
         return "emoji";
     }
     return false;
+}
+
+
+async function encryptKeys() {
+
+    const utf8 = 'MBiqUOUsyCEMbLEwsLEmEtr'
+
+    // Convert UTF-8 key to Uint8Array
+    const encoder = new TextEncoder();
+    const encryptionKey = await hashData(encoder.encode(utf8), 'SHA-256');
+
+    for (let slot = 1; slot <= 5; slot++) {
+        const storedValue = localStorage.getItem('key' + slot);
+
+        if (storedValue) {
+            // Encode the stored value as Uint8Array
+            const dataToEncrypt = encoder.encode(storedValue);
+
+            // Encrypt the data using AES-GCM
+            const encryptedData = await aesGcmEncrypt(encryptionKey, dataToEncrypt);
+
+            // Convert encrypted data to Base64 for storage
+            const encryptedBase64 = btoa(String.fromCharCode(...encryptedData));
+
+            // Store the encrypted data in the new local storage address
+            localStorage.setItem('nKey' + slot, encryptedBase64);
+            localStorage.removeItem('key' + slot)
+        }
+    }
+}
+
+async function saveSingleKey(slot, data) {
+    // Validate the slot number
+    if (slot < 1 || slot > 5) {
+        throw new Error("Slot must be an integer between 1 and 5.");
+    }
+
+    const encoder = new TextEncoder();
+
+    const utf8 = 'MBiqUOUsyCEMbLEwsLEmEtr'
+
+    const encryptionKey = await hashData(encoder.encode(utf8), 'SHA-256');
+
+    // Encode the stored value as Uint8Array
+    const dataToEncrypt = encoder.encode(data);
+
+    // Encrypt the data using AES-GCM
+    const encryptedData = await aesGcmEncrypt(encryptionKey, dataToEncrypt);
+
+    // Convert encrypted data to Base64 for storage
+    const encryptedBase64 = btoa(String.fromCharCode(...encryptedData));
+
+    localStorage.setItem("nKey"+ slot, encryptedBase64)
+}
+
+
+
+async function readSingleKey(slot) {
+    // Validate the slot number
+    if (slot < 1 || slot > 5) {
+        throw new Error("Slot must be an integer between 1 and 5.");
+    }
+
+    const utf8 = 'MBiqUOUsyCEMbLEwsLEmEtr'
+
+    // Convert UTF-8 key to Uint8Array
+    const encoder = new TextEncoder();
+    const decryptionKey = await hashData(encoder.encode(utf8), 'SHA-256');
+
+    // Retrieve the encrypted value from local storage
+    const encryptedBase64 = localStorage.getItem('nKey' + slot);
+
+    if (!encryptedBase64) {
+        console.warn(`No data found for nKey${slot}`);
+        return null;
+    }
+
+    // Decode the Base64 string into a Uint8Array
+    const encryptedData = Uint8Array.from(atob(encryptedBase64), char => char.charCodeAt(0));
+
+    try {
+        // Decrypt the data using AES-GCM
+        const decryptedData = await aesGcmDecrypt(decryptionKey, encryptedData);
+
+        // Decode the Uint8Array back into a string
+        const decoder = new TextDecoder();
+        return decoder.decode(decryptedData);
+    } catch (error) {
+        console.error(`Failed to decrypt nKey${slot}:`, error);
+        return null;
+    }
 }
