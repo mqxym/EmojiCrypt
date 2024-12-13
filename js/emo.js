@@ -521,8 +521,6 @@ async function saveSingleKey(slot, data) {
     // Convert encrypted data to Base64 for storage
     const encryptedBase64 = btoa(String.fromCharCode(...encryptedData));
 
-    console.log(encryptedBase64);
-
     localStorage.setItem("nKey"+ slot, encryptedBase64)
 }
 
