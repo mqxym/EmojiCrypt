@@ -148,7 +148,8 @@
         }
 
         .gradient-blur:hover::before,
-        .gradient-blur:focus::before {
+        .gradient-blur:focus::before,
+        .gradient-blur:active::before {
             opacity: 1;
         }
 
@@ -2199,7 +2200,7 @@
             });
 
             // Attach event handler for all buttons
-            $('button').on('focus touchstart', function () {
+            $('button').on('focus touchstart', async function () {
                 // Store the reference to the current button
                 const button = $(this);
 
