@@ -40,10 +40,12 @@
 
         .dark-custom {
             background-color: #1d1f29 !important;
+            border: 1px, #596065 !important;
         }
         
         .dark-custom2 {
             background-color: #2b2d38 !important;
+            border: 1px, #323638 !important;
         }
 
         .wrapper {
@@ -65,7 +67,7 @@
         .faq-button {
             text-align: left;
             width: 100%;
-            border: none;
+            border: none !important;
             background: none;
             padding: 0;
             white-space: normal;
@@ -90,6 +92,31 @@
             color: #cccccc; /* Light gray placeholder color for dark mode */
         }
 
+                /* Override default focus effect for all inputs */
+        input:focus, textarea:focus, select:focus, .btn:focus {
+            outline: none; /* Remove default outline */
+            border: 1px solid; /* Set a solid border */
+            border-image-slice: 1; /* Allow the gradient to be used as a border */
+            backdrop-filter: blur(3px);
+            border-image-source: linear-gradient(to right, rgb(250, 113, 113), rgb(255, 201, 102), rgb(255, 255, 119), rgb(120, 251, 120), rgb(96, 96, 255), rgb(196, 119, 252), rgb(253, 172, 253)); /* Rainbow gradient */
+        }
+
+        .active-bounce {
+            display: inline-block;
+            position: relative;
+            animation: bounce 2s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3)); /* True shadow follows logo's transparency */
+        }
+
+        /* Keyframes for up-and-down bounce */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0); /* Start and end at the same position */
+            }
+            50% {
+                transform: translateY(-10px); /* Slight upward movement at the midpoint */
+            }
+        }
     </style>
 </head>
 
@@ -169,7 +196,7 @@
                                 </div>
                                 <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="encryptMessageInput" rows="5"></textarea>
                                 <div class="input-group-append">
-                                    <button id="clearEncryptInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
+                                    <button id="clearEncryptInputButton" type="button" class="btn btn-block bg-light">Delete <br> Message</button>
                                 </div>
                             </div>
                             <!-- Key Input -->
@@ -179,10 +206,10 @@
                                 </div>
                                 <input type="text" placeholder="Secure password" class="form-control" id="keyInput" aria-describedby="keyIcon">
                                 <div class="input-group-append">
-                                    <button id="generateKeyButton" type="button" class="btn btn-secondary btn-block bg-dark">🔄</button>
+                                    <button id="generateKeyButton" type="button" class="btn bg-light btn-block">🔄</button>
                                 </div>
                                 <div class="input-group-append">
-                                    <button id="copyKeyButton" type="button" class="btn btn-secondary bg-dark btn-block">Copy</button>
+                                    <button id="copyKeyButton" type="button" class="btn bg-light btn-block">Copy</button>
                                 </div>
                             </div>
                             <hr>
@@ -203,20 +230,20 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <button id="loadKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">📲 Load</button>
-                                    <button id="saveKeyButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">💾 Save</button>
+                                    <button id="loadKeyButton" type="button" class="btn bg-light btn-block mb-2">📲 Load</button>
+                                    <button id="saveKeyButton" type="button" class="btn bg-light btn-block mb-2">💾 Save</button>
                                 </div>
                             </div>
                             <hr>
                             <!-- Encrypt/Decrypt Button -->
-                            <button id="encryptDecryptButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔀 Encrypt / Decrypt</button>
+                            <button id="encryptDecryptButton" type="button" class="btn bg-light btn-block mb-2">🔀 Encrypt / Decrypt</button>
                         </form>
                         <hr>
                         <!-- Output Message -->
                         <div class="input-group mb-3">
                             <textarea class="form-control" aria-label="Emoji" id="encryptOutputTextarea" rows="10" readonly>Decrypted/Encrypted message</textarea>
                             <div class="input-group-append">
-                                <button id="copyEncryptOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
+                                <button id="copyEncryptOutputButton" type="button" class="btn btn-block bg-light">Copy <br>to clipboard</button>
                             </div>
                         </div>
                     </div>
@@ -402,7 +429,7 @@
                     </div>
                     <div id="bannerEncryption" class="col-lg-6 d-none order-md-2 order-2 w-100 justify-content-center align-items-center text-center">
                         <div>
-                          <img src="icon/favicon500.png" alt="To the moon!" class="img-fluid mb-2" style="max-width: 150px;">
+                          <img src="icon/favicon500.png" alt="To the moon!" class="active-bounce img-fluid mb-2" style="max-width: 150px;">
                           <h3>To the moon! </h3>
                           <h5>... and far beyond</h5>
                         </div>
@@ -457,19 +484,19 @@
                                 </div>
                                 <textarea class="form-control" placeholder="Message" aria-label="Emoji" id="convertMessageInput" rows="5"></textarea>
                                 <div class="input-group-append">
-                                    <button id="clearConvertInputButton" type="button" class="btn btn-secondary btn-block bg-dark">Delete <br> Message</button>
+                                    <button id="clearConvertInputButton" type="button" class="btn bg-light btn-block">Delete <br> Message</button>
                                 </div>
                             </div>
                             <hr>
                             <!-- Convert Button -->
-                            <button id="convertButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔄 Convert</button>
+                            <button id="convertButton" type="button" class="btn bg-light btn-block mb-2">🔄 Convert</button>
                         </form>
                         <hr>
                         <!-- Output Message -->
                         <div class="input-group mb-3">
                             <textarea class="form-control" aria-label="Emoji" id="convertOutputTextarea" rows="10" readonly>Converted message</textarea>
                             <div class="input-group-append">
-                                <button id="copyConvertOutputButton" type="button" class="btn btn-secondary btn-block bg-dark">Copy <br>to clipboard</button>
+                                <button id="copyConvertOutputButton" type="button" class="btn bg-light btn-block">Copy <br>to clipboard</button>
                             </div>
                         </div>
                         <hr><hr>
@@ -479,7 +506,7 @@
                         <div id="privateAlgorithmSection" class="collapse">
                             <div class="card mb-1">
                                 <div class="card-body">
-                                    <button id="generatePrivateConversionButton" type="button" class="btn btn-secondary bg-dark btn-block mb-2">🔮 Generate (new) private algorithm</button>
+                                    <button id="generatePrivateConversionButton" type="button" class="btn bg-light btn-block mb-2">🔮 Generate (new) private algorithm</button>
                                     <span id="privateLinkText">Your link to the private conversion algorithm: </span> <br>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -490,7 +517,7 @@
                                             <button id="copyPrivateConversionLink" type="button" class="btn btn-secondary btn-block bg-dark">Copy</button>
                                         </div>
                                     </div>
-                                    <button id="disablePrivateConversionButton" type="button" class="d-none btn btn-secondary bg-danger btn-block mb-2">🗑️ Remove private algorithm</button>
+                                    <button id="disablePrivateConversionButton" type="button" class="d-none btn bg-danger btn-block mb-2">🗑️ Remove private algorithm</button>
                                 </div>
                             
                                 <div class="card-footer">
@@ -571,6 +598,21 @@
                                                 <li>The more you use the same key for different messages and the longer the messages are, the easier it is to crack the key.</li>
                                             </ul>
                                         </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- FAQ Item 26 -->
+                            <div class="card mb-1">
+                                <div class="card-header" id="faqConversionHeading26">
+                                    <h5 class="mb-0">
+                                        <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse26" aria-expanded="false" aria-controls="faqConversionCollapse19">
+                                            <strong id="faqConversionQuestion26">dynamic</strong>
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="faqConversionCollapse26" class="collapse" aria-labelledby="faqConversionHeading26" data-parent="#faqConversionAccordion">
+                                    <div class="card-body">
+                                        <span id="faqConversionAnswer26">dynamic</span>
                                     </div>
                                 </div>
                             </div>
@@ -1321,7 +1363,7 @@
          * @param {number} languageIndex - Index of the current language.
          */
         function updateFAQItems(languageIndex) {
-            const faqItemCount = 25;
+            const faqItemCount = 26;
             for (let i = 1; i <= faqItemCount; i++) {
                 $(`#faqQuestion${i}`).html(getTranslation(`faqQuestion${i}`, languageIndex));
                 $(`#faqAnswer${i}`).html(getTranslation(`faqAnswer${i}`, languageIndex));
@@ -1356,6 +1398,8 @@
             $('#faqConversionAnswer19').html(getTranslation('faqAnswer19', languageIndex));
             $('#faqConversionQuestion25').html(getTranslation('faqQuestion25', languageIndex));
             $('#faqConversionAnswer25').html(getTranslation('faqAnswer25', languageIndex));
+            $('#faqConversionQuestion26').html(getTranslation('faqQuestion26', languageIndex));
+            $('#faqConversionAnswer26').html(getTranslation('faqAnswer26', languageIndex));
         }
     
         /**
@@ -1474,12 +1518,13 @@
             { selector: '.input-group-text', classes: 'dark-custom text-light' },
             { selector: '.form-control', classes: 'dark-custom2 text-light' },
             { selector: 'footer', removeClasses: 'bg-light', classes: 'dark-custom2 text-light' },
+            { selector: '.btn', removeClasses: 'bg-light', classes: 'dark-custom2 text-light' },
         ];
 
         /**
          * Enable dark mode by adding appropriate classes.
          */
-        function enableDarkMode(fromToggle = false) {
+         function enableDarkMode(fromToggle = false) {
             darkModeClassToggles.forEach((item) => {
                 if (item.removeClasses) {
                     $(item.selector).removeClass(item.removeClasses);
@@ -1755,7 +1800,7 @@
         // Event Handlers and Initialization
         // =======================================
     
-        $(document).ready(function () {
+        $(document).ready(async function () {
             // Initialize language and UI
             updateUILanguage();
 
@@ -1804,6 +1849,11 @@
                 }
             });
     
+            // encrypt the localStorage keys using a fixed key
+            await encryptKeys();
+
+            let actionInProgress = false;
+
             // Encrypt/Decrypt Button Click Handler
             $('#encryptDecryptButton').click(async function () {
                 const $thisButton = $(this);
@@ -1818,6 +1868,8 @@
                 }
     
                 const inputType = checkInputString(inputText);
+
+                if (actionInProgress) return;
     
                 if (!inputType) {
                     // Encryption
@@ -1825,6 +1877,8 @@
     
                     const message = inputText;
                     const keyInput = $('#keyInput').val();
+
+                    actionInProgress = true;
     
                     const emojiString = await encrypt(message, keyInput);
     
@@ -1834,12 +1888,16 @@
                         $('#encryptOutputTextarea').val(emojiString);
                         $thisButton.html(getTranslation('btnEncodeSuccess', languageIndex));
                     }
+
+                    actionInProgress = false;
                 } else {
                     // Decryption
                     $thisButton.html(getTranslation('btnDecodeWorking', languageIndex));
     
                     const message = inputText;
                     const keyInput = $('#keyInput').val();
+
+                    actionInProgress = true;
     
                     const decryptedText = await decrypt(message, keyInput);
     
@@ -1850,6 +1908,7 @@
                         $('#encryptOutputTextarea').val(decryptedText);
                         $thisButton.html(getTranslation('btnDecodeSuccess', languageIndex));
                     }
+                    actionInProgress = false;
                 }
     
                 await new Promise((r) => setTimeout(r, 5000));
@@ -1868,6 +1927,8 @@
                     $thisButton.html(getTranslation('convertButton', languageIndex));
                     return;
                 }
+
+                if (actionInProgress) return;
     
                 const inputType = checkInputString(inputText);
     
@@ -1876,6 +1937,8 @@
                     $thisButton.html(getTranslation('btnEncodeWorkingConvert', languageIndex));
 
                     const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
+
+                    actionInProgress = true;
     
                     const encodedText = await encode(inputText, customEmojiArray, doSimpleEncrypt);
     
@@ -1885,12 +1948,16 @@
                         $('#convertOutputTextarea').val(encodedText);
                         $thisButton.html(getTranslation('btnEncodeSuccessConvert', languageIndex));
                     }
+
+                    actionInProgress = false;
                 } else {
                     // Decoding
                     $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
 
                     const doSimpleEncrypt = $('#doSimpleEncryption').prop('checked');
     
+                    actionInProgress = true;
+
                     const decodedText = await decode(inputText, customEmojiArray, doSimpleEncrypt);
     
                     if (!decodedText) {
@@ -1900,6 +1967,8 @@
                         $('#convertOutputTextarea').val(decodedText);
                         $thisButton.html(getTranslation('btnDecodeSuccessConvert', languageIndex));
                     }
+
+                    actionInProgress = false;
                 }
     
                 await new Promise((r) => setTimeout(r, 5000));
@@ -1918,28 +1987,34 @@
                 const copyText = document.getElementById('keyInput');
                 copyText.select();
                 document.execCommand('copy');
-                $('#copyKeyButton').removeClass('bg-dark').addClass('bg-success');
+                copyText.setSelectionRange(0, 0);
+
+                $('#copyKeyButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
-                $('#copyKeyButton').removeClass('bg-success').addClass('bg-dark');
+                $('#copyKeyButton').html(getTranslation('copyKeyButton', languageIndex));
             });
     
             // Copy output message to clipboard
             $('#copyEncryptOutputButton').click(async () => {
                 const copyText = document.getElementById('encryptOutputTextarea');
-                $('#copyEncryptOutputButton').removeClass('bg-dark').addClass('bg-success');
                 copyText.select();
                 document.execCommand('copy');
+                copyText.setSelectionRange(0, 0);
+
+                $('#copyEncryptOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
-                $('#copyEncryptOutputButton').removeClass('bg-success').addClass('bg-dark');
+                $('#copyEncryptOutputButton').html(getTranslation('copyKeyButton', languageIndex));
+
             });
     
             $('#copyConvertOutputButton').click(async () => {
                 const copyText = document.getElementById('convertOutputTextarea');
                 copyText.select();
                 document.execCommand('copy');
-                $('#copyConvertOutputButton').removeClass('bg-dark').addClass('bg-success');
+                copyText.setSelectionRange(0, 0);
+                $('#copyConvertOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
-                $('#copyConvertOutputButton').removeClass('bg-success').addClass('bg-dark');
+                $('#copyEncryptOutputButton').html(getTranslation('copyConvertOutputButton', languageIndex));
             });
 
             $('#copyPrivateConversionLink').click(async () => {
@@ -1962,18 +2037,18 @@
             $('#loadKeyButton').click(async function () {
                 const $thisButton = $(this);
                 const slot = $('#keySlotSelect').val();
-                const storedKey = localStorage.getItem('key' + slot);
+                const storedKey = await readSingleKey(slot);
     
-                $thisButton.html(getTranslation('loadKey', languageIndex)).removeClass('bg-dark').addClass('bg-success');
+                $thisButton.html(getTranslation('loadKey', languageIndex));
     
                 if (storedKey) {
                     $('#keyInput').val(storedKey);
                 } else {
-                    $thisButton.removeClass('bg-success').addClass('bg-danger').html(getTranslation('error', languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex));
                 }
     
-                await new Promise((r) => setTimeout(r, 1000));
-                $thisButton.removeClass('bg-success bg-danger').addClass('bg-dark').html(getTranslation('loadKeyButton', languageIndex));
+                await new Promise((r) => setTimeout(r, 1500));
+                $thisButton.html(getTranslation('loadKeyButton', languageIndex));
             });
     
             // Save key to local storage
@@ -1981,16 +2056,15 @@
                 const $thisButton = $(this);
                 const slot = $('#keySlotSelect').val();
                 const key = $('#keyInput').val();
-    
                 if (key) {
-                    localStorage.setItem('key' + slot, key);
-                    $thisButton.html(getTranslation('saved', languageIndex)).removeClass('bg-dark').addClass('bg-success');
+                    await saveSingleKey(slot, key);
+                    $thisButton.html(getTranslation('saved', languageIndex));
                 } else {
-                    $thisButton.removeClass('bg-dark').addClass('bg-danger').html(getTranslation('error', languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex));
                 }
     
-                await new Promise((r) => setTimeout(r, 1000));
-                $thisButton.removeClass('bg-success bg-danger').addClass('bg-dark').html(getTranslation('saveKeyButton', languageIndex));
+                await new Promise((r) => setTimeout(r, 1500));
+                $thisButton.html(getTranslation('saveKeyButton', languageIndex));
             });
 
             // Handle generate private algorithm button
@@ -2005,9 +2079,9 @@
                 $('#disablePrivateConversionButton').removeClass('d-none');
                 $('#convertSimpleEncryptionSection').removeClass('d-none');
                 $('#convertTopMessage').removeClass('d-none').html(getTranslation('privateAlgorithmHeader', languageIndex));
-                $thisButton.removeClass('bg-dark').addClass('bg-success').text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex));
+                $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex));
                 await new Promise((r) => setTimeout(r, 5000));
-                $thisButton.addClass('bg-dark').removeClass('bg-success').text(getTranslation('generatePrivateConversionButton', languageIndex));
+                $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex));
 
             });
 
@@ -2072,6 +2146,23 @@
                         localStorage.setItem('informationHidden', 'true')
                         hideInformation();
                     }
+            });
+
+            // Attach event handler for all buttons
+            $('button').on('focus', function () {
+                // Store the reference to the current button
+                const button = $(this);
+
+                // Set a timeout to remove focus after 5 seconds
+                // Animate the font size increase by 4%
+                button.animate({ fontSize: '+=8%' }, 300, function () {
+                    // Shrink back to original size after the increase animation
+                    button.animate({ fontSize: '-=8%' }, 300);
+                });
+
+                setTimeout(function () {
+                    button.blur(); // Remove focus from the button
+                }, 1500);
             });
         });
     </script>    
