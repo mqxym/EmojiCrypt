@@ -1998,10 +1998,11 @@
 
             // Handle generate private algorithm button
             $('#generatePrivateConversionButton').click(async function () {
-                if (actionInProgress) return;
-
-                actionInProgress = true;
                 const $thisButton = $(this);
+
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
+
                 privateConversionId = generateSecureRandomString();
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 updateURLParameter();
@@ -2014,9 +2015,7 @@
                 $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex)).addClass('border-success');
                 await new Promise((r) => setTimeout(r, 4000));
                 $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex)).removeClass('border-success');
-
-                actionInProgress = false;
-
+                $thisButton.data('handling', false);
             });
 
             // Handle remove private algorithm button
