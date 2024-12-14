@@ -2082,22 +2082,22 @@
                     }
             });
 
-            // Attach event handler for all buttons
             $('.btn').on('pointerdown', function (e) {
                 e.preventDefault(); // Prevent default behavior if necessary
 
                 const button = $(this);
 
+                // Prevent handling multiple clicks simultaneously
                 if (button.data('clickHandled')) return;
                 button.data('clickHandled', true);
 
-                // Add animation class
                 button.addClass('btn-font-animate');
+                void button[0].offsetWidth;
 
-                // Remove animation after transition
+                // Remove the class after animation completes
                 setTimeout(function () {
                     button.removeClass('btn-font-animate');
-                    button.removeClass('active').removeClass('focus').blur();
+                    button.removeClass('active').blur();
                     button.data('clickHandled', false);
                 }, 400); 
             });
