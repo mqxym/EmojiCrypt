@@ -2102,7 +2102,7 @@
                 buttonClickHandled = false;
 
                 setTimeout(function () {
-                    button.blur(); // Remove focus from the button
+                    button.blur().removeClass('active'); // Remove focus from the button
                 }, 1500);
             });
         });
