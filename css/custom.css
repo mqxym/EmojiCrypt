@@ -126,3 +126,29 @@ input:focus, textarea:focus, select:focus {
     outline: none !important;
     box-shadow: none !important;
 }
+
+/* Base button styles (ensure transition is set for font-size) */
+.btn {
+    transition: font-size 0.2s ease-in-out;
+}
+
+/* Animation class to increase and then decrease font size */
+.btn-font-animate {
+    /* Increase font size by 10% */
+    font-size: 110%;
+    /* After 200ms, revert back to original size */
+    animation: fontSizePulse 400ms forwards;
+}
+
+/* Keyframes for the font size pulse */
+@keyframes fontSizePulse {
+    0% {
+        font-size: 100%;
+    }
+    50% {
+        font-size: 110%;
+    }
+    100% {
+        font-size: 100%;
+    }
+}

@@ -397,7 +397,7 @@
                             </div>
                             <hr>
                             <!-- Convert Button -->
-                            <button id="convertButton" type="button" class="btn bg-light btn-block mb-4">🔄 Convert</button>
+                            <button id="convertButton" type="button" class="btn bg-light shadow-lg btn-block mb-4">🔄 Convert</button>
                         </form>
                         
                         <!-- Output Message -->
@@ -2082,28 +2082,24 @@
                     }
             });
 
-            let buttonClickHandled = false;
-
             // Attach event handler for all buttons
-            $('.btn').on('click touchstart', async function () {
+            $('.btn').on('pointerdown', function (e) {
+                e.preventDefault(); // Prevent default behavior if necessary
 
-                if (buttonClickHandled) return;
-                buttonClickHandled = true;
-
-                // Store the reference to the current button
                 const button = $(this);
 
-                // Set a timeout to remove focus after 5 seconds
-                // Animate the font size increase by 4%
-                button.animate({ fontSize: '+=10%' }, 200, function () {
-                    // Shrink back to original size after the increase animation
-                    button.animate({ fontSize: '-=10%' }, 200);
-                });
-                buttonClickHandled = false;
+                if (button.data('clickHandled')) return;
+                button.data('clickHandled', true);
 
+                // Add animation class
+                button.addClass('btn-font-animate');
+
+                // Remove animation after transition
                 setTimeout(function () {
-                    button.blur().removeClass('active'); // Remove focus from the button
-                }, 1500);
+                    button.removeClass('btn-font-animate');
+                    button.removeClass('active').removeClass('focus').blur();
+                    button.data('clickHandled', false);
+                }, 400); 
             });
         });
     </script>    
