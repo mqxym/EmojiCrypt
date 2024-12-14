@@ -20,143 +20,13 @@
     <meta name="revisit-after" content="2 days" />
     <!-- CSS and JS Links -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
     
     <title>🌘 - to the moon! Text to Emoji and Emoji-Encryption</title>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/bootstrap.bundle.js"></script>
-    <style>
-       body,
-        html {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-        .card-header .faq-button:hover {
-            background-color: transparent !important;
-            color: inherit !important;
-            box-shadow: none !important;
-        }
-
-        .dark-custom {
-            background-color: #1d1f29 !important;
-            border: 1px, #596065 !important;
-        }
-        
-        .dark-custom2 {
-            background-color: #2b2d38 !important;
-            border: 1px, #323638 !important;
-        }
-
-        .wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .main-container {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-content {
-            width: 100%;
-        }
-
-        .faq-button {
-            text-align: left;
-            width: 100%;
-            border: none !important;
-            background: none;
-            padding: 0;
-            white-space: normal;
-            word-break: break-word;
-        }
-
-        .btn {
-            border-color: #ced4da; /* Light gray border */
-        }
-
-        .btn:hover {
-            background-color: #e2e6ea; /* Slightly darker on hover */
-        }
-
-        /* Default placeholder color */
-        .form-control::placeholder {
-            color: #6c757d; /* Bootstrap's default placeholder color */
-        }
-
-        /* Placeholder color in dark mode */
-        .dark-mode .form-control::placeholder {
-            color: #cccccc; /* Light gray placeholder color for dark mode */
-        }
-
-        input:focus, textarea:focus, select:focus {
-            box-shadow: none !important;
-            outline: none !important;
-        }
-
-        .gradient-blur {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-        }
-
-        .gradient-blur::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            background: linear-gradient(
-                to right,
-                rgb(250, 113, 113),
-                rgb(255, 201, 102),
-                rgb(255, 255, 119),
-                rgb(120, 251, 120),
-                rgb(96, 96, 255),
-                rgb(196, 119, 252),
-                rgb(253, 172, 253)
-            );
-            z-index: -1;
-            border-radius: 2px;
-            filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gradient-blur:hover::before,
-        .gradient-blur:focus::before,
-        .gradient-blur:active::before {
-            opacity: 1;
-        }
-
-        .active-bounce {
-            display: inline-block;
-            position: relative;
-            animation: bounce 2s infinite ease-in-out;
-            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3)); /* True shadow follows logo's transparency */
-        }
-
-        /* Keyframes for up-and-down bounce */
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0); /* Start and end at the same position */
-            }
-            50% {
-                transform: translateY(-10px); /* Slight upward movement at the midpoint */
-            }
-        }
-
-        .btn:focus, .btn:hover {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-    </style>
+    <script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/bootstrap.bundle.js"></script>
+    
 </head>
 
 <body>
@@ -539,7 +409,7 @@
                         </div>
 
                         <!-- Private Conversion Algorithm -->
-                        <a class="btn btn-secondary bg-secondary btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection" id="showPrivateAlgorithmButton">💎 Private Algorithm</a>
+                        <a class="btn btn-block text-light mb-3" data-toggle="collapse" data-target="#privateAlgorithmSection" aria-expanded="true" aria-controls="privateAlgorithmSection" id="showPrivateAlgorithmButton">💎 Private Algorithm</a>
                         <div id="privateAlgorithmSection" class="collapse">
                             <div class="card mb-1">
                                 <div class="card-body">
@@ -1225,8 +1095,8 @@
     </div>
 
     <!-- External Scripts -->
-    <script src="js/lib.js" defer></script>
-    <script src="js/emo.js" defer></script>
+    <script src="js/mainLibrary.js" defer></script>
+    <script src="js/main.js" defer></script>
     <script src="js/lang.js" defer></script>
 
     <script>
@@ -1552,10 +1422,10 @@
             { selector: '.card-body', classes: 'dark-custom text-light' },
             { selector: '.faq-button',removeClasses: 'text-dark', classes: 'text-light' },
             { selector: '.collapse', classes: 'dark-custom2 text-light' },
-            { selector: '.input-group-text', classes: 'dark-custom text-light' },
-            { selector: '.form-control', classes: 'dark-custom2 text-light' },
+            { selector: '.input-group-text', classes: 'border-dark dark-custom text-light' },
+            { selector: '.form-control', classes: 'border-dark dark-custom text-light' },
             { selector: 'footer', removeClasses: 'bg-light', classes: 'dark-custom2 text-light' },
-            { selector: '.btn', removeClasses: 'bg-light text-dark', classes: 'dark-custom2 text-light' },
+            { selector: '.btn', removeClasses: 'bg-secondary bg-light text-dark', classes: 'bg-secondary border-dark dark-custom2 text-light' },
         ];
 
         /**
@@ -1907,6 +1777,7 @@
                 const inputType = checkInputString(inputText);
 
                 if (actionInProgress) return;
+
     
                 if (!inputType) {
                     // Encryption
@@ -1918,7 +1789,7 @@
                     actionInProgress = true;
     
                     const emojiString = await encrypt(message, keyInput);
-    
+
                     if (!emojiString) {
                         $thisButton.html(getTranslation('btnEncodeFailed', languageIndex));
                     } else {
@@ -1926,7 +1797,6 @@
                         $thisButton.html(getTranslation('btnEncodeSuccess', languageIndex));
                     }
 
-                    actionInProgress = false;
                 } else {
                     // Decryption
                     $thisButton.html(getTranslation('btnDecodeWorking', languageIndex));
@@ -1937,7 +1807,7 @@
                     actionInProgress = true;
     
                     const decryptedText = await decrypt(message, keyInput);
-    
+
                     if (!decryptedText) {
                         $thisButton.html(getTranslation('btnDecodeFailed', languageIndex));
                         $('#encryptOutputTextarea').val('');
@@ -1945,10 +1815,10 @@
                         $('#encryptOutputTextarea').val(decryptedText);
                         $thisButton.html(getTranslation('btnDecodeSuccess', languageIndex));
                     }
-                    actionInProgress = false;
                 }
     
-                await new Promise((r) => setTimeout(r, 5000));
+                await new Promise((r) => setTimeout(r, 4000));
+                actionInProgress = false;
                 $thisButton.html(getTranslation('encryptDecryptButton', languageIndex));
             });
     
@@ -1985,8 +1855,6 @@
                         $('#convertOutputTextarea').val(encodedText);
                         $thisButton.html(getTranslation('btnEncodeSuccessConvert', languageIndex));
                     }
-
-                    actionInProgress = false;
                 } else {
                     // Decoding
                     $thisButton.html(getTranslation('btnDecodeWorkingConvert', languageIndex));
@@ -2004,12 +1872,11 @@
                         $('#convertOutputTextarea').val(decodedText);
                         $thisButton.html(getTranslation('btnDecodeSuccessConvert', languageIndex));
                     }
-
-                    actionInProgress = false;
                 }
     
-                await new Promise((r) => setTimeout(r, 5000));
+                await new Promise((r) => setTimeout(r, 3000));
                 $thisButton.html(getTranslation('convertButton', languageIndex));
+                actionInProgress = false;
             });
     
             // Clear input text
@@ -2025,10 +1892,16 @@
                 copyText.select();
                 document.execCommand('copy');
                 copyText.setSelectionRange(0, 0);
+                window.getSelection().removeAllRanges();
+
+                if (copyText.animationInProgress) return;
+                copyText.animationInProgress = true;
 
                 $('#copyKeyButton').html("✅");
-                await new Promise((r) => setTimeout(r, 4000));
+                await new Promise((r) => setTimeout(r, 3000));
                 $('#copyKeyButton').html(getTranslation('copyKeyButton', languageIndex));
+
+                copyText.animationInProgress = false;
             });
     
             // Copy output message to clipboard
@@ -2037,10 +1910,15 @@
                 copyText.select();
                 document.execCommand('copy');
                 copyText.setSelectionRange(0, 0);
+                window.getSelection().removeAllRanges();
 
+                if (copyText.animationInProgress) return;
+                copyText.animationInProgress = true;
+                
                 $('#copyEncryptOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
                 $('#copyEncryptOutputButton').html(getTranslation('copyKeyButton', languageIndex));
+                copyText.animationInProgress = false;
 
             });
     
@@ -2049,9 +1927,16 @@
                 copyText.select();
                 document.execCommand('copy');
                 copyText.setSelectionRange(0, 0);
+                window.getSelection().removeAllRanges();
+
+                if (copyText.animationInProgress) return;
+                copyText.animationInProgress = true;
+                
+
                 $('#copyConvertOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
                 $('#copyConvertOutputButton').html(getTranslation('copyConvertOutputButton', languageIndex));
+                copyText.animationInProgress = false;
             });
 
             $('#copyPrivateConversionLink').click(async () => {
@@ -2060,9 +1945,15 @@
                     copyText.select();
                     document.execCommand('copy');
                     copyText.setSelectionRange(0, 0);
+                    copyText.blur();
+
+                    if (copyText.animationInProgress) return;
+                    copyText.animationInProgress = true;
+
                     $('#copyPrivateConversionLink').html("✅");
                     await new Promise((r) => setTimeout(r, 4000));
                     $('#copyPrivateConversionLink').html(getTranslation('copyPrivateConversionLink', languageIndex));
+                    copyText.animationInProgress = false;
                 } else {
                     $('#copyPrivateConversionLink').html("❌");
                     await new Promise((r) => setTimeout(r, 4000));
@@ -2107,6 +1998,9 @@
 
             // Handle generate private algorithm button
             $('#generatePrivateConversionButton').click(async function () {
+                if (actionInProgress) return;
+
+                actionInProgress = true;
                 const $thisButton = $(this);
                 privateConversionId = generateSecureRandomString();
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
@@ -2117,9 +2011,11 @@
                 $('#disablePrivateConversionButton').removeClass('d-none');
                 $('#convertSimpleEncryptionSection').removeClass('d-none');
                 $('#convertTopMessage').removeClass('d-none').html(getTranslation('privateAlgorithmHeader', languageIndex));
-                $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex));
-                await new Promise((r) => setTimeout(r, 5000));
-                $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex));
+                $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex)).addClass('border-success');
+                await new Promise((r) => setTimeout(r, 4000));
+                $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex)).removeClass('border-success');
+
+                actionInProgress = false;
 
             });
 
@@ -2187,17 +2083,17 @@
             });
 
             // Attach event handler for all buttons
-            $('button').on('focus touchstart', async function () {
+            $('.btn').on('click touchstart', async function () {
                 // Store the reference to the current button
                 const button = $(this);
 
                 // Set a timeout to remove focus after 5 seconds
                 // Animate the font size increase by 4%
-                button.animate({ fontSize: '+=8%' }, 300, function () {
+                button.animate({ fontSize: '+=10%' }, 200, function () {
                     // Shrink back to original size after the increase animation
-                    button.animate({ fontSize: '-=8%' }, 300);
+                    button.animate({ fontSize: '-=10%' }, 200);
                 });
-
+                
                 setTimeout(function () {
                     button.blur(); // Remove focus from the button
                 }, 1500);
