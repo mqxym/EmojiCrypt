@@ -142,7 +142,10 @@ input:focus, textarea:focus, select:focus {
         font-size: 1rem;
     }
     50% {
-        font-size: 1.2rem;
+        font-size: 1.18rem;
+    }
+    90% {
+        font-size: 1.02rem;
     }
     100% {
         font-size: 1rem;
