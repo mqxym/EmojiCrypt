@@ -2082,8 +2082,14 @@
                     }
             });
 
+            let buttonClickHandled = false;
+
             // Attach event handler for all buttons
             $('.btn').on('click touchstart', async function () {
+
+                if (buttonClickHandled) return;
+                buttonClickHandled = true;
+
                 // Store the reference to the current button
                 const button = $(this);
 
@@ -2093,7 +2099,8 @@
                     // Shrink back to original size after the increase animation
                     button.animate({ fontSize: '-=10%' }, 200);
                 });
-                
+                buttonClickHandled = false;
+
                 setTimeout(function () {
                     button.blur(); // Remove focus from the button
                 }, 1500);
