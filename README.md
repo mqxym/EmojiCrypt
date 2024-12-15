@@ -1,29 +1,71 @@
 # EmojiCrypt Version 3.4.5 🌈
 
-Your convenient and secure text encryption, where emojis are all that matters.
+Your convenient and secure web app for text encryption and conversion, where emojis are all that matters.
 This repo is hosted here:
 
-- (v3): [nasaemoji.com](https://nasaemoji.com)
-- (v2): [v2.nasaemoji.com](https://v2.nasaemoji.com) (**not recommended**)
-- (v1): [v1.nasaemoji.com](https://v1.nasaemoji.com) (**not recommended**)
+- (v3.x): [nasaemoji.com](https://nasaemoji.com)
+- (latest v2): [v2.nasaemoji.com](https://v2.nasaemoji.com) (**not recommended**)
+- (latest v1): [v1.nasaemoji.com](https://v1.nasaemoji.com) (**not recommended**)
 
-## Idea 💡
+## ☑️ Emoji Features
+
+### 🔴 Text To Emoji 
+
+> (`?convert` default app)
+
+- Basic algorithm 
+- `input(a) = output(a)`: map all emojis to the binary encoded input, same input = same output
+
+### 🟠 Private Algorithm For Text To Emoji 
+
+> `?convert&id={x}`, x can be generated
+
+- Generates a secure permutation of the base emoji set using the generated 10 character key (x)
+- `input(a, map(x)) -> output(b)`: same input = same output
+
+### 🟡 Private Algorithm + Simple Encrypt 
+
+> `?convert&id={x}`, simple encryption box checked (default)
+
+- Uses the secure permutation and a *PBKDF2* generated salted key to encrypt the input with XOR
+- `input(a, key) -> (unique mapping) -> XOR ( input(a), PBKDF2(key, salt: random(12-byte)) ) -> output(c) `
+- Every output is different because of the random salt
+- The derived key is always the same length as text to encrypt
+
+### 🟢 Layered Encryption With Emojis
+
+> `?encrypt`, input and key always required
+
+- Encrypts text with emoji; generate emoji keys which look like encrypted messages
+- Keys get hashed using custom key derivation method KDVX with 3 output stages [0|1|2]
+- Encryption methods are layered:
+```
+XOR( KDVX[2](key), 
+  AES-CTR( KDVX[1](key),
+    AES-GCM( KDVX[0](key), input, rnd. 12-byte IV),
+  rnd. 16-byte IV
+  )
+)
+```
+- KDVX[2] is 4096-byte long; KDVX[1|2] both 256-byte
+
+#### 💡 Pitch Behind The Encryption Method 
 
 You want to send some confidential text and confuse prying eyes?
 Fear no more: Simply generate a secret emoji key and use it to securely encrypt your message.
 Guess what? The output is emojis too!
 The idea is to implement a protocol where only you and the receiver knows what the key and the message is.
+  
+### 🌐 General App Features 
 
-## Features ✅
-
-### Usability ☺️
-
-- Convert text to emojis and back using the convert option and generate a private conversion algorithm with an unique URL
-- Generate emoji keys which look like encrypted messages
-- Save keys within the browser
+- Auto dark mode
+- Auto language detection
+  - The web app is available in 7 languages (feel free to improve the automated translations)
+- Save encryption keys within the browsers localStorage
 - Site can be added to homescreen on Android and iOS to act as an app (Webapp)
-- The web app is available in 7 languages (feel free to improve the automated translations)
-- Auto Dark mode
+- The last visited site is saved 
+
+> The following section will be rewritten soon:
 
 ### Basic Security Information 🔐
 
@@ -59,8 +101,8 @@ I chose to implement a custom hash algorithm to introduce additional complexity 
 ## Includes ⤴️
 
 - jQuery for HTML manipulation
-- Bootstrap 4 for CSS
-- A javascript library `js/lib.js` containing all the algorithms
+- Bootstrap 4 for CSS and `css/custom.css` styling
+- A javascript library `js/mainLibrary.js` containing all the algorithms
 
 ## Download for local execution
 
