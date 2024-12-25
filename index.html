@@ -1894,14 +1894,15 @@
                 copyText.setSelectionRange(0, 0);
                 window.getSelection().removeAllRanges();
 
-                if (copyText.animationInProgress) return;
-                copyText.animationInProgress = true;
+                const $thisButton = $(this);
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
 
                 $('#copyKeyButton').html("✅");
                 await new Promise((r) => setTimeout(r, 3000));
                 $('#copyKeyButton').html(getTranslation('copyKeyButton', languageIndex));
 
-                copyText.animationInProgress = false;
+                $thisButton.data('handling', false);
             });
     
             // Copy output message to clipboard
@@ -1912,13 +1913,14 @@
                 copyText.setSelectionRange(0, 0);
                 window.getSelection().removeAllRanges();
 
-                if (copyText.animationInProgress) return;
-                copyText.animationInProgress = true;
+                const $thisButton = $(this);
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
                 
                 $('#copyEncryptOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
                 $('#copyEncryptOutputButton').html(getTranslation('copyKeyButton', languageIndex));
-                copyText.animationInProgress = false;
+                $thisButton.data('handling', false);
 
             });
     
@@ -1929,17 +1931,20 @@
                 copyText.setSelectionRange(0, 0);
                 window.getSelection().removeAllRanges();
 
-                if (copyText.animationInProgress) return;
-                copyText.animationInProgress = true;
+                const $thisButton = $(this);
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
                 
 
                 $('#copyConvertOutputButton').html("✅");
                 await new Promise((r) => setTimeout(r, 4000));
                 $('#copyConvertOutputButton').html(getTranslation('copyConvertOutputButton', languageIndex));
-                copyText.animationInProgress = false;
+                $thisButton.data('handling', false);
             });
 
             $('#copyPrivateConversionLink').click(async () => {
+                const $thisButton = $(this);
+
                 if (privateConversionId) {
                     const copyText = document.getElementById('privateConversionLink');
                     copyText.select();
@@ -1947,17 +1952,21 @@
                     copyText.setSelectionRange(0, 0);
                     copyText.blur();
 
-                    if (copyText.animationInProgress) return;
-                    copyText.animationInProgress = true;
+                    if ($thisButton.data('handling')) return;
+                    $thisButton.data('handling', true);
 
                     $('#copyPrivateConversionLink').html("✅");
                     await new Promise((r) => setTimeout(r, 4000));
                     $('#copyPrivateConversionLink').html(getTranslation('copyPrivateConversionLink', languageIndex));
-                    copyText.animationInProgress = false;
+                    $thisButton.data('handling', false);
                 } else {
+                    if ($thisButton.data('handling')) return;
+                    $thisButton.data('handling', true);
+
                     $('#copyPrivateConversionLink').html("❌");
                     await new Promise((r) => setTimeout(r, 4000));
                     $('#copyPrivateConversionLink').html(getTranslation('copyPrivateConversionLink', languageIndex));
+                    $thisButton.data('handling', false);
                 }
                
             });
@@ -1969,6 +1978,9 @@
                 const storedKey = await readSingleKey(slot);
     
                 $thisButton.html(getTranslation('loadKey', languageIndex));
+
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
     
                 if (storedKey) {
                     $('#keyInput').val(storedKey);
@@ -1978,6 +1990,7 @@
     
                 await new Promise((r) => setTimeout(r, 1500));
                 $thisButton.html(getTranslation('loadKeyButton', languageIndex));
+                $thisButton.data('handling', false);
             });
     
             // Save key to local storage
@@ -1985,6 +1998,9 @@
                 const $thisButton = $(this);
                 const slot = $('#keySlotSelect').val();
                 const key = $('#keyInput').val();
+                if ($thisButton.data('handling')) return;
+                $thisButton.data('handling', true);
+
                 if (key) {
                     await saveSingleKey(slot, key);
                     $thisButton.html(getTranslation('saved', languageIndex));
@@ -1993,6 +2009,7 @@
                 }
     
                 await new Promise((r) => setTimeout(r, 1500));
+                $thisButton.data('handling', false);
                 $thisButton.html(getTranslation('saveKeyButton', languageIndex));
             });
 
