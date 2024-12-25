@@ -1,0 +1,153 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+.card-header .faq-button:hover {
+    background-color: transparent !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}
+
+.dark-custom {
+    background-color: #1d1f29 !important;
+}
+
+.dark-custom2 {
+    background-color: #2b2d38 !important;
+}
+
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-content {
+    width: 100%;
+}
+
+.faq-button {
+    text-align: left;
+    width: 100%;
+    border: none !important;
+    background: none;
+    padding: 0;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.btn {
+    border-color: #ced4da; /* Light gray border */
+}
+
+.btn:hover {
+    background-color: #e2e6ea; /* Slightly darker on hover */
+}
+
+/* Default placeholder color */
+.form-control::placeholder {
+    color: #6c757d; /* Bootstrap's default placeholder color */
+}
+
+/* Placeholder color in dark mode */
+.dark-mode .form-control::placeholder {
+    color: #cccccc; /* Light gray placeholder color for dark mode */
+}
+
+input:focus, textarea:focus, select:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.gradient-blur {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.gradient-blur::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(
+        to right,
+        rgb(250, 113, 113),
+        rgb(255, 201, 102),
+        rgb(255, 255, 119),
+        rgb(120, 251, 120),
+        rgb(96, 96, 255),
+        rgb(196, 119, 252),
+        rgb(253, 172, 253)
+    );
+    z-index: -1;
+    border-radius: 2px;
+    filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gradient-blur:hover::before,
+.gradient-blur:focus::before,
+.gradient-blur:active::before {
+    opacity: 1;
+}
+
+.active-bounce {
+    display: inline-block;
+    position: relative;
+    animation: bounce 2s infinite ease-in-out;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3)); /* True shadow follows logo's transparency */
+}
+
+/* Keyframes for up-and-down bounce */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); /* Start and end at the same position */
+    }
+    50% {
+        transform: translateY(-10px); /* Slight upward movement at the midpoint */
+    }
+}
+
+.btn:focus, .btn:hover {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+.btn {
+    transition: font-size 0.2s ease-in-out;
+    will-change: font-size;
+}
+
+.btn-font-animate {
+    animation: fontSizePulse 400ms forwards;
+}
+
+@keyframes fontSizePulse {
+    0% {
+        font-size: 1rem;
+    }
+    50% {
+        font-size: 1.18rem;
+    }
+    90% {
+        font-size: 1.02rem;
+    }
+    100% {
+        font-size: 1rem;
+    }
+}
