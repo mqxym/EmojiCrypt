@@ -1125,7 +1125,7 @@
                 privateConversionId = null;
                 return;
             }
-            privateConversionId = getPrivateIdfromUrl() || localStorage.getItem("pa");
+            privateConversionId = getPrivateIdfromUrl() || localStorage.getItem("nPa");
             if ( privateConversionId ) {
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 $('#privateConversionLink').val(window.location.href);
@@ -1208,7 +1208,7 @@
          * @returns {Object} An object containing languageCode and languageIndex.
          */
         function initializeLanguage() {
-            let languageCode = getLanguageCodeFromURL() || localStorage.getItem('lang') || getUserLanguageCode() || 'en';
+            let languageCode = getLanguageCodeFromURL() || localStorage.getItem('nLang') || getUserLanguageCode() || 'en';
             let languageIndex = getLanguageIndexFromCode(languageCode);
     
             if (languageIndex === -1) {
@@ -1217,7 +1217,7 @@
                 languageIndex = 0;
             }
     
-            localStorage.setItem('lang', languageCode);
+            localStorage.setItem('nLang', languageCode);
             return { languageCode, languageIndex };
         }
     
@@ -1397,7 +1397,7 @@
          * @returns {boolean} True if dark mode is enabled
          */
         function isDarkModeEnabled() {
-            return localStorage.getItem('darkMode') === 'true';
+            return localStorage.getItem('nDarkMode') === 'true';
         }
 
         /**
@@ -1447,7 +1447,7 @@
             $('hr').css('border-top', '1px solid #666');
             $('meta[name="theme-color"]').attr('content', '#1d1f29');
     
-            localStorage.setItem('darkMode', 'true');
+            localStorage.setItem('nDarkMode', 'true');
             $('#darkModeMenu').html(getTranslation('disableDarkMode', languageIndex));
         }
     
@@ -1470,7 +1470,7 @@
             $('hr').css('border-top', '');
             $('meta[name="theme-color"]').attr('content', '#ffffff');
     
-            localStorage.setItem('darkMode', 'false');
+            localStorage.setItem('nDarkMode', 'false');
             $('#darkModeMenu').html(getTranslation('enableDarkMode', languageIndex));
         }
 
@@ -1515,7 +1515,7 @@
             if (params.has('convert')) return 'convertSection';
 
             // No section specified in URL, attempt to retrieve from localStorage
-            const lastSite = localStorage.getItem("lastSite");
+            const lastSite = localStorage.getItem("nLastSite");
 
             return lastSite || 'convertSection';
         }
@@ -1633,7 +1633,7 @@
                         updateLanguageMenuLinks();
                         updateNavigationLinks();
                         updateMetadata();
-                        localStorage.setItem('lastSite', currentMenu)
+                        localStorage.setItem('nLastSite', currentMenu)
                     });
                 });
             } else {
@@ -1646,7 +1646,7 @@
                     updateLanguageMenuLinks();
                     updateNavigationLinks();
                     updateMetadata();
-                    localStorage.setItem('lastSite', currentMenu)
+                    localStorage.setItem('nLastSite', currentMenu)
                 });
             }
     
@@ -1708,6 +1708,12 @@
         // =======================================
     
         $(document).ready(async function () {
+
+            // Migrate local Storage Keys
+            const lsKeys = ['pa','lang','darkMode','lastSite','informationHidden']
+            migrateLocalStorageKeys(lsKeys);
+
+
             // Initialize language and UI
             updateUILanguage();
 
@@ -1720,7 +1726,7 @@
             updateURLParameter();
             $("#versionFooter").html(getVersion());
 
-            if(localStorage.getItem('informationHidden')) {
+            if(localStorage.getItem('nInformationHidden')) {
                 hideInformation();
             }
     
@@ -1734,7 +1740,7 @@
                 if (langCode !== languageCode) {
                     languageCode = langCode || 'en';
                     languageIndex = getLanguageIndexFromCode(languageCode);
-                    localStorage.setItem('lang', languageCode);
+                    localStorage.setItem('nLang', languageCode);
                     updateUILanguage();
                 }
 
@@ -2023,7 +2029,7 @@
                 privateConversionId = generateSecureRandomString();
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 updateURLParameter();
-                localStorage.setItem("pa", privateConversionId);
+                localStorage.setItem("nPa", privateConversionId);
 
                 $('#privateConversionLink').val(window.location.href);
                 $('#disablePrivateConversionButton').removeClass('d-none');
@@ -2039,8 +2045,8 @@
             $('#disablePrivateConversionButton').click(async function () {
                 if (customEmojiArray) {
                     if (confirm(getTranslation('modalDisablePrivateAlgorithm', languageIndex))) {
-                        if (localStorage.getItem("pa")) {
-                            localStorage.removeItem("pa");
+                        if (localStorage.getItem("nPa")) {
+                            localStorage.removeItem("nPa");
                         }
                         const $thisButton = $(this);
                         privateConversionId = null;
@@ -2076,7 +2082,7 @@
                 const newLangCode = $(this).attr('data-lang-code');
     
                 // Update the language code in local storage
-                localStorage.setItem('lang', newLangCode);
+                localStorage.setItem('nLang', newLangCode);
     
                 // Update the languageIndex
                 languageCode = newLangCode;
@@ -2093,7 +2099,7 @@
             // Hide Information
             $('.hide-information').click(async function () {
                 if (confirm("Do you really want to hide this information tab forever?")) {
-                        localStorage.setItem('informationHidden', 'true')
+                        localStorage.setItem('nInformationHidden', 'true')
                         hideInformation();
                     }
             });
