@@ -723,7 +723,7 @@
                             <div class="card-body">
                               <h4 class="card-title" id="convertTabHeader">🔄 Convert</h4>
                               <h6 class="card-subtitle mb-2 text-muted" id="convertTabDescription">Convert text to emojis and back. Simpler Algorithms. You can use a private algorithm link with simple encrypt to increase security.</h6>
-                              <a href="?convert" class="btn btn-light btn-block mb-3" id="btnGoToConvert">Go to 🔄 Convert App</a>
+                              <button class="btn btn-light btn-block mb-3" id="btnGoToConvert">Go to 🔄 Convert App</button>
                               <hr>
                               <div class="accordion" id="faqAccordionConversion">
                                 <h6 class="text-muted">How to</h6>
@@ -781,16 +781,16 @@
                                 <h6 class="text-muted">Private Algorithm Security</h6>
                                 <!-- FAQ Item 26 -->
                                 <div class="card mb-1">
-                                    <div class="card-header" id="faqConversionHeading26">
+                                    <div class="card-header" id="faqHeading26">
                                         <h5 class="mb-0">
-                                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqConversionCollapse26" aria-expanded="false" aria-controls="faqConversionCollapse19">
-                                                <strong id="faqConversionQuestion26">What is simple encryption?</strong>
+                                            <button class="btn faq-button collapsed" type="button" data-toggle="collapse" data-target="#faqCollapse26" aria-expanded="false" aria-controls="faqConversionCollapse26">
+                                                <strong id="faqQuestion26">What is simple encryption?</strong>
                                             </button>
                                         </h5>
                                     </div>
-                                    <div id="faqConversionCollapse26" class="collapse" aria-labelledby="faqConversionHeading26" data-parent="#faqConversionAccordion">
+                                    <div id="faqCollapse26" class="collapse" aria-labelledby="faqConversionHeading26" data-parent="#faqConversionAccordion">
                                         <div class="card-body">
-                                            <span id="faqConversionAnswer26">Simple encryption is a basic way to protect your messages. Here’s what you need to know:<ul><li>It uses XOR to scramble your text.</li><li>The encryption key matches the length of your message.</li><li>The key is created securely with a random salt.</li><li>Prevents others from easily guessing your key.</li><li>Not as strong as advanced methods like AES.</li><li>For better security, use the 🔐 Encrypt feature on this site.</li></ul></span>
+                                            <span id="faqAnswer26">Simple encryption is a basic way to protect your messages. Here’s what you need to know:<ul><li>It uses XOR to scramble your text.</li><li>The encryption key matches the length of your message.</li><li>The key is created securely with a random salt.</li><li>Prevents others from easily guessing your key.</li><li>Not as strong as advanced methods like AES.</li><li>For better security, use the 🔐 Encrypt feature on this site.</li></ul></span>
                                         </div>
                                     </div>
                                 </div>
@@ -804,7 +804,7 @@
                               <h4 class="card-title" id="encryptTabHeader">🔐 Encrypt</h4>
                               <h6 class="card-subtitle mb-2 text-muted" id="encryptTabDescription">The most secure way of protecting data using compute intensive hash algorithms and a unique way of outputting your scrambled text. Combines two chained AES-Algorithms with XOR on top.
                               </h6>
-                              <a href="?convert" class="btn btn-light btn-block mb-3" id="btnGoToEncrypt">Go to 🔐 Encrypt App</a>
+                              <button class="btn btn-light btn-block mb-3" id="btnGoToEncrypt">Go to 🔐 Encrypt App</button>
                               <hr>
                               <div class="accordion" id="faqAccordionEncryption">
                                 <!-- FAQ Item 4 -->
@@ -2176,9 +2176,9 @@
                 $('#disablePrivateConversionButton').removeClass('d-none');
                 $('#convertSimpleEncryptionSection').removeClass('d-none');
                 $('#convertTopMessage').removeClass('d-none').html(getTranslation('privateAlgorithmHeader', languageIndex));
-                $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex)).addClass('border-success');
+                $thisButton.text(getTranslation('btnPrivateAlgorithmGenerated', languageIndex)).addClass('custom-green-border');
                 await new Promise((r) => setTimeout(r, 4000));
-                $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex)).removeClass('border-success');
+                $thisButton.text(getTranslation('generatePrivateConversionButton', languageIndex)).removeClass('custom-green-border');
                 $thisButton.data('handling', false);
             });
 
@@ -2196,10 +2196,10 @@
                         $('#privateConversionLink').val(null);
                         $('#convertTopMessage').addClass('d-none');
                         $('#convertSimpleEncryptionSection').addClass('d-none');
-                        $thisButton.text(getTranslation('btnPrivateAlgorithmRemoved', languageIndex));
+                        $thisButton.text(getTranslation('btnPrivateAlgorithmRemoved', languageIndex)).addClass('custom-red-border');
                         await new Promise((r) => setTimeout(r, 4000));
                         $thisButton.addClass('d-none');
-                        $thisButton.text(getTranslation('disablePrivateConversionButton', languageIndex));
+                        $thisButton.text(getTranslation('disablePrivateConversionButton', languageIndex)).removeClass('custom-red-border');
                     }
                 }
             });
@@ -2215,7 +2215,15 @@
                     transitionToSection(targetSection);
                 }
             });
+
+            // Attach click handlers to go to Buttons
+            $('#btnGoToEncrypt').click(function (e) {
+                transitionToSection('encryptSection')
+            });
     
+            $('#btnGoToConvert').click(function (e) {
+                transitionToSection('convertSection')
+            });
             // Handle clicks on language menu links
             $('#languageMenuItems a.dropdown-item').click(function (e) {
                 e.preventDefault();
