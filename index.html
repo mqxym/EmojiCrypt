@@ -1901,9 +1901,9 @@
     
                 // Show error if input text is empty
                 if (!inputText) {
-                    $thisButton.html(getTranslation('error', languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex)).addClass('custom-red-border');
                     await new Promise((r) => setTimeout(r, 1000));
-                    $thisButton.html(getTranslation('encryptDecryptButton', languageIndex));
+                    $thisButton.html(getTranslation('encryptDecryptButton', languageIndex)).removeClass('custom-red-border');
                     return;
                 }
     
@@ -1924,10 +1924,10 @@
                     const emojiString = await encrypt(message, keyInput);
 
                     if (!emojiString) {
-                        $thisButton.html(getTranslation('btnEncodeFailed', languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeFailed', languageIndex)).addClass('custom-red-border');
                     } else {
                         $('#encryptOutputTextarea').val(emojiString);
-                        $thisButton.html(getTranslation('btnEncodeSuccess', languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeSuccess', languageIndex)).addClass('custom-green-border');
                     }
 
                 } else {
@@ -1942,17 +1942,17 @@
                     const decryptedText = await decrypt(message, keyInput);
 
                     if (!decryptedText) {
-                        $thisButton.html(getTranslation('btnDecodeFailed', languageIndex));
+                        $thisButton.html(getTranslation('btnDecodeFailed', languageIndex)).addClass('custom-red-border');
                         $('#encryptOutputTextarea').val('');
                     } else {
                         $('#encryptOutputTextarea').val(decryptedText);
-                        $thisButton.html(getTranslation('btnDecodeSuccess', languageIndex));
+                        $thisButton.html(getTranslation('btnDecodeSuccess', languageIndex)).addClass('custom-green-border');
                     }
                 }
     
                 await new Promise((r) => setTimeout(r, 4000));
                 actionInProgress = false;
-                $thisButton.html(getTranslation('encryptDecryptButton', languageIndex));
+                $thisButton.html(getTranslation('encryptDecryptButton', languageIndex)).removeClass('custom-red-border').removeClass('custom-green-border');
             });
     
             // Convert Button Click Handler
@@ -1962,9 +1962,9 @@
     
                 // Show error if input text is empty
                 if (!inputText) {
-                    $thisButton.html(getTranslation('error', languageIndex));
+                    $thisButton.html(getTranslation('error', languageIndex)).addClass('custom-red-border');
                     await new Promise((r) => setTimeout(r, 1000));
-                    $thisButton.html(getTranslation('convertButton', languageIndex));
+                    $thisButton.html(getTranslation('convertButton', languageIndex)).removeClass('custom-red-border');
                     return;
                 }
 
@@ -1983,10 +1983,10 @@
                     const encodedText = await encode(inputText, customEmojiArray, doSimpleEncrypt);
     
                     if (!encodedText) {
-                        $thisButton.html(getTranslation('btnEncodeFailedConvert', languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeFailedConvert', languageIndex)).addClass('custom-red-border');
                     } else {
                         $('#convertOutputTextarea').val(encodedText);
-                        $thisButton.html(getTranslation('btnEncodeSuccessConvert', languageIndex));
+                        $thisButton.html(getTranslation('btnEncodeSuccessConvert', languageIndex)).addClass('custom-green-border');
                     }
                 } else {
                     // Decoding
@@ -1999,16 +1999,16 @@
                     const decodedText = await decode(inputText, customEmojiArray, doSimpleEncrypt);
     
                     if (!decodedText) {
-                        $thisButton.html(getTranslation('btnDecodeFailedConvert', languageIndex));
+                        $thisButton.html(getTranslation('btnDecodeFailedConvert', languageIndex)).addClass('custom-red-border');
                         $('#convertOutputTextarea').val('');
                     } else {
                         $('#convertOutputTextarea').val(decodedText);
-                        $thisButton.html(getTranslation('btnDecodeSuccessConvert', languageIndex));
+                        $thisButton.html(getTranslation('btnDecodeSuccessConvert', languageIndex)).addClass('custom-green-border');
                     }
                 }
     
                 await new Promise((r) => setTimeout(r, 3000));
-                $thisButton.html(getTranslation('convertButton', languageIndex));
+                $thisButton.html(getTranslation('convertButton', languageIndex)).removeClass('custom-red-border').removeClass('custom-green-border');
                 actionInProgress = false;
             });
     
