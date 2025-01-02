@@ -3,7 +3,7 @@
  * @returns {string} The current version.
  */
 function getVersion() {
-    return "3.4.5";
+    return "3.4.6";
 }
 
 /*
@@ -560,4 +560,22 @@ async function readSingleKey(slot) {
         console.error(`Failed to decrypt nKey${slot}:`, error);
         return null;
     }
+}
+
+/**
+ * Migrate to new localStorage Keys
+ * 
+ * @param {Array<string>} keys - The keys to migrate with an "n" prefix for nasaemoji
+ */
+
+function migrateLocalStorageKeys(keys) {
+    keys.forEach(key => {
+        const value = localStorage.getItem(key); 
+        if (value !== null) {
+            const newKey = `n${key.charAt(0).toUpperCase()}${key.slice(1)}`; // Format the new key
+            console.log(newKey);
+            localStorage.setItem(newKey, value);
+            localStorage.removeItem(key); 
+        }
+    });
 }

@@ -400,51 +400,6 @@ function getTranslation(key, langIndex) {
             "<i class='text-muted'>يتم استخدام خوارزمية خاصة. <br>اضغط على '💎 الخوارزمية الخاصة' للمزيد من المعلومات.</i>",
             "",
         ],
-        // Messages and other elements
-        footerHighlight: [
-            "Secure on-device encryption! Version " +
-                getVersion() +
-                "<br> Combined AES-256 & XOR <br>No data sent. No cookies = no tracking. No logging.",
-            "Sichere Verschlüsselung auf dem Gerät! Version " +
-                getVersion() +
-                "<br> Kombiniert AES-256 & XOR <br>Keine Daten werden gesendet. Keine Cookies = kein Tracking. Kein Logging.",
-            "设备上的安全加密！版本 " +
-                getVersion() +
-                "<br> 组合 AES-256 和 XOR <br> 不发送数据。没有 Cookie = 无跟踪。无日志。",
-            "Безопасное шифрование на устройстве! Версия " +
-                getVersion() +
-                "<br> Комбинация AES-256 & XOR <br> Данные не отправляются. Нет куки = нет отслеживания. Нет логирования.",
-            "¡Encriptación segura en el dispositivo! Versión " +
-                getVersion() +
-                "<br> Combinación de AES-256 y XOR <br> No se envían datos. Sin cookies = sin seguimiento. Sin registros.",
-            "Chiffrement sécurisé sur l'appareil ! Version " +
-                getVersion() +
-                "<br> Combinaison AES-256 & XOR <br> Aucune donnée envoyée. Pas de cookies = pas de suivi. Pas de journalisation.",
-            "تشفير آمن على الجهاز! الإصدار " +
-                getVersion() +
-                "<br> يجمع بين AES-256 و XOR <br>لا يتم إرسال بيانات. لا كوكيز = لا تتبع. لا سجلات.",
-            "",
-        ],
-        footerSource: [
-            "Sourcecode (Github)",
-            "Quellcode (Github)",
-            "源代码（Github）",
-            "Исходный код (Github)",
-            "Código fuente (Github)",
-            "Code source (Github)",
-            "شفرة المصدر (GitHub)",
-            "",
-        ],
-        explanation: [
-            "<h6>Encrypt or decrypt texts or messages with a password. The output is emojis, the key is emojis. With NasaEmoji, you can send secret messages to anyone! Generate and share a common key with your recipient using a method of your choice. Save the key in one of the 5 slots for ease of access.</h6>",
-            "<h6>Verschlüssele oder entschlüssele Texte oder Nachrichten mit einem Passwort. Die Ausgabe sind Emojis, der Schlüssel sind Emojis. Mit NasaEmoji kannst du geheime Nachrichten an jeden senden! Erstelle und teile einen gemeinsamen Schlüssel mit deinem Empfänger auf eine beliebige Weise. Speichere den Schlüssel in einem der 5 Slots, um leichter darauf zugreifen zu können.</h6>",
-            "<h6>使用密码加密或解密文本或消息。输出是表情符号，密钥是表情符号。使用 NasaEmoji，你可以向任何人发送秘密消息！使用你选择的方法生成并与你的收件人分享一个共同的密钥。将密钥保存在 5 个插槽中的一个，以方便访问。</h6>",
-            "<h6>Шифруйте или расшифровывайте тексты или сообщения с помощью пароля. Выводятся эмодзи, ключ — эмодзи. С NasaEmoji вы можете отправлять секретные сообщения кому угодно! Создайте и поделитесь общим ключом с получателем любым удобным способом. Сохраните ключ в одном из 5 слотов для удобного доступа.</h6>",
-            "<h6>¡Cifra o descifra textos o mensajes con una contraseña! La salida son emojis, la clave son emojis. Con NasaEmoji, ¡puedes enviar mensajes secretos a cualquiera! Genera y comparte una clave común con tu destinatario usando el método que prefieras. Guarda la clave en uno de los 5 espacios para acceder fácilmente.</h6>",
-            "<h6>Tu peux chiffrer ou déchiffrer des textes ou des messages avec un mot de passe. Le résultat ? Des emojis, et la clé, c'est aussi des emojis. Avec NasaEmoji, tu peux envoyer des messages secrets à qui tu veux ! Crée et partage une clé avec ton destinataire comme tu veux. Garde la clé dans un des 5 emplacements pour la retrouver facilement.</h6>",
-            "<h6>قم بتشفير أو فك تشفير النصوص أو الرسائل باستخدام كلمة مرور. المخرجات هي إيموجي، والمفتاح هو إيموجي. مع NasaEmoji، يمكنك إرسال رسائل سرية إلى أي شخص! قم بإنشاء ومشاركة مفتاح مشترك مع مستلمك باستخدام الطريقة التي تختارها. احفظ المفتاح في أحد الخمسة فتحات لسهولة الوصول.</h6>",
-            "",
-        ],
         // Status messages
         saved: [
             "💾 Saved",
@@ -527,6 +482,37 @@ function getTranslation(key, langIndex) {
             "💔 فشل. مفتاح / كلمة مرور خاطئة؟",
             "",
         ],
+        //About page
+        btnGoToConvert: [
+            "Go to 🔄 Convert App",
+            "Zur 🔄 Konvertierungs-App",
+            "前往 🔄 转换应用",
+            "Перейти в 🔄 Конверт App",
+            "Ir a 🔄 Convertir",
+            "Aller à 🔄 Convertir",
+            "اذهب إلى 🔄 التحويل",
+            "",
+        ],
+        btnGoToEncrypt: [
+            "Go to 🔐 Encrypt App",
+            "Zur 🔐 Verschlüsselungs-App",
+            "前往 🔐 加密应用",
+            "Перейти в 🔐 Шифр App",
+            "Ir a 🔐 Encriptar",
+            "Aller à 🔐 Chiffrer",
+            "اذهب إلى 🔐 التشفير",
+            "",
+        ],
+        btnAdvancedEncryption: [
+            "✴️ About Encryption Security",
+            "✴️ Verschlüsselungssicherheit",
+            "✴️ 加密安全",
+            "✴️ Безопасность шифрования",
+            "✴️ Seguridad de encriptación",
+            "✴️ Sécurité du cryptage",
+            "✴️ أمان التشفير",
+            "",
+        ],
         btnDecodeSuccess: [
             "💚 Decrypted!",
             "💚 Entschlüsselt!",
@@ -596,6 +582,107 @@ function getTranslation(key, langIndex) {
             "💚 ¡Decodificado!",
             "💚 Décodé !",
             "💚 تم فك الترميز!",
+            "",
+        ],
+        // About Descriptions
+        informationTabHeader: [
+            "ℹ️ Information",
+            "ℹ️ Information",
+            "ℹ️ 信息",
+            "ℹ️ Информация",
+            "ℹ️ Información",
+            "ℹ️ Informations",
+            "ℹ️ معلومات",
+            "",
+        ],
+        informationTabDescription: [
+            "About NasaEmoji.com",
+            "Über NasaEmoji.com",
+            "关于 NasaEmoji.com",
+            "О NasaEmoji.com",
+            "Sobre NasaEmoji.com",
+            "À propos de NasaEmoji.com",
+            "حول NasaEmoji.com",
+            "",
+        ],
+        informationTabSubDescription: [
+            "The site does not use cookies or any tracking methods and does not log your IP. Any calculations are done on-device only.",
+            "Die Seite verwendet keine Cookies oder Tracking-Methoden und zeichnet deine IP nicht auf. Alle Berechnungen erfolgen nur auf dem Gerät.",
+            "本网站不使用 cookies 或任何跟踪方法，也不记录您的 IP。所有计算均在设备上完成。",
+            "Сайт не использует файлы cookie или любые методы отслеживания и не регистрирует ваш IP. Все вычисления выполняются только на устройстве.",
+            "El sitio no utiliza cookies ni métodos de rastreo y no registra tu IP. Cualquier cálculo se realiza solo en el dispositivo.",
+            "Le site n'utilise pas de cookies ni de méthodes de suivi et ne consigne pas votre IP. Tous les calculs sont effectués uniquement sur l'appareil.",
+            "الموقع لا يستخدم ملفات تعريف الارتباط أو أي طرق تتبع ولا يسجل عنوان IP الخاص بك. يتم إجراء جميع الحسابات على الجهاز فقط.",
+            "",
+        ],
+        convertTabHeader: [
+            "🔄 Convert",
+            "🔄 Konvertieren",
+            "🔄 转换",
+            "🔄 Конвертировать",
+            "🔄 Convertir",
+            "🔄 Convertir",
+            "🔄 تحويل",
+            "",
+        ],
+        convertTabDescription: [
+            "Convert text to emojis and back. Simpler Algorithms. You can use a private algorithm link with simple encrypt to increase security.",
+            "Text in Emojis und zurück konvertieren. Einfachere Algorithmen. Du kannst einen privaten Algorithmus-Link mit simple encryption verwenden, um die Sicherheit zu erhöhen.",
+            "将文本转换为表情符号并恢复。更简单的算法。您可以使用带有 simple encrypt 的私有算法链接来增加安全性。",
+            "Конвертируйте текст в эмодзи и обратно. Простые алгоритмы. Вы можете использовать ссылку на приватный алгоритм с simple encrypt для повышения безопасности.",
+            "Convierte texto a emojis y viceversa. Algoritmos más simples. Puedes usar un enlace de algoritmo privado con simple encrypt para aumentar la seguridad.",
+            "Convertissez le texte en émojis et inversement. Algorithmes plus simples. Vous pouvez utiliser un lien d'algorithme privé avec simple encrypt pour augmenter la sécurité.",
+            "حوّل النص إلى إيموجي والعكس. خوارزميات أبسط. يمكنك استخدام رابط خوارزمية خاصة مع simple encrypt لزيادة الأمان.",
+            "",
+        ],
+        encryptTabHeader: [
+            "🔐 Encrypt",
+            "🔐 Verschlüsseln",
+            "🔐 加密",
+            "🔐 Шифровать",
+            "🔐 Encriptar",
+            "🔐 Chiffrer",
+            "🔐 تشفير",
+            "",
+        ],
+        encryptTabDescription: [
+            "The most secure way of protecting data using compute intensive hash algorithms and a unique way of outputting your scrambled text. Combines two chained AES-Algorithms with XOR on top.",
+            "Der sicherste Weg, Daten mit rechenintensiven Hash-Algorithmen und einer einzigartigen Methode zur Ausgabe deines verschlüsselten Textes zu schützen. Kombiniert zwei verkettete AES-Algorithmen mit XOR.",
+            "使用计算密集型哈希算法和独特的输出方式保护数据的最安全方法。将两个链式 AES 算法与 XOR 结合在一起。",
+            "Самый безопасный способ защиты данных с использованием вычислительно интенсивных хэш-алгоритмов и уникального способа вывода зашифрованного текста. Комбинирует два цепочечных алгоритма AES с XOR.",
+            "La forma más segura de proteger datos usando algoritmos hash intensivos en computación y una forma única de mostrar tu texto cifrado. Combina dos algoritmos AES encadenados con XOR.",
+            "La façon la plus sécurisée de protéger les données en utilisant des algorithmes de hachage intensifs en calcul et une méthode unique pour afficher votre texte brouillé. Combine deux algorithmes AES enchaînés avec XOR au-dessus.",
+            "أكثر الطرق أمانًا لحماية البيانات باستخدام خوارزميات تجزئة كثيفة الحوسبة وطريقة فريدة لإخراج نصك المشوش. يجمع بين خوارزميتين AES متسلسلتين مع XOR في الأعلى.",
+            "",
+        ],
+        moreTabHeader: [
+            "*️⃣ More",
+            "*️⃣ Mehr",
+            "*️⃣ 更多",
+            "*️⃣ Больше",
+            "*️⃣ Más",
+            "*️⃣ Plus",
+            "*️⃣ المزيد",
+            "",
+        ],
+        moreTabDescription: [
+            "Source code and download app",
+            "Quellcode und App herunterladen",
+            "下载应用和源代码",
+            "Скачать приложение и исходный код",
+            "Código fuente y descargar app",
+            "Télécharger l'application et le code source",
+            "كود المصدر وتنزيل التطبيق",
+            "",
+        ],
+        placeholder: [
+            "Download app and source code",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
         ],
         // FAQ
