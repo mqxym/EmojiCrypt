@@ -601,9 +601,9 @@
                     <div class="col-xl-3 col-md-6 col-12 mb-3">
                         <div class="card shadow h-100">
                             <div class="card-body">
-                              <h4 class="card-title">ℹ️ Information</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">About NasaEmoji.com</h6>
-                              <p class="text-muted font-italic">The site does not use cookies or any tracking methods and does not log your IP. Any calculations are done on-device only.</p>
+                              <h4 class="card-title" id="informationTabHeader">ℹ️ Information</h4>
+                              <h6 class="card-subtitle mb-2 text-muted" id="informationTabDescription">About NasaEmoji.com</h6>
+                              <p class="text-muted font-italic" id="informationTabSubDescription">The site does not use cookies or any tracking methods and does not log your IP. Any calculations are done on-device only.</p>
                               <hr>
                               <div class="accordion" id="faqAccordionGeneral">
                                     <!-- FAQ Item 1 -->
@@ -721,9 +721,9 @@
                      <div class="col-xl-3 col-md-6 col-12 mb-3">
                         <div class="card shadow h-100" >
                             <div class="card-body">
-                              <h4 class="card-title">🔄 Convert</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Convert text to emojis and back. Simpler Algorithms. You can use a private algorithm link with simple encrypt to increase security.</h6>
-                              <a href="?convert" class="btn btn-light btn-block mb-3">Go to 🔄 Convert App</a>
+                              <h4 class="card-title" id="convertTabHeader">🔄 Convert</h4>
+                              <h6 class="card-subtitle mb-2 text-muted" id="convertTabDescription">Convert text to emojis and back. Simpler Algorithms. You can use a private algorithm link with simple encrypt to increase security.</h6>
+                              <a href="?convert" class="btn btn-light btn-block mb-3" id="btnGoToConvert">Go to 🔄 Convert App</a>
                               <hr>
                               <div class="accordion" id="faqAccordionConversion">
                                 <h6 class="text-muted">How to</h6>
@@ -801,10 +801,10 @@
                      <div class="col-xl-3 col-md-6 col-12 mb-3">
                         <div class="card shadow h-100">
                             <div class="card-body">
-                              <h4 class="card-title">🔐 Encrypt</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">The most secure way of protecting data using compute intensive hash algorithms and a unique way of outputting your scrambled text. Combines two chained AES-Algorithms with XOR on top.
+                              <h4 class="card-title" id="encryptTabHeader">🔐 Encrypt</h4>
+                              <h6 class="card-subtitle mb-2 text-muted" id="encryptTabDescription">The most secure way of protecting data using compute intensive hash algorithms and a unique way of outputting your scrambled text. Combines two chained AES-Algorithms with XOR on top.
                               </h6>
-                              <a href="?convert" class="btn btn-light btn-block mb-3">Go to 🔐 Encrypt App</a>
+                              <a href="?convert" class="btn btn-light btn-block mb-3" id="btnGoToEncrypt">Go to 🔐 Encrypt App</a>
                               <hr>
                               <div class="accordion" id="faqAccordionEncryption">
                                 <!-- FAQ Item 4 -->
@@ -879,11 +879,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-light btn-block my-3" type="button" data-toggle="collapse" data-target="#collapseFAQEncryption" aria-expanded="false" aria-controls="collapseFAQEncryption">
+                                    <button id="btnAdvancedEncryption" class="btn btn-light btn-block my-3" type="button" data-toggle="collapse" data-target="#collapseFAQEncryption" aria-expanded="false" aria-controls="collapseFAQEncryption">
                                         ✴️ About Encryption Security
                                       </button>
                                       <div class="collapse" id="collapseFAQEncryption">
-                                        <h6 class="text-muted">Algorithms</h6>
+                                        <h6 class="text-muted">Algorithms <a href="https://github.com/mqxym/EmojiCrypt?tab=readme-ov-file#-layered-encryption-with-emojis">(Details)</a></h6>
                                 
                                         <!-- FAQ Item 12 -->
                                         <div class="card mb-1">
@@ -916,7 +916,8 @@
                                             </div>
                                         </div>
                                         <hr>
-                                        <h6 class="text-muted">Hashing</h6>
+                                        <h6 class="text-muted">Hashing <a href="https://github.com/mqxym/EmojiCrypt?tab=readme-ov-file#%EF%B8%8F-kdvx-key-derviation-version-x">(Algorithm Details)</a></h6>
+                                        <small></small>
                                         <!-- FAQ Item 14 -->
                                         <div class="card mb-1">
                                             <div class="card-header" id="faqHeading14">
@@ -1003,8 +1004,8 @@
                      <div class="col-xl-3 col-md-6 col-12 mb-3">
                         <div class="card shadow h-100">
                             <div class="card-body">
-                              <h4 class="card-title">*️⃣ More</h4>
-                              <h6 class="card-subtitle mb-2 text-muted">Download app and source code</h6>
+                              <h4 class="card-title" id="moreTabHeader">*️⃣ More</h4>
+                              <h6 class="card-subtitle mb-2 text-muted" id="moreTabDescription">Download app and source code</h6>
                               <hr>
                               <div class="accordion" id="faqAccordionMore">
                                 <h6 class="text-muted">Limitations</h6>
@@ -1383,6 +1384,19 @@
             { selector: '#privateAlgorithmFooter', key: 'privateAlgorithmFooter' },
             { selector: '#showPrivateAlgorithmButton', key: 'showPrivateAlgorithmButton' },
             { selector: '#convertTopMessage', key: 'privateAlgorithmHeader' },
+            { selector: '#btnGoToConvert', key: 'btnGoToConvert' },
+            { selector: '#btnGoToEncrypt', key: 'btnGoToEncrypt' },
+            { selector: '#informationTabHeader', key: 'informationTabHeader' },
+            { selector: '#convertTabHeader', key: 'convertTabHeader' },
+            { selector: '#encryptTabHeader', key: 'encryptTabHeader' },
+            { selector: '#moreTabHeader', key: 'moreTabHeader' },
+            { selector: '#informationTabDescription', key: 'informationTabDescription' },
+            { selector: '#convertTabDescription', key: 'convertTabDescription' },
+            { selector: '#encryptTabDescription', key: 'encryptTabDescription' },
+            { selector: '#moreTabDescription', key: 'moreTabDescription' },
+            { selector: '#informationTabSubDescription', key: 'informationTabSubDescription' },
+            { selector: '#btnAdvancedEncryption', key: 'btnAdvancedEncryption' },
+            { selector: '#place', key: 'place' },
         ];
     
         // Elements to update placeholder attributes
