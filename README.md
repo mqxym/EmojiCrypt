@@ -1,4 +1,4 @@
-# 🌈 EmojiCrypt Version 3.4.6å
+# 🌈 EmojiCrypt Version 3.4.6
 
 Your convenient and secure web app for text encryption and conversion, where emojis are all that matters.
 
