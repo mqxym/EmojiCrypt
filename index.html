@@ -2270,7 +2270,10 @@
                     button.removeClass('btn-font-animate');
                     button.removeClass('active').blur();
                     button.data('clickHandled', false);
-                    $('body').focus();
+                    setTimeout(() => {
+                        button.blur();
+                        $('body').focus();
+                    }, 50);
                 }, 400); 
             });
         });
