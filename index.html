@@ -2272,7 +2272,7 @@
                     button.data('clickHandled', false);
                     setTimeout(() => {
                         button.blur();
-                        $('body').focus();
+                        button.trigger('mouseout');
                     }, 50);
                 }, 400); 
             });
