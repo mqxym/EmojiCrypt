@@ -348,7 +348,7 @@
             <div class="main-content p-3 convert-section container-fluid" id="convertSection">
                 <div class="row">
                     <div class="col-lg-6 order-md-1 order-1 w-100 mb-2">
-                        <div class="mb-3" id="convertTopMessage"></div>
+                        <div class="mb-3 d-none container border rounded" id="convertTopMessage"></div>
                         <div class="mb-3 d-none" id="convertSimpleEncryptionSection">
                             <div class="form-check">
                                 <label class="form-check-label">
@@ -438,7 +438,10 @@
                                 </div>
                             </div>
                         </div>
-                        <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages and use simple encrypt to add a another layer of security.</i>
+                        <div class="container border rounded">
+                            <i class="text-muted" id="privateAlgorithmFooter"> You can use a private algorithm with a unique key to obfuscate your messages and use simple encrypt to add a another layer of security.</i>
+                        </div>
+                       
             
                     </div>
                     <div id="informationConversion" class="col-md-6 order-md-2 order-2 w-100">
@@ -1256,7 +1259,7 @@
             if ( privateConversionId ) {
                 customEmojiArray = await generateSecurePermutationFromString(privateConversionId, getEmojiArray());
                 $('#privateConversionLink').val(window.location.href);
-                $('#convertTopMessage').html(getTranslation('privateAlgorithmHeader', languageIndex));
+                $('#convertTopMessage').removeClass('d-none').html(getTranslation('privateAlgorithmHeader', languageIndex));
                 $('#disablePrivateConversionButton').removeClass('d-none');
                 $('#convertSimpleEncryptionSection').removeClass('d-none');
             } else {
