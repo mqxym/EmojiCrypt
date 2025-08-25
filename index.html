@@ -26,7 +26,15 @@
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/bootstrap.bundle.js"></script>
-    
+
+  <script>
+  //This needs to be done
+  window.loadArgon2WasmBinary = () =>
+    fetch("./js/lib/cryptit/argon2.wasm")
+      .then(r => r.arrayBuffer())
+      .then(buf => new Uint8Array(buf));
+
+  </script>
 </head>
 
 <body>

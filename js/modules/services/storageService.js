@@ -3,9 +3,9 @@
  * @description Handles encrypted key storage, plain text preferences, and data migration.
  */
 
-import { CryptoService } from './cryptoService.js';
-import { HashingService } from './hashingService.js';
-import { encodeUTF8, decodeUTF8 } from './utils.js';
+import { CryptoService } from '../services/cryptoService.js'
+import { HashingService } from './../services/hashingService.js';
+import { encodeUTF8, decodeUTF8 } from '../utils.js';
 
 export class StorageService {
     constructor() {
@@ -59,7 +59,7 @@ export class StorageService {
         const encryptedBase64 = localStorage.getItem('nKey' + slot);
 
         if (!encryptedBase64) {
-            console.warn(`No data found for nKey${slot}`);
+            if (window.DEBUG_APP) console.warn(`No data found for nKey${slot}`);
             return null;
         }
 
@@ -69,7 +69,7 @@ export class StorageService {
             const decryptedBytes = await CryptoService.aesGcmDecrypt(aesKey, encryptedDataBytes);
             return decodeUTF8(decryptedBytes);
         } catch (error) {
-            console.error(`Failed to decrypt nKey${slot}:`, error);
+            if (window.DEBUG_APP) console.error(`Failed to decrypt nKey${slot}:`, error);
             return null;
         }
     }
@@ -138,21 +138,21 @@ export class StorageService {
      * Encrypts old unencrypted keys stored in localStorage.
      */
     async encryptOldKeys() {
-        console.log("Attempting to encrypt old keys...");
+        if (window.DEBUG_APP) console.log("Attempting to encrypt old keys...");
         const aesKey = await this._getEncryptionKey();
         for (let slot = 1; slot <= 5; slot++) {
             const oldKeyData = localStorage.getItem('key' + slot);
             if (oldKeyData) {
                 try {
-                    console.log(`Found old key in slot ${slot}. Encrypting...`);
+                    if (window.DEBUG_APP) console.log(`Found old key in slot ${slot}. Encrypting...`);
                     const dataToEncryptBytes = encodeUTF8(oldKeyData);
                     const encryptedDataBytes = await CryptoService.aesGcmEncrypt(aesKey, dataToEncryptBytes);
                     const encryptedBase64 = btoa(String.fromCharCode(...encryptedDataBytes));
                     localStorage.setItem('nKey' + slot, encryptedBase64);
                     localStorage.removeItem('key' + slot);
-                    console.log(`Successfully encrypted and migrated key for slot ${slot}.`);
+                    if (window.DEBUG_APP) console.log(`Successfully encrypted and migrated key for slot ${slot}.`);
                 } catch (error) {
-                    console.error(`Error encrypting key for slot ${slot}:`, error);
+                    if (window.DEBUG_APP) console.error(`Error encrypting key for slot ${slot}:`, error);
                 }
             }
         }
@@ -163,14 +163,14 @@ export class StorageService {
      * @param {string[]} keysToMigrateArray - Array of old key names to migrate.
      */
     migrateLocalStorageKeys(keysToMigrateArray) {
-        console.log("Attempting to migrate localStorage keys...");
+        if (window.DEBUG_APP) console.log("Attempting to migrate localStorage keys...");
         keysToMigrateArray.forEach(oldKey => {
             const value = localStorage.getItem(oldKey);
             if (value !== null) {
                 const newKey = `n${oldKey.charAt(0).toUpperCase()}${oldKey.slice(1)}`;
                 localStorage.setItem(newKey, value);
                 localStorage.removeItem(oldKey);
-                console.log(`Migrated '${oldKey}' to '${newKey}'.`);
+                if (window.DEBUG_APP) console.log(`Migrated '${oldKey}' to '${newKey}'.`);
             }
         });
     }

@@ -3,9 +3,9 @@
  * @description Service for deriving cryptographic keys.
  */
 
-import { CASE_SALTS, INITIAL_HASH_SALTS } from './constants.js';
-import { encodeUTF8, concatUint8Arrays } from './utils.js';
-import { HashingService } from './hashingService.js';
+import { CASE_SALTS, INITIAL_HASH_SALTS } from '../constants.js';
+import { encodeUTF8, concatUint8Arrays } from '../utils.js';
+import { HashingService } from '../services/hashingService.js';
 
 export class KeyDerivationService {
     constructor() {
@@ -153,7 +153,7 @@ export class KeyDerivationService {
      * @returns {Promise<{ aesKey1: Uint8Array, aesKey2: Uint8Array, xorKey: Uint8Array, customSalt: Uint8Array }>} Derived keys.
      */
     async deriveCryptoKeys(keyInput, inputSalt = null) {
-        console.log("Started Calculating Password Hash.");
+        if (window.DEBUG_APP) console.log("Started Calculating Password Hash.");
         console.time("keyHash");
 
         const passBytes = encodeUTF8(keyInput);

@@ -166,7 +166,17 @@ export function checkInputString(inputString) {
  * @returns {string} The current version.
  */
 export function getVersion() {
-    return "3.4.8";
+    return "4.0.0-b1";
+}
+
+/**
+ * Returns a promise that resolves after a specified delay.
+ *
+ * @param {number} ms - The number of milliseconds to wait before resolving.
+ * @returns {Promise<void>} A promise that resolves after the delay.
+ */
+export function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 

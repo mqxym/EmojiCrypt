@@ -3,8 +3,7 @@
  * @description Provides functionalities for mapping bytes to symbols (emojis) and generating secure permutations.
  */
 
-import { HashingService } from './hashingService.js'; // Imported as per task, though not directly used in generateSecurePermutation for now.
-import { encodeUTF8 } from './utils.js';
+import { encodeUTF8 } from '../utils.js';
 
 /**
  * EmojiService object literal.

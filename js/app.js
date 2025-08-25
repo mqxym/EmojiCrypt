@@ -1,108 +1,64 @@
 /**
  * @file app.js
- * @description Main application entry point. Initializes services, orchestrators, and UI.
+ * @description Main application entry point. Initializes orchestrators and the UI controllers.
  */
 
-// 1. Import all necessary modules
-import { StorageService } from './modules/storageService.js';
-import { HashingService } from './modules/hashingService.js';
-import { CryptoService } from './modules/cryptoService.js';
-import { EmojiService } from './modules/emojiService.js';
-import { KeyDerivationService } from './modules/keyDerivationService.js';
-import { EncryptionOrchestrator } from './modules/encryptionOrchestrator.js';
-import { ConversionOrchestrator } from './modules/conversionOrchestrator.js';
-import * as LanguageServiceFunctions from './modules/languageService.js';
-import { UIManager } from './modules/uiManager.js';
-import { EMOJI_ARRAY } from './modules/constants.js'; 
-import { 
-    encodeUTF8, 
-    decodeUTF8, 
-    generateRandomString, 
-    concatUint8Arrays, 
-    extractEmojis, 
-    checkInputString, 
-    getEmojiRegex,
-    countEmojisAndNonEmojis,
-    generateSecureRandomString,
-    getVersion 
-} from './modules/utils.js'; 
+window.DEBUG_APP = false;
 
-// 2. Instantiate Services
+import { StorageService } from './modules/services/storageService.js';
+import { KeyDerivationService } from './modules/deprecated/keyDerivationService.js';
+import { EncryptionOrchestrator } from './modules/orchestrators/encryptionOrchestrator.js';
+import { ConversionOrchestrator } from './modules/orchestrators/conversionOrchestrator.js';
+import { EmojiService } from './modules/services/emojiService.js';
+import { CryptoService } from './modules/services/cryptoService.js';
+import { HashingService } from './modules/services/hashingService.js';
+import { EMOJI_ARRAY } from './modules/constants.js';
+import { createCryptit } from './lib/cryptit/cryptit.browser.min.js';
+
+import { MainController } from './modules/controllers/mainController.js';
+
+// Only instantiate what actually has state:
 const storageService = new StorageService();
-const hashingService = HashingService; 
-const cryptoService = CryptoService;   
-const emojiService = EmojiService;       
 const keyDerivationService = new KeyDerivationService();
+const cryptitInstance = createCryptit();
 
-// Group LanguageService functions
-const languageService = {
-    getTranslation: LanguageServiceFunctions.getTranslation,
-    initializeLanguage: LanguageServiceFunctions.initializeLanguage,
-    LANGUAGES_CONFIG: LanguageServiceFunctions.LANGUAGES_CONFIG,
-    getLanguageCodeFromURL: LanguageServiceFunctions.getLanguageCodeFromURL,
-    getUserLanguageCode: LanguageServiceFunctions.getUserLanguageCode,
-    getLanguageIndexFromCode: LanguageServiceFunctions.getLanguageIndexFromCode
-};
-
-// 3. Create Consolidated Utility Object
-const utils = {
-    encodeUTF8,
-    decodeUTF8,
-    generateRandomString,
-    concatUint8Arrays,
-    extractEmojis,
-    checkInputString,
-    getEmojiRegex,
-    countEmojisAndNonEmojis,
-    generateSecureRandomString,
-    getVersion
-};
-
-// 4. Instantiate Orchestrators
+// Orchestrators
 const encryptionOrchestrator = new EncryptionOrchestrator(
-    keyDerivationService,
-    cryptoService,
-    emojiService,
-    hashingService,
-    utils,          // Pass consolidated utils object
-    EMOJI_ARRAY     // Pass EMOJI_ARRAY directly
+  keyDerivationService,
+  CryptoService,
+  EmojiService,
+  HashingService,
+  EMOJI_ARRAY,
+  cryptitInstance
 );
 
 const conversionOrchestrator = new ConversionOrchestrator(
-    emojiService,
-    cryptoService,
-    hashingService,
-    utils,          // Pass consolidated utils object
-    EMOJI_ARRAY     // Pass EMOJI_ARRAY directly
+  EmojiService,
+  CryptoService,
+  HashingService,
+  EMOJI_ARRAY
 );
 
-// 5. Instantiate UIManager
-// UIManager constructor: storageService, encryptionOrchestrator, conversionOrchestrator, 
-// emojiService, languageService (object), utils (object), emojiArrayConstant (direct)
-const uiManager = new UIManager(
-    storageService,
-    encryptionOrchestrator,
-    conversionOrchestrator,
-    emojiService,
-    languageService, 
-    utils,          // Pass consolidated utils object
-    EMOJI_ARRAY     // Pass EMOJI_ARRAY directly
+// Main UI orchestrator
+const mainController = new MainController(
+  storageService,
+  encryptionOrchestrator,
+  conversionOrchestrator
 );
 
-// 6. Initialize the Application
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
-        await uiManager.initialize();
-        console.log("Application initialized successfully.");
-    } catch (error) {
-        console.error("Failed to initialize application:", error);
-        const errorDiv = document.getElementById('errorHeader') || document.createElement('div');
-        if (!document.getElementById('errorHeader')) {
-            errorDiv.id = 'errorHeader';
-            errorDiv.className = 'p-2 m-3 bg-danger border rounded rounded-sm text-light';
-            document.body.insertBefore(errorDiv, document.body.firstChild);
-        }
-        errorDiv.innerHTML = 'Critical Error: Application could not start. Please try refreshing. If the problem persists, contact support.';
-        errorDiv.classList.remove('d-none');
+  try {
+    await mainController.initialize();
+    if (window.DEBUG_APP) console.log("Application initialized successfully.");
+  } catch (error) {
+    if (window.DEBUG_APP) console.error("Failed to initialize application:", error);
+    const errorDiv = document.getElementById('errorHeader') || document.createElement('div');
+    if (!document.getElementById('errorHeader')) {
+      errorDiv.id = 'errorHeader';
+      errorDiv.className = 'p-2 m-3 bg-danger border rounded rounded-sm text-light';
+      document.body.insertBefore(errorDiv, document.body.firstChild);
     }
+    errorDiv.innerHTML = 'Critical Error: Application could not start. Please try refreshing. If the problem persists, contact support.';
+    errorDiv.classList.remove('d-none');
+  }
 });

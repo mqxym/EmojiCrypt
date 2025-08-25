@@ -3,7 +3,7 @@
  * @description Provides cryptographic functionalities.
  */
 
-import { concatUint8Arrays } from './utils.js';
+import { concatUint8Arrays } from '../utils.js';
 
 /**
  * CryptoService object literal.
@@ -142,7 +142,7 @@ export const CryptoService = {
         try {
             xorKey = await this.generatePBKDF2Key(password, iv, keyLength * 8);
         } catch (err) {
-            console.error("Error deriving key in simpleXOREncrypt:", err);
+            if (window.DEBUG_APP) console.error("Error deriving key in simpleXOREncrypt:", err);
             return new Uint8Array(0); // Return empty array on error
         }
         const xorEncrypted = this.XORencrypt(xorKey, data);
@@ -169,7 +169,7 @@ export const CryptoService = {
         try {
             xorKey = await this.generatePBKDF2Key(password, iv, keyLength * 8);
         } catch (err) {
-            console.error("Error deriving key in simpleXORDecrypt:", err);
+            if (window.DEBUG_APP) console.error("Error deriving key in simpleXORDecrypt:", err);
             return new Uint8Array(0); // Return empty array on error
         }
         const decrypted = this.XORdecrypt(xorKey, encryptedData);
