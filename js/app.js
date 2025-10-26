@@ -20,7 +20,7 @@ import { MainController } from './modules/controllers/mainController.js';
 // Only instantiate what actually has state:
 const storageService = new StorageService();
 const keyDerivationService = new KeyDerivationService();
-const cryptitInstance = createCryptit();
+const cryptitInstanceEncryption = createCryptit({scheme: 1});
 
 // Orchestrators
 const encryptionOrchestrator = new EncryptionOrchestrator(
@@ -29,7 +29,7 @@ const encryptionOrchestrator = new EncryptionOrchestrator(
   EmojiService,
   HashingService,
   EMOJI_ARRAY,
-  cryptitInstance
+  cryptitInstanceEncryption
 );
 
 const conversionOrchestrator = new ConversionOrchestrator(

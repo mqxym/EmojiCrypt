@@ -85,10 +85,9 @@ export class EncryptionOrchestrator {
   }
 
   async generateRandomAppKey() {
-    await delay(100);
-    const randomMessage = generateRandomString();
-    const randomPassword = generateRandomString();
-    const keyString = await this.encryptMessage(randomMessage, randomPassword);
+    const randomNum = Math.floor(Math.random() * (120 - 22 + 1)) + 22;
+    const randomKey = this.cryptitInstance.generateFakeData(randomNum);
+    const keyString = this.emojiService.mapBytesToSymbols(randomKey, this.EMOJI_ARRAY).join('');
     return keyString;
   }
 }
